@@ -12,6 +12,7 @@ public class User implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
+    private UserType role;
 
     public User(){
 
@@ -40,4 +41,13 @@ public class User implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public UserType getRole() {
+        return role;
+    }
+
+    public void setRole(UserType role) {
+        this.role = role;
+    }
+
 }
