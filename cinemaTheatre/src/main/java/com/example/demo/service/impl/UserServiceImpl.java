@@ -21,4 +21,6 @@ public class UserServiceImpl implements UserService {
     public User getById(String id){
         return userRepository.getUserById(id);
     }
+
+
 }
