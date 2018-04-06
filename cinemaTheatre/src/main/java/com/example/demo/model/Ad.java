@@ -15,7 +15,6 @@ public class Ad {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "merchandise_id")
-    @JsonIgnore
     private Merchandise merchandise;
 
     @OneToMany(mappedBy = "ad") // "Go look over on the bean property named 'ad' on the thing I have a collection of to find the configuration."mappedBy = "ad",
@@ -28,14 +27,6 @@ public class Ad {
     private Long priceAd;//cena koju je postavio u oglasu
 
     private Date dateEndOfBids;//datum isteka za prikupljanje ponuda
-
-    public Ad(Long id, Merchandise merchandise, User user, Long priceAd, Date dateEndOfBids) {
-        this.id = id;
-        this.merchandise = merchandise;
-        this.user = user;
-        this.priceAd = priceAd;
-        this.dateEndOfBids = dateEndOfBids;
-    }
 
     public Ad() {
 

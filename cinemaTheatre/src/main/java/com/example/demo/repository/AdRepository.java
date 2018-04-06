@@ -10,4 +10,6 @@ public interface AdRepository extends JpaRepository<Ad,Long> {
     public Ad getById(Long id_ad);
 
     public List<Ad> getByUserId(Long idUser);
+
+    public Ad getByMerchandiseId(Long merchandiseId);
 }

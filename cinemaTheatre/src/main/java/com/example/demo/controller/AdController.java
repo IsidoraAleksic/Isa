@@ -1,13 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AdDTO;
 import com.example.demo.model.Ad;
 import com.example.demo.service.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
 @RestController
 @RequestMapping("/advert")
 public class AdController {
@@ -32,5 +33,23 @@ public class AdController {
     @RequestMapping("/userId/{id}")
     public List<Ad> getAllUserAds(@PathVariable("id") Long id_user) {
         return adService.getAllUserAds(id_user);
+    }
+
+    @PostMapping
+    public ResponseEntity createAd(@RequestBody AdDTO adDTO) {
+         String result = adService.create(adDTO);
+         return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @PostMapping("{id}")
+    public ResponseEntity updateAd(@PathVariable("id") Long id_ad, @RequestBody AdDTO adDTO) {
+        String result = adService.update(id_ad, adDTO);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteAd(@PathVariable("id") Long id_ad) {
+        String result = adService.delete(id_ad);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

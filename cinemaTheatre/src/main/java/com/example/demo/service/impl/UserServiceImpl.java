@@ -11,15 +11,20 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    @Autowired
+
     UserRepository userRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
 
     public List<User> getAll(UserType userType){
         return userRepository.getUserByRole(userType);
     }
 
-    public User getById(String id){
-        return userRepository.getUserById(id);
+    public User getById(Long id){
+        return userRepository.getById(id);
     }
 
 

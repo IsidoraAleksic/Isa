@@ -15,15 +15,20 @@ import java.util.List;
 @RequestMapping("/adminfz")
 public class AdminFanZoneController {
 
-    @Autowired //uvek se autowire-uje interfejs.SOLID princip neki
+     //uvek se autowire-uje interfejs.SOLID princip neki
     UserService userService;
+
+    @Autowired
+    public AdminFanZoneController(UserService userService){
+        this.userService = userService;
+    }
 
     @RequestMapping("/all")
     public List<User> getAll(){
         return userService.getAll(UserType.ADMIN);
     }
     @RequestMapping("{id}")
-    public User getAdminFz(@PathVariable("id") String id){
+    public User getAdminFz(@PathVariable("id") Long id){
         return userService.getById(id);
     }
 }

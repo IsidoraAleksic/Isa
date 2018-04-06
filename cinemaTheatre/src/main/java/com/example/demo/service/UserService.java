@@ -12,5 +12,5 @@ public interface UserService {
 
     public List<User> getAll(UserType userType);
 
-    public User getById(String id);
+    public User getById(Long id);
 }

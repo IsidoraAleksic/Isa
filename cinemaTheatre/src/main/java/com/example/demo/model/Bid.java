@@ -16,15 +16,8 @@ public class Bid {
     @JoinColumn(name = "id_ad")
     private Ad ad;
 
-    private Long idGuestBid;//id ponudjaca
-    private Long priceBid;//cena ponude bas
-
-    public Bid(Ad ad, Long id, Long idGuestBid, Long priceBid) {
-        this.id = id;
-        this.ad = ad;
-        this.idGuestBid = idGuestBid;
-        this.priceBid = priceBid;
-    }
+    private Long idGuestBid;
+    private Long priceBid;
 
     public Bid() {
 

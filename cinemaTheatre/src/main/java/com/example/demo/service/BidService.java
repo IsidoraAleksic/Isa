@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.BidDTO;
 import com.example.demo.model.Bid;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,13 @@ public interface BidService {
 
     public Bid getById(Long id_bid);
 
-    public List<Bid> getByAd(Long id_ad);
+    public List<Bid> getByIdAd(Long id_ad);
 
     public List<Bid> getByGuest(Long id_guestBid);
+
+    public String create(BidDTO bidDTO);
+
+    public String update(Long bidId, BidDTO bidDTO);
+
+    public String delete(Long idBid);
 }
