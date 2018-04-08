@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 public interface AuthenticationService  {
 
     public User authenticateUser(String username, String password);
-    public void saveUser(User user);
     public String registerUser(User user);
+    public void saveUser(User user);
+    public User findByConfirmationToken(String token);
+    public void deleteUser(User user);
 }

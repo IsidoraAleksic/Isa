@@ -1,1 +1,1 @@
-insert into isadb.users(first_name, last_name,password_user,username, email,city,phone  ) values('admin', 'admin','admin','admin','admin','','');
+insert into isadb.users(first_name, last_name,password_user,username, email,city,phone,enabled  ) values('admin', 'admin','admin','admin','admin','admin','admin', FALSE );
