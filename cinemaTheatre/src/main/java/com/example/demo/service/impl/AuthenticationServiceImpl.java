@@ -58,6 +58,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         userRepository.save(user);
     }
 
+    @Override
+    public User findByConfirmationToken(String token) {
+        return null;
+    }
+
 
     @Override
     public void deleteUser(User user) {

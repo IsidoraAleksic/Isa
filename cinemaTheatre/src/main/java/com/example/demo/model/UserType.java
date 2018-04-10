@@ -6,5 +6,6 @@ public enum UserType {
     ADMINFZ,
     UNREGISTERED,
     GUEST,
+    OBICAN
 
 }
