@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 import sun.security.util.Password;
 
@@ -42,11 +43,12 @@ public class User implements Serializable {
     @NotEmpty(message = "Please enter your phone number")
     private String phone;
 
-
-
     @Enumerated(EnumType.STRING)
     private UserType role;
 
+    @OneToMany(mappedBy = "receiver")
+    @JsonIgnore
+    private List<Notification> notifications;
 
     public User(){
 
@@ -77,7 +79,13 @@ public class User implements Serializable {
     }
 
 
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
 
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
 
     public String getPassword() {
         return password;

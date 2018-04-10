@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.Bid;
+import com.example.demo.model.AdBidStatus;
 
 public class BidDTO {
 
@@ -10,6 +11,8 @@ public class BidDTO {
     private Long idGuestBid;
 
     private Long priceBid;
+
+    private AdBidStatus adBidStatus;
 
     public BidDTO() {
 
@@ -31,6 +34,10 @@ public class BidDTO {
         return priceBid;
     }
 
+    public AdBidStatus getAdBidStatus() {
+        return adBidStatus;
+    }
+
     public void setIdGuestBid(Long idGuestBid) {
         this.idGuestBid = idGuestBid;
     }
@@ -39,10 +46,14 @@ public class BidDTO {
         this.priceBid = priceBid;
     }
 
+    public void setAdBidStatus(AdBidStatus adBidStatus) {
+        this.adBidStatus = adBidStatus;
+    }
+
     public Bid createBid() {
         Bid bid = new Bid();
         bid.setPriceBid(priceBid);
-
+        bid.setAdBidStatus(adBidStatus);
         return bid;
     }
 
