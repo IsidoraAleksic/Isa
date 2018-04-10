@@ -28,6 +28,9 @@ public class Ad {
 
     private Date dateEndOfBids;//datum isteka za prikupljanje ponuda
 
+    @Enumerated(EnumType.STRING)
+    private AdBidStatus adBidStatus;
+
     public Ad() {
 
     }
@@ -78,6 +81,14 @@ public class Ad {
     public List<Bid> getBid() {
 
         return bid;
+    }
+
+    public AdBidStatus getAdBidStatus() {
+        return adBidStatus;
+    }
+
+    public void setAdBidStatus(AdBidStatus adBidStatus) {
+        this.adBidStatus = adBidStatus;
     }
 
     @Override

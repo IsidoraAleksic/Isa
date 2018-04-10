@@ -1,11 +1,15 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.BidDTO;
+import com.example.demo.dto.NotificationDTO;
 import com.example.demo.model.Ad;
 import com.example.demo.model.Bid;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.example.demo.model.AdBidStatus;
+import com.example.demo.model.User;
 import com.example.demo.repository.AdRepository;
 import com.example.demo.repository.BidRepository;
 import com.example.demo.repository.UserRepository;
@@ -30,9 +34,10 @@ public class BidServiceImpl implements BidService {
     private static String BID_DOESNT_EXISTS = "Bid can't be deleted because it doesn't exist.";
 
     @Autowired
-    public BidServiceImpl(BidRepository bidRepository, AdRepository adRepository) {
+    public BidServiceImpl(BidRepository bidRepository, AdRepository adRepository, UserRepository userRepository) {
         this.bidRepository = bidRepository;
         this.adRepository = adRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Bid> getAll() {
@@ -72,7 +77,7 @@ public class BidServiceImpl implements BidService {
         Bid bid = bidRepository.getById(bidId);
         if (!bid.getIdGuestBid().equals(bidDTO.getIdGuestBid())) {
             return ERRORR_UPDATE_BID;
-        }else if(!bid.getAd().getId().equals(bidDTO.getAdId())){
+        } else if (!bid.getAd().getId().equals(bidDTO.getAdId())) {
             return ERRORR_UPDATE_BID;
         }
         bid.setPriceBid(bidDTO.getPriceBid());
@@ -81,11 +86,44 @@ public class BidServiceImpl implements BidService {
     }
 
     public String delete(Long idBid) {
-        if(bidRepository.getById(idBid) == null){
+        if (bidRepository.getById(idBid) == null) {
             return BID_DOESNT_EXISTS;
         }
         bidRepository.deleteById(idBid);
         return SUCCESS_DELETED_BID;
+    }
+
+    public List<NotificationDTO> updateBidStatus(Long id, AdBidStatus status) {
+        Bid bid = bidRepository.getById(id);
+        if (bid == null) {
+            return null;
+        }
+
+        if (AdBidStatus.ACCEPTED.equals(status)) {
+            bid.setAdBidStatus(status);
+            bidRepository.save(bid);
+            List<Bid> bids = bid.getAd().getBid();
+            for (Bid bidTemp : bids) {
+                if (bid.getId().equals(bidTemp.getId()))
+                    continue;
+                bidTemp.setAdBidStatus(AdBidStatus.REJECTED);
+                bidRepository.save(bidTemp);
+            }
+
+            return createNotifications(bids);
+        }
+        return null;
+
+    }
+
+    private List<NotificationDTO> createNotifications(List<Bid> bids) {
+        List<NotificationDTO> notificationDTOS = new ArrayList<>();
+        for (Bid bid : bids) {
+            User user = userRepository.getById(bid.getIdGuestBid());
+
+            notificationDTOS.add(new NotificationDTO(user.getId(), "Bid Notification", "Bid with id: " + bid.getId()+ " is " + bid.getAdBidStatus().name()));
+        }
+        return notificationDTOS;
     }
 
 }

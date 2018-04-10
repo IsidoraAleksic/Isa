@@ -1,11 +1,15 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
+import sun.security.util.Password;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -39,33 +43,15 @@ public class User implements Serializable {
     @NotEmpty(message = "Please enter your phone number")
     private String phone;
 
-    @Column(name="enabled")
-    private boolean enabled;
-
     @Enumerated(EnumType.STRING)
     private UserType role;
 
-    private String confirmationToken;
-
+    @OneToMany(mappedBy = "receiver")
+    @JsonIgnore
+    private List<Notification> notifications;
 
     public User(){
-        this.enabled = false;
-    }
 
-    public String getConfirmationToken() {
-        return confirmationToken;
-    }
-
-    public void setConfirmationToken(String confirmationToken) {
-        this.confirmationToken = confirmationToken;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     public Long getId() {
@@ -90,6 +76,15 @@ public class User implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public String getPassword() {
@@ -131,6 +126,8 @@ public class User implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+
 
     public UserType getRole() {
         return role;

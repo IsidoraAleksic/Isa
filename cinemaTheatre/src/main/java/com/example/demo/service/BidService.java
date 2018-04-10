@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.BidDTO;
+import com.example.demo.dto.NotificationDTO;
 import com.example.demo.model.Bid;
+import com.example.demo.model.AdBidStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,4 +23,6 @@ public interface BidService {
     public String update(Long bidId, BidDTO bidDTO);
 
     public String delete(Long idBid);
+
+    public List<NotificationDTO> updateBidStatus(Long id, AdBidStatus status);
 }

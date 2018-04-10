@@ -1,12 +1,9 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name="bids")
+@Table(name = "bids")
 public class Bid {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +15,9 @@ public class Bid {
 
     private Long idGuestBid;
     private Long priceBid;
+
+    @Enumerated(EnumType.STRING)
+    private AdBidStatus adBidStatus;
 
     public Bid() {
 
@@ -39,6 +39,10 @@ public class Bid {
         return priceBid;
     }
 
+    public AdBidStatus getAdBidStatus() {
+        return adBidStatus;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -53,6 +57,10 @@ public class Bid {
 
     public void setPriceBid(Long priceBid) {
         this.priceBid = priceBid;
+    }
+
+    public void setAdBidStatus(AdBidStatus adBidStatus) {
+        this.adBidStatus = adBidStatus;
     }
 
     @Override

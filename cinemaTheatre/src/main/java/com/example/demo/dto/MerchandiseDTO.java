@@ -1,33 +1,29 @@
-package com.example.demo.model;
+package com.example.demo.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.demo.model.Ad;
+import com.example.demo.model.Merchandise;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name="merchandise")
-public class Merchandise {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MerchandiseDTO {
 
-    @OneToMany(mappedBy = "merchandise")
     private List<Ad> ads;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;//korisnik koji je objavio oglas
-
+    private Long userId;
     private String nameMerchandise;
     private String description;
     private Long priceMerchandise;//ovo treba za blagajnu. kao neka realna cena
     private String imageMerchandise;
 
-    public Merchandise() {
+    public MerchandiseDTO() {
 
     }
-    public Long getId() {
-        return id;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getNameMerchandise() {
@@ -46,10 +42,6 @@ public class Merchandise {
         return imageMerchandise;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setNameMerchandise(String nameMerchandise) {
         this.nameMerchandise = nameMerchandise;
     }
@@ -66,14 +58,6 @@ public class Merchandise {
         this.imageMerchandise = imageMerchandise;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public List<Ad> getAds() {
         return ads;
     }
@@ -82,14 +66,24 @@ public class Merchandise {
         this.ads = ads;
     }
 
+    public Merchandise createMerchandise(){
+        Merchandise merch = new Merchandise();
+        merch.setAds(ads);
+        merch.setDescription(description);
+        merch.setNameMerchandise(nameMerchandise);
+        merch.setImageMerchandise(imageMerchandise);
+        merch.setPriceMerchandise(priceMerchandise);
+
+        return merch;
+    }
     @Override
     public String toString() {
         return "Merchandise{" +
-                "id=" + id +
                 ", nameMerchandise='" + nameMerchandise + '\'' +
                 ", description='" + description + '\'' +
                 ", priceMerchandise=" + priceMerchandise +
                 ", imageMerchandise=" + imageMerchandise +
                 '}';
     }
+
 }
