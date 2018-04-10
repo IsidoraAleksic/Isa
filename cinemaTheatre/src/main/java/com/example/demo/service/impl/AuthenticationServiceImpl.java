@@ -13,6 +13,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EmailService emailService;
+
+
 //
 //    @Autowired
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -31,38 +35,33 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return null;
     }
 
-
-
     @Override
-    public void saveUser(User user) {
-        //TODO: implementiraj
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        user.setActive(1);
+    public String registerUser(User user){
+
+        if(user.getPassword() == null ||user.getEmail() == null || user.getFirstName() == null ||
+                user.getLastName() == null || user.getCity() == null || user.getPhone() == null || user.getUsername() == null)
+            return null;
+
+        if(userRepository.findByEmail(user.getEmail())!=null)
+            return "exists";
+
+        user.setRole(UserType.OBICAN);
+
+
+//        userRepository.save(user);
+
+        return "registered";
     }
 
     @Override
-    public String registerUser(User user) {
-        if(user.getPassword() == null || user.getPassword().isEmpty())
-            return "password cannot be empty";
-        if( user.getEmail() == null  || user.getEmail().isEmpty())
-            return "email cannot be empty";
-        if(user.getFirstName() == null || user.getFirstName().isEmpty())
-            return "first name cannot be empty";
-        if( user.getLastName() == null || user.getLastName().isEmpty())
-            return "last name cannot be empty";
-        if( user.getCity() == null || user.getCity().isEmpty())
-            return "city cannot be empty";
-        if(user.getPhone() == null || user.getPhone().isEmpty() )
-            return "phone cannot be empty";
-        if(user.getUsername() == null || user.getUsername().isEmpty() )
-            return "username cannot be empty";
-        if(userRepository.findByEmail(user.getEmail())!=null)
-            return "user exists";
-
-        user.setRole(UserType.GUEST);
+    public void saveUser(User user) {
         userRepository.save(user);
+    }
 
-        return "user registered";
+
+    @Override
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
 
