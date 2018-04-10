@@ -29,10 +29,10 @@ public class CTtoCTDTO implements Converter<CinemaTheater, CTDTO> {
 
 	public List<CTDTO> convert(List<CinemaTheater> cts) {
 		List<CTDTO> result = new ArrayList<>();
-		
+
 		for (CinemaTheater ct : cts)
 			result.add(convert(ct));
-		
+
 		return result;
 	}
 

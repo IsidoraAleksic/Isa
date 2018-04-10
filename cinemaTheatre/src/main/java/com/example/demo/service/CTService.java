@@ -10,6 +10,10 @@ public interface CTService {
 	
 	Page<CinemaTheater> getCinemaTheaterByType(CTType type, Pageable pageable);
 
+	CinemaTheater save(CinemaTheater ct);
 	
+	CinemaTheater find(long id);
+	
+	CinemaTheater delete(long id);
 	
 }

@@ -1,16 +1,18 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="ct")
+@Table(name = "ct")
 public class CinemaTheater {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 
 	@NotNull
 	@Column(name = "name", columnDefinition = "VARCHAR(60)")
@@ -19,7 +21,7 @@ public class CinemaTheater {
 
 	@NotNull
 	@Column(name = "address", columnDefinition = "VARCHAR(120)")
-	@Size(min = 10, max = 120)
+	@Size(max = 120)
 	private String address;
 
 	@Size(max = 280)
@@ -27,18 +29,23 @@ public class CinemaTheater {
 	private String description;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="type")
+	@Column(name = "type", columnDefinition = "VARCHAR(20)")
 	private CTType type;
-	
-	/**
-	 * TODO: OCENA AMBIJENTA, SALE, PROJEKCIJE, FILMOVI
-	 */
 
-	public Long getId() {
+	@OneToMany
+	private List<Projection> projections;
+
+	@OneToMany
+	private List<Hall> halls;
+
+	@Column(name = "ambient")
+	private float ambient;
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -70,11 +77,47 @@ public class CinemaTheater {
 
 	}
 
-	public CinemaTheater(Long id, String name, String address, String description) {
+	public CinemaTheater(long id, @NotNull @Size(min = 2, max = 60) String name,
+			@NotNull @Size(max = 120) String address, @Size(max = 280) String description, CTType type,
+			float ambient) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.description = description;
+		this.type = type;
+		this.ambient = ambient;
+	}
+
+	public CTType getType() {
+		return type;
+	}
+
+	public void setType(CTType type) {
+		this.type = type;
+	}
+
+	public List<Projection> getProjections() {
+		return projections;
+	}
+
+	public void setProjections(List<Projection> projections) {
+		this.projections = projections;
+	}
+
+	public List<Hall> getHalls() {
+		return halls;
+	}
+
+	public void setHalls(List<Hall> halls) {
+		this.halls = halls;
+	}
+
+	public float getAmbient() {
+		return ambient;
+	}
+
+	public void setAmbient(float ambient) {
+		this.ambient = ambient;
 	}
 
 }
