@@ -18,6 +18,10 @@ public class Merchandise {
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;//korisnik koji je objavio oglas
 
+    @OneToMany(mappedBy = "merch")
+    @JsonIgnore
+    private List<ReservationMerchandise> reservationMerchandise;
+
     private String nameMerchandise;
     private String description;
     private Long priceMerchandise;//ovo treba za blagajnu. kao neka realna cena
@@ -80,6 +84,14 @@ public class Merchandise {
 
     public void setAds(List<Ad> ads) {
         this.ads = ads;
+    }
+
+    public List<ReservationMerchandise> getReservationMerchandise() {
+        return reservationMerchandise;
+    }
+
+    public void setReservationMerchandise(List<ReservationMerchandise> reservationMerchandise) {
+        this.reservationMerchandise = reservationMerchandise;
     }
 
     @Override
