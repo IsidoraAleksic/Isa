@@ -1,0 +1,4 @@
+#map { width: 300px; height:300px; }
+#content { position: relative; }
+.checked { color: orange; }
+.hidden { display: none; }

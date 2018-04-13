@@ -1,9 +1,5 @@
 package com.example.demo.dto;
 
-import java.util.List;
-
-import com.example.demo.model.Actor;
-
 public class MSDTO {
 
 	private long id;
@@ -13,7 +9,7 @@ public class MSDTO {
 	private short duration;
 	private String genre;
 	private String imagePath;
-	private List<Actor> actors;
+	private String actors;
 	public long getId() {
 		return id;
 	}
@@ -56,14 +52,14 @@ public class MSDTO {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-	public List<Actor> getActors() {
+	public String getActors() {
 		return actors;
 	}
-	public void setActors(List<Actor> actors) {
+	public void setActors(String actors) {
 		this.actors = actors;
 	}
 	public MSDTO(long id, String name, String director, String description, short duration, String genre,
-			String imagePath, List<Actor> actors) {
+			String imagePath, String actors) {
 		super();
 		this.id = id;
 		this.name = name;
