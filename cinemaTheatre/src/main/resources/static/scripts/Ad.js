@@ -43,6 +43,26 @@ function makeAd(){
     });
 
 }
+function makeMerch(){
+    $.ajax({
+        url: "/merchandise",
+        contentType: "application/json",
+        dataType: "text",
+        type: "POST",
+        data: JSON.stringify({
+            "userId": "",
+            "nameMerchandise": $("#nameMerchandise").val(),
+            "description":  $("#descriptionMerch").val(),
+            "priceMerchandise":$("#priceMerchandise").val(),
+            "imageMerchandise": ""
+        }),
+        success: function(data) {
+            window.open(data);
+            $(location).attr('href', 'Merch.html')
+        }
+    });
+
+}
 function openUpdateAd(id){
     $(location).attr('href', 'Ad.html?adId='+id);
 }
@@ -103,6 +123,20 @@ function deleteAd(adId){
     });
 
 }
+function deleteAd(adId){
+    $.ajax({
+        url: "/advert/"+adId,
+        contentType: "application/json",
+        dataType: "text",
+        type: "DELETE",
+        success: function(data) {
+            window.open(data);
+            $(location).attr('href', 'FanZone.html')
+        }
+    });
+
+}
+
 function uploadImage(){
     $.ajax({
         url: "Upload/{imageName}",
@@ -125,6 +159,9 @@ function uploadImage(){
 }
 function openFanZone(){
     $(location).attr('href', 'FanZone.html')
+}
+function openMerchPage(){
+    $(location).attr('href', 'Merch.html')
 }
 function openAdPage(){
     $(location).attr('href', 'Ad.html')

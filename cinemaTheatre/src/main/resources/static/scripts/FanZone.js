@@ -12,7 +12,6 @@ function getAllMerchs(){
             }
             $("#zvanicna-prodavnica").empty().append(content);
 
-
         }
     });
 }
@@ -121,6 +120,21 @@ function deleteBid(bidId) {
         success: function (data) {
             window.open(data);
             $(location).attr('href', 'FanZone.html');
+        }
+    });
+}
+function updateBid(bidId){
+    $.ajax({
+        url: "/bid/"+bidId,
+        contentType: "application/json",
+        dataType: "text",
+        type: "POST",
+        data: JSON.stringify({
+            "priceBid": $("#priceBid").val()
+        }),
+        success: function(data) {
+            window.open(data);
+            $(location).attr('href', 'FanZone.html')
         }
     });
 }
