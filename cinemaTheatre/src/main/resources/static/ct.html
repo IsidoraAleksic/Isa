@@ -2,70 +2,13 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" src="css/ct.css"/>
 	<script src="scripts/jquery-3.2.1.min.js"></script>
 	<script src="scripts/tether.min.js"></script>
 	<script src="scripts/bootstrap.min.js"></script>
-	<style>
-		table.disp { width:50%; margin-left: auto; margin-right:auto; }
-		td.pic{width: 20%; max-width: 250px; max-height:250px; border: none;}
-		td.irs {height: 35px;}
-		td {border: 1px solid black;}
-		td.extra {border: none; height: 12px;}
-		</style>
+	<script src="scripts/ct.js"></script>
 </head>
 <body>
-<script>
-	$(document).ready(
-
-			function() {
-				tgt = "http://localhost:9080/" + window.location.href.split("ct=")[1];
-				$.ajax({
-					url: tgt,
-					success: function(data){	
-						
-						console.log(data.content);
-						for(i = 0; i < data.content.length;i++){
-							newct = "<tr class=\"bottom\"><td rowspan=\"5\" class=\"pic\"><img src=\"images/placeholder.png\"/></td>"
-									+ "<td class=\"irs\">Name: "+data.content[i].name+"</td></tr>"
-									+"<tr><td class=\"irs\">Address: "+data.content[i].address+"</td></tr>"
-									+"<tr><td rowspan=\"2\">Description: "+data.content[i].description+"</td></tr>"
-									+"<tr></tr>"
-									+"<tr><td class=\"irs\">Rating: "+data.content[i].ambient+"</td></tr>"
-									+"<tr><td class=\"extra\" colspan=\"2\"></td></tr>";
-							$("#dataTable").append(newct);
-						}
-					}
-				});
-				
-			}
-			
-	);
-				
-</script>
-
-<!--
-	<div id="map"></div>
-    <script>
-      function initMap() {
-		//https://maps.google.com/maps?ie=UTF8&q=arena+cineplex&fb=1&hq=arena+cineplex&cid=0,0,18106413033580639073&hnear=&ll=
-		//45.253758,19.845412
-		//&spn=0.006295,0.006295&t=m&output=embed
-
-	  var uluru = {lat: 45.253758, lng: 19.845412};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 14,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-      }
-    </script>
-    <script async defer
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUO9Z5prXj0zWkltyOL2iborplYsjVwa0&callback=initMap">
-	</script>
-	-->
 <table id="dataTable" class="disp">
 	<tbody>
 	</tbody>

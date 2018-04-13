@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title></title>
+	<script src="scripts/jquery-3.2.1.min.js"></script>
+	<link rel="stylesheet" href="css/ctProfile.css"/>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+	<script src="scripts/ctProfile.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUO9Z5prXj0zWkltyOL2iborplYsjVwa0"></script>
+	<script>
+	$(document).on("click", ".button", function(e){
+		e.preventDefault();
+		var latitude = 0;
+		var longitude = 0;
+		var link = "https://maps.google.com/maps/api/geocode/json?address="+document.getElementById('address').textContent;
+		$.ajax({
+			url:link,
+			success: function(data) {
+				latitude = data.results[0].geometry.location.lat;
+				longitude = data.results[0].geometry.location.lng;
+				initMap(latitude, longitude);
+			}
+		});
+		
+		function initMap(latitude, longitude){
+		var point = {lat: latitude, lng: longitude};
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 14,
+				center: point
+			});
+			var marker = new google.maps.Marker({
+				position: point,
+				map: map
+			});
+			console.log('ok');
+			console.log(point);
+		}
+	});
+	</script>
+</head>
+<body>
+	<div id="content">
+		<h1 id="name"></h1>
+		<hr>
+		<h3 id="address"></h3>
+		<hr>
+		<p id = "description"></p>
+		<hr>
+		<p id="rating"></p>
+		<br>
+		<div id="stars">
+		</div>
+		<hr>
+		<button class="button">MAP</button>
+		<div id="map"></div>
+	</div>
+</body>
+</html>

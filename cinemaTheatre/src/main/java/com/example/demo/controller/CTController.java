@@ -51,11 +51,14 @@ public class CTController {
 		return new ResponseEntity<>(created,HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/cinemas/{id}", method=RequestMethod.DELETE)
+	@RequestMapping(value = "/ct/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<?> deleteCT(@PathVariable long id){
 		CinemaTheater deleted = ctService.delete(id);
 		return new ResponseEntity<>(deleted, HttpStatus.OK);
 	}
 
-	
+	@RequestMapping(value = "/ct/{id}", method=RequestMethod.GET)
+	public ResponseEntity<?> getCT(@PathVariable long id){
+		return new ResponseEntity<>(ctService.find(id),HttpStatus.OK);
+	}
 }

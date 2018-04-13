@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity(name = "projections")
 public class Projection {
@@ -12,17 +13,39 @@ public class Projection {
 	@GeneratedValue
 	private Long id;
 
-	@OneToOne
-	private MovieShow happening;
+	@NotNull
+	private String name;
+
+	@NotNull
+	private String actors;
+
+	@NotNull
+	private String genre;
+
+	@NotNull
+	private String director;
+
+	@NotNull
+	private int duration;
+
+	@NotNull
+	private String imagePath;
+
+	@NotNull
+	@Size(max = 280)
+	private String description;
 
 	@ManyToOne
 	private Hall hall;
+
+	@ManyToOne
+	private CinemaTheater ct;
 
 	@Column(nullable = false)
 	private Date date;
 
 	@Column(nullable = false)
-	private Float price;
+	private float price;
 
 	@ManyToMany
 	private List<Seat> taken;
@@ -36,14 +59,6 @@ public class Projection {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public MovieShow getHappening() {
-		return happening;
-	}
-
-	public void setHappening(MovieShow happening) {
-		this.happening = happening;
 	}
 
 	public Hall getHall() {
@@ -86,10 +101,73 @@ public class Projection {
 		this.reserved = reserved;
 	}
 
-	public Projection(Long id, MovieShow happening, Hall hall, Date date, Float price, List<Seat> taken,
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getActors() {
+		return actors;
+	}
+
+	public void setActors(String actors) {
+		this.actors = actors;
+	}
+
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Projection(Long id, String name, String actors, String genre, String director, int duration,
+			String imagePath, String description, Hall hall, Date date, Float price, List<Seat> taken,
 			List<Reservation> reserved) {
 		this.id = id;
-		this.happening = happening;
+		this.name = name;
+		this.actors = actors;
+		this.genre = genre;
+		this.director = director;
+		this.duration = duration;
+		this.imagePath = imagePath;
+		this.description = description;
 		this.hall = hall;
 		this.date = date;
 		this.price = price;
