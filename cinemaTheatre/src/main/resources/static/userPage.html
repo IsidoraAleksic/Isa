@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="scripts/jquery-3.2.1.min.js"></script>
+    <script href="scripts/bootstrap.min.js" rel="stylesheet" type="text/javascript"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" id="toastr-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src = "scripts/userPage.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/userPage.css"/>
+    <title>Profile</title>
+</head>
+<body>
+<div class="container">
+
+    <div class="toppane">
+        <!--<label>Search by first name: </label>-->
+        <form action="" class="form-horizontal" id="formaSearchByName">
+            <div class="form-group col-md-offset-1"  >
+        <input type="text" class="form-control" name="search" id="searchName" placeholder="Search by name"/>
+        <input class="btn" type="submit" value="Search">
+        <input type="checkbox" id="justFriendsName"> Only friends
+            </div>
+        </form>
+        <div id="friendRequestsDiv">
+            <form action="" class="form-horizontal" id="formaFriendRequests">
+                <input class="btn-link" type="submit" value="Friend requests">
+            </form>
+        </div>
+
+            <!--<form action="" class="form-horizontal" id="formaSearchByLastName">-->
+                <!--<div class="form-group col-md-offset-1"  >-->
+            <!--&lt;!&ndash;<label>Search by last name name: </label>&ndash;&gt;-->
+            <!--<input type="text" class="form-control" id="searchLastName" name="search" placeholder="Search by last name"/>-->
+            <!--<input class="btn" type="submit" value="Search">-->
+
+            <!--<input type="checkbox" name="vehicle" id="justFriendsLastName"> Only friends-->
+                <!--</div>-->
+        <!--</form>-->
+
+
+   </div>
+    <!--<div class="row">-->
+        <!--<ul class="nav nav-tabs"  id="tabovi">-->
+             <!--<li class="active"><a href="index.html" >Home</a></li>-->
+            <!--<li class="active"><a href="index.html" >Cinema</a></li>-->
+            <!--<li class="active"><a href="index.html" >Friends</a></li>-->
+            <!--<li class="active"><a href="index.html" >Home</a></li>-->
+        <!--</ul>-->
+
+
+    <!--</div>-->
+   <div class="empty" ></div>
+   <div class="leftpane" id="editDiv">
+       <h3 id = "username"></h3>
+       <h4 >Edit profile</h4>
+       <div class="row class-md-1" id="porukaDiv" >
+
+       </div>
+       <form action="" class="form-horizontal" id="formaEditUser">
+           <div class="row class-md-1" id="editFNdiv" ></div>
+           <div class="row class-md-1" id="editLNdiv" ></div>
+           <div class="row" id="editCitydiv"  ></div>
+           <div class="row" id="editPhonediv"  ></div>
+           <div class="row" id="editPassdiv" > </div>
+           <div class="row" >
+               <input class="button" type="submit" value="Edit">
+           </div>
+       </form>
+
+   </div>
+   <div class="middlepane" id="resultsDiv">
+
+   </div>
+    <a href="homeRegistered.html">Home</a>
+
+
+
+</div>
+
+
+
+</body>
+</html>
