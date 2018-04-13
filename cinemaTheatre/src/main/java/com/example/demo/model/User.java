@@ -77,7 +77,7 @@ public class User implements Serializable {
         this.confirmationToken = confirmationToken;
     }
 
-    public boolean isEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 

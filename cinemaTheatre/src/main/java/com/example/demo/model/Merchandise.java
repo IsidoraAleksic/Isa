@@ -12,10 +12,8 @@ public class Merchandise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "merchandise")
-    private List<Ad> ads;
-
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     private User user;//korisnik koji je objavio oglas
 
     @OneToMany(mappedBy = "merch")
@@ -76,14 +74,6 @@ public class Merchandise {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<Ad> getAds() {
-        return ads;
-    }
-
-    public void setAds(List<Ad> ads) {
-        this.ads = ads;
     }
 
     public List<ReservationMerchandise> getReservationMerchandise() {

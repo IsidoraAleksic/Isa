@@ -31,7 +31,7 @@ public class AuthenticationController {
         if(logedIn== null)
             return "nok";
         else
-            if(logedIn.isEnabled())
+            if(logedIn.getEnabled())
                 return "ok";
             else
                 return "not enabled";
@@ -61,7 +61,7 @@ public class AuthenticationController {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        if(user.isEnabled())
+        if(user.getEnabled())
             return "ok";
 
         return "not confirmed";

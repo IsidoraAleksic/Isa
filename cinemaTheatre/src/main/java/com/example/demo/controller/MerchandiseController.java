@@ -13,12 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/merchandise")
 public class MerchandiseController {
-
+    @Autowired
     MerchandiseService merchandiseService;
-    @Autowired //uvek se autowire-uje interfejs.SOLID princip neki
-    public MerchandiseController(MerchandiseService merchandiseService){
-        this.merchandiseService = merchandiseService;
-    }
+    //uvek se autowire-uje interfejs.SOLID princip neki
 
     @RequestMapping("/allMerchandise")
     public List<Merchandise> getAll(){

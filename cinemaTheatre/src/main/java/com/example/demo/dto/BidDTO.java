@@ -12,8 +12,6 @@ public class BidDTO {
 
     private Long priceBid;
 
-    private AdBidStatus adBidStatus;
-
     public BidDTO() {
 
     }
@@ -34,10 +32,6 @@ public class BidDTO {
         return priceBid;
     }
 
-    public AdBidStatus getAdBidStatus() {
-        return adBidStatus;
-    }
-
     public void setIdGuestBid(Long idGuestBid) {
         this.idGuestBid = idGuestBid;
     }
@@ -46,14 +40,11 @@ public class BidDTO {
         this.priceBid = priceBid;
     }
 
-    public void setAdBidStatus(AdBidStatus adBidStatus) {
-        this.adBidStatus = adBidStatus;
-    }
 
     public Bid createBid() {
         Bid bid = new Bid();
         bid.setPriceBid(priceBid);
-        bid.setAdBidStatus(adBidStatus);
+        bid.setAdBidStatus(AdBidStatus.WAITING);
         return bid;
     }
 

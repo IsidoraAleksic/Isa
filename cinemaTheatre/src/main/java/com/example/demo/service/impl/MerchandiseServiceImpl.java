@@ -73,14 +73,14 @@ public class MerchandiseServiceImpl implements MerchandiseService {
             return MERCH_DOESNT_EXISTS;
         }
 
-        List<Ad> ads = adRepository.getByMerchandiseId(merchandiseId);
+        /*List<Ad> ads = adRepository.getByMerchandiseId(merchandiseId);
         for (Ad ad : ads) {
             List<Bid> bids = adRepository.getById(ad.getId()).getBid();
             for (Bid bid : bids) {
                 bidRepository.deleteById(bid.getId());
             }
             adRepository.deleteById(ad.getId());
-        }
+        }*/
 
         merchandiseRepository.deleteById(merchandiseId);
         return SUCCESS_DELETED_MERCH;

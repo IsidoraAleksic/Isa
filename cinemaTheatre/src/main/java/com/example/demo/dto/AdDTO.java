@@ -7,7 +7,11 @@ import java.util.Date;
 
 public class AdDTO {
 
-    private Long merchandiseId;
+    private String nameAd;
+
+    private String description;
+
+    private String imageAd;
 
     private Long userId;//korisnik koji je objavio oglas
 
@@ -15,8 +19,10 @@ public class AdDTO {
 
     private Date dateEndOfBids;//datum isteka za prikupljanje ponuda
 
-    public AdDTO(Long merchandiseId, Long userId, Long priceAd, Date dateEndOfBids) {
-        this.merchandiseId = merchandiseId;
+    public AdDTO(String nameAd, String description,String imageAd, Long userId, Long priceAd, Date dateEndOfBids) {
+        this.nameAd = nameAd;
+        this.description = description;
+        this.imageAd = imageAd;
         this.userId = userId;
         this.priceAd = priceAd;
         this.dateEndOfBids = dateEndOfBids;
@@ -26,8 +32,20 @@ public class AdDTO {
 
     }
 
-    public Long getMerchandiseId() {
-        return merchandiseId;
+    public String getNameAd() {
+        return nameAd;
+    }
+
+    public void setNameAd(String nameAd) {
+        this.nameAd = nameAd;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getUserId() {
@@ -42,10 +60,6 @@ public class AdDTO {
         return dateEndOfBids;
     }
 
-    public void setMerchandiseId(Long merchandiseId) {
-        this.merchandiseId = merchandiseId;
-    }
-
     public void setUserId(Long userId) {
         this.userId = userId;
     }
@@ -58,17 +72,32 @@ public class AdDTO {
         this.dateEndOfBids = dateEndOfBids;
     }
 
+    public String getImageAd() {
+        return imageAd;
+    }
+
+    public void setImageAd(String imageAd) {
+        this.imageAd = imageAd;
+    }
+
     public Ad createAd(){
         Ad ad = new Ad();
+        ad.setNameAd(nameAd);
+        ad.setImageAd(imageAd);
         ad.setDateEndOfBids(dateEndOfBids);
         ad.setPriceAd(priceAd);
+        ad.setDescription(description);
         ad.setBid(new ArrayList<>());
         return ad;
     }
+
+
     @Override
     public String toString() {
         return "AdDTO{" +
-                "merchandiseId=" + merchandiseId +
+                "nameAd='" + nameAd + '\'' +
+                ", description='" + description + '\'' +
+                ", imageAd='" + imageAd + '\'' +
                 ", userId=" + userId +
                 ", priceAd=" + priceAd +
                 ", dateEndOfBids=" + dateEndOfBids +

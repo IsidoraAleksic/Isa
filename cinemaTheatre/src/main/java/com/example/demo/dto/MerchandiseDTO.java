@@ -7,7 +7,6 @@ import java.util.List;
 
 public class MerchandiseDTO {
 
-    private List<Ad> ads;
     private Long userId;
     private String nameMerchandise;
     private String description;
@@ -58,17 +57,8 @@ public class MerchandiseDTO {
         this.imageMerchandise = imageMerchandise;
     }
 
-    public List<Ad> getAds() {
-        return ads;
-    }
-
-    public void setAds(List<Ad> ads) {
-        this.ads = ads;
-    }
-
     public Merchandise createMerchandise(){
         Merchandise merch = new Merchandise();
-        merch.setAds(ads);
         merch.setDescription(description);
         merch.setNameMerchandise(nameMerchandise);
         merch.setImageMerchandise(imageMerchandise);

@@ -8,11 +8,10 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User,Long> {
 
-    public List<User> getUserByRole(UserType role);
-    public User findByUsername(String username);
-    public User findByEmail(String email);
-    public User getUserById(String id);
-    public User getById(Long id);
-    public User findByConfirmationToken(String token);
-
+    List<User> getUserByRole(UserType role);
+    User findByUsername(String username);
+    User findByEmail(String email);
+    User getUserById(String id);
+    User getById(Long id);
+    User findByConfirmationToken(String token);
 }

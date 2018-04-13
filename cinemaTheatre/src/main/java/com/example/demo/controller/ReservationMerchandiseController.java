@@ -1,14 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ReservationMerchandiseDTO;
 import com.example.demo.model.ReservationMerchandise;
 import com.example.demo.service.ReservationMerchandiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +30,11 @@ public class ReservationMerchandiseController {
     public ResponseEntity findUserReservations(@PathVariable Long userId) {
         final List<ReservationMerchandise> userReservations = reservationMerchandiseService.findUserReservations(userId);
         return new ResponseEntity<>(userReservations, HttpStatus.OK);
+    }
+    @PostMapping
+    public ResponseEntity createReservationMerchandise(@RequestBody ReservationMerchandiseDTO reservationMerchandiseDTO) {
+        String result = reservationMerchandiseService.createReservationMerchandise(reservationMerchandiseDTO);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
 }

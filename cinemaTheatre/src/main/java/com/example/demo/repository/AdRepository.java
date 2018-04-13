@@ -11,5 +11,4 @@ public interface AdRepository extends JpaRepository<Ad,Long> {
 
     public List<Ad> getByUserId(Long idUser);
 
-    public List<Ad> getByMerchandiseId(Long merchandiseId);
 }
