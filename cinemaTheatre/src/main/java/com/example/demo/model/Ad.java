@@ -13,13 +13,9 @@ public class Ad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "merchandise_id")
-    private Merchandise merchandise;
-
     @OneToMany(mappedBy = "ad") // "Go look over on the bean property named 'ad' on the thing I have a collection of to find the configuration."mappedBy = "ad",
     @JsonIgnore
-    private List<Bid> bid;//oglas
+    private List<Bid> bid;//ponuda
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;//korisnik koji je objavio oglas
@@ -28,15 +24,37 @@ public class Ad {
 
     private Date dateEndOfBids;//datum isteka za prikupljanje ponuda
 
+    private String nameAd;
+
+    private String description;
+
+    private String imageAd;
+
+    @Enumerated(EnumType.STRING)
+    private AdBidStatus adBidStatus;
+
     public Ad() {
 
     }
-    public Long getId() {
-        return id;
+
+    public String getNameAd() {
+        return nameAd;
     }
 
-    public Merchandise getMerchandise() {
-        return merchandise;
+    public void setNameAd(String nameAd) {
+        this.nameAd = nameAd;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public User getUser() {
@@ -55,10 +73,6 @@ public class Ad {
         this.id = id;
     }
 
-    public void setMerchandise(Merchandise merchandise) {
-        this.merchandise = merchandise;
-    }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -75,19 +89,39 @@ public class Ad {
         this.bid = bid;
     }
 
+    public String getImageAd() {
+        return imageAd;
+    }
+
+    public void setImageAd(String imageAd) {
+        this.imageAd = imageAd;
+    }
+
     public List<Bid> getBid() {
 
         return bid;
+    }
+
+    public AdBidStatus getAdBidStatus() {
+        return adBidStatus;
+    }
+
+    public void setAdBidStatus(AdBidStatus adBidStatus) {
+        this.adBidStatus = adBidStatus;
     }
 
     @Override
     public String toString() {
         return "Ad{" +
                 "id=" + id +
-                ", merchandise=" + merchandise +
+                ", bid=" + bid +
                 ", user=" + user +
                 ", priceAd=" + priceAd +
                 ", dateEndOfBids=" + dateEndOfBids +
+                ", nameAd='" + nameAd + '\'' +
+                ", description='" + description + '\'' +
+                ", imageAd='" + imageAd + '\'' +
+                ", adBidStatus=" + adBidStatus +
                 '}';
     }
 }

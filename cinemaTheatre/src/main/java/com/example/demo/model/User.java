@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -50,13 +51,25 @@ public class User implements Serializable {
 //    @OneToMany(mappedBy="user")
 //    private List<User> friends;
 
+    @OneToMany(mappedBy = "receiver")
+    @JsonIgnore
+    private List<Notification> notifications;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<ReservationMerchandise> reservationMerchandise;
 
     public User(){
         this.enabled = false;
     }
 
+    public List<ReservationMerchandise> getReservationMerchandise() {
+        return reservationMerchandise;
+    }
 
+    public void setReservationMerchandise(List<ReservationMerchandise> reservationMerchandise) {
+        this.reservationMerchandise = reservationMerchandise;
+    }
 
     public String getConfirmationToken() {
         return confirmationToken;
@@ -66,7 +79,7 @@ public class User implements Serializable {
         this.confirmationToken = confirmationToken;
     }
 
-    public boolean isEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
@@ -96,6 +109,14 @@ public class User implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
     }
 
     public String getPassword() {
