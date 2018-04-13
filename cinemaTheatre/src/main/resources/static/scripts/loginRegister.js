@@ -33,7 +33,7 @@ $(function() {
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>User with email and password not found</p>');
                 }else if(user=="ok"){
-                    window.location= "http://localhost:9080/index.html";
+                    window.location= "http://localhost:9080/homeRegistered.html";
                 }else{
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>Email not confirmed. Please confirm email.</p>');
@@ -54,7 +54,6 @@ $(document).on('submit', '#register-form', function(e){
     var firstName = document.getElementById("firstName").value;
     var lastName = document.getElementById("lastName").value;
     var email = document.getElementById("email").value;
-    var usernameR = document.getElementById("usernameR").value;
     var password = document.getElementById("passwordR").value;
     var confirm = document.getElementById("confirm-password").value;
     var city = document.getElementById("city").value;
@@ -73,7 +72,6 @@ $(document).on('submit', '#register-form', function(e){
                 "firstName": firstName,
                 "lastName": lastName,
                 "email": email,
-                "username": usernameR,
                 "password": password,
                 "city": city,
                 "phone": phone,
@@ -86,7 +84,7 @@ $(document).on('submit', '#register-form', function(e){
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>User already exists. </p>');
                 }else if(user=="ok"){
-                    window.location= "http://localhost:9080/index.html";
+                    window.location= "http://localhost:9080/homeRegistered.html";
                 }else if(user=="not confirmed") {
                     $("#loginMessage").empty();
                     $("#register-form").empty();

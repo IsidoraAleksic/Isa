@@ -3,15 +3,16 @@ package com.example.demo.controller;
 import com.example.demo.model.User;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.impl.EmailService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -23,39 +24,50 @@ public class AuthenticationController {
     @Autowired
     EmailService emailService;
 
-    private Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+    @RequestMapping(value = "/getUser",method = RequestMethod.GET, produces = "application/json")
+    public User getLoggedInUser(){
+        User user = authenticationService.getLoggedInUser();
+        if(user==null)
+            return null;
 
+        return user;
+
+    }
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "text/plain", consumes = "application/json")
-    public String authenticateUserLogin(@RequestBody User user){
-        User logedIn = authenticationService.authenticateUser(user.getEmail(), user.getPassword());
-        if(logedIn== null)
+    public String authenticateUserLogin( @RequestBody User user){
+        User loggedIn = authenticationService.authenticateUser(user.getEmail(), user.getPassword());
+        if(loggedIn== null)
             return "nok";
-        else
-            if(logedIn.isEnabled())
+        else {
+            if (loggedIn.isEnabled()) {
+                authenticationService.setLoggedInUser(loggedIn);
                 return "ok";
-            else
+            }else
                 return "not enabled";
-//        if(authenticationService.authenticateUser(user.getEmail(), user.getPassword()) == null)
-//            return new User();
-//        else
-//            return authenticationService.authenticateUser(user.getEmail(), user.getPassword());
+        }
+    }
+
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "ok";
     }
 
     @RequestMapping(value="/register", method = RequestMethod.POST, produces = "text/plain", consumes = "application/json")
-    public String registerUser(@RequestBody User user, HttpServletRequest request){
+    public String registerUser(@Valid @RequestBody User user, HttpServletRequest request){
         String registered = authenticationService.registerUser(user);
         if (registered==null)
             return "nok";
         else if(registered.equals("exists"))
             return "exists";
         String url = request.getScheme() + "://" + request.getServerName() + ":9080/authenticate/confirm";
-        System.out.println(url);
         user.setConfirmationToken(UUID.randomUUID().toString());
         user.setEnabled(false);
         authenticationService.saveUser(user);
         url = url + "/"+user.getConfirmationToken();
-        System.out.println(url);
-
         try {
             emailService.sendEmailVerification(user.getEmail(),url);
         } catch (MessagingException e) {
@@ -63,21 +75,24 @@ public class AuthenticationController {
         }
         if(user.isEnabled())
             return "ok";
-
         return "not confirmed";
     }
 
     @RequestMapping(value = "/confirm/{token}", method = RequestMethod.GET)
-    public void confirmEmail(@PathVariable("token") String token){
+    public void confirmEmail(@PathVariable String token){
         User user = authenticationService.findByConfirmationToken(token);
-        authenticationService.deleteUser(user);
         if(user!=null) {
-            user.setEnabled(true);
-            authenticationService.saveUser(user);
+            authenticationService.deleteUser(user);
+            if(!user.isEnabled()) {
+                user.setEnabled(true);
+                authenticationService.saveUser(user);
+            }
         }
-
 
     }
 
 }
 
+
+//toastr
+//jwt json web

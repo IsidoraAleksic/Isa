@@ -23,8 +23,33 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserByRole(userType);
     }
 
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public User getById(Long id){
         return userRepository.getById(id);
+    }
+
+    @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<User> findByFirstName(String firstName) {
+        return userRepository.findUsersByFirstName(firstName);
+    }
+
+    @Override
+    public List<User> findByLastName(String lastName) {
+        return userRepository.findUsersByLastName(lastName);
+    }
+
+    @Override
+    public List<User> findUsersByFirstNameContainsOrLastNameContains(String firstName, String lastName) {
+        return userRepository.findUsersByFirstNameContainsOrLastNameContains(firstName,lastName);
     }
 
 

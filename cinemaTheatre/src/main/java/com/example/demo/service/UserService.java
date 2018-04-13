@@ -11,6 +11,11 @@ import java.util.List;
 public interface UserService {
 
     public List<User> getAll(UserType userType);
-
+    public User findByEmail(String email);
     public User getById(Long id);
+    public void saveUser(User user);
+    public List<User> findByFirstName(String firstName);
+    public List<User> findByLastName(String lastName);
+//    public List<User> findByName(String name);
+public List<User> findUsersByFirstNameContainsOrLastNameContains(String firstName, String lastName);
 }

@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name="users")
@@ -21,12 +22,11 @@ public class User implements Serializable {
     private String lastName;
 
     @Column(name="password_user", nullable = false)
-    @Length(min=6, message = "Password must have at least 6 characters")
+    @Length(min=3, message = "Password must have at least 3 characters")
     @NotEmpty(message = "Please enter your password")
     private String password;
 
-    @NotEmpty(message = "Please enter your username")
-    private String username;
+
 
     @Column(unique = true, nullable = false)
     @Email(message = "Enter email")
@@ -47,10 +47,16 @@ public class User implements Serializable {
 
     private String confirmationToken;
 
+//    @OneToMany(mappedBy="user")
+//    private List<User> friends;
+
+
 
     public User(){
         this.enabled = false;
     }
+
+
 
     public String getConfirmationToken() {
         return confirmationToken;
@@ -100,13 +106,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getEmail() {
         return email;

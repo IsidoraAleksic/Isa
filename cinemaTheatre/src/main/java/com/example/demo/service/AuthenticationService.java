@@ -11,4 +11,6 @@ public interface AuthenticationService  {
     public void saveUser(User user);
     public User findByConfirmationToken(String token);
     public void deleteUser(User user);
+    public void setLoggedInUser(User user);
+    public User getLoggedInUser();
 }
