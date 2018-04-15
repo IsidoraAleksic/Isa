@@ -14,7 +14,7 @@ function editUser(){
                 $('#editPhonediv').empty();
                 $('#editPassdiv').empty();
                 $('#username').empty();
-                $('#username').append(''+user.firstName+' '+user.lastName+'');
+                $('#username').append('<img src="images\\userImage.png " height="62" width="62">'+user.firstName+' '+user.lastName+'');
                 $('#editFNdiv').append(' <br><label>First Name: </label><input type="text" class="form-control" id="editFirstName" placeholder="First Name" value="'+user.firstName+'"><br>');
                 $('#editLNdiv').append(' <br><label>Last Name: </label><input type="text" class="form-control" id="editLastName" placeholder="Last Name" value="'+user.lastName+'"><br>');
                 $('#editCitydiv').append(' <br><label>City: </label><input type="text" class="form-control" id="editCity" placeholder="City" value="'+user.city+'"><br>');
@@ -95,12 +95,20 @@ $(document).on('submit', '#formaSearchByName', function(e){
                     }
 
                     $.each(friends, function(idx, friend) {
-                        results.append('<h4>'+friend.firstName+' '+friend.lastName+'</h4><p>'+friend.email+'</p><br>');
-                        var forma =$('<form action="" class="form-horizontal" id="formaObrisiPrijatelja"></form>');
-                        var hidden = $('<input id="hiddenObrisi" type="hidden" value="' + friend.id + '">');
-                        forma.append(hidden);
-                        forma.append('<input class="btn" type="submit" value="Remove friend">');
-                        results.append(forma);
+                        var div = $('<div></div>');
+                        var span = $('<div id = "'+friend.id+'"></div>');
+                        div.append('<h4>'+friend.firstName+' '+friend.lastName+'</h4><p>'+friend.email+'</p><br>');
+                        span.append('<button class="btn" onclick="removeFriend('+friend.id+')">Remove friend</button>');
+                        div.append(span);
+                        results.append(div);
+
+
+                        // results.append('<h4>'+friend.firstName+' '+friend.lastName+'</h4><p>'+friend.email+'</p><br>');
+                        // var forma =$('<form action="" class="form-horizontal" id="formaObrisiPrijatelja"></form>');
+                        // var hidden = $('<input id="hiddenObrisi" type="hidden" value="' + friend.id + '">');
+                        // forma.append(hidden);
+                        // forma.append('<input class="btn" type="submit" value="Remove friend">');
+                        // results.append(forma);
 
                     });
 
@@ -119,19 +127,26 @@ $(document).on('submit', '#formaSearchByName', function(e){
                         results.append('<h4>No friends found with name "'+firstName+'" </h4>');
                     }
                     $.each(friends, function(idx, friend) {
-                        results.append('<h4>'+friend.firstName+' '+friend.lastName+'</h4>'+friend.email+'');
+                        // results.append('<h4>'+friend.firstName+' '+friend.lastName+'</h4>'+friend.email+'');
                         var id = friend.id;
                         $.ajax({
                             type : "GET",
                             url : "/friends/isFriends/" + id,
                             dataType : "text",
                             success : function(data) {
+                                var span = $('<div id = "'+friend.id+'"></div>');
+                                var div = $('<div></div>');
                                 if(data=="no") {
-                                    var forma =$('<form action="" class="form-horizontal" id="formaDodajPrijatelja"></form>');
-                                    var hidden = $('<input id="hiddenDodaj" type="hidden" value="' + id + '">');
-                                    forma.append(hidden);
-                                    forma.append('<input class="btn" type="submit" value="Add friend">');
-                                    results.append(forma);
+                                    div.append('<h4>'+friend.firstName+' '+friend.lastName+'</h4><p>'+friend.email+'</p><br>');
+                                    span.append('<button class="btn" onclick="addFriend('+friend.id+')">Add friend</button>');
+                                    div.append(span);
+                                    results.append(div);
+                                }else{
+
+                                    div.append('<h4>'+friend.firstName+' '+friend.lastName+'</h4><p>'+friend.email+'</p><br>');
+                                    span.append('<button class="btn" onclick="removeFriend('+friend.id+')">Remove friend</button>');
+                                    div.append(span);
+                                    results.append(div);
                                 }
                             }
                         });
@@ -145,20 +160,9 @@ $(document).on('submit', '#formaSearchByName', function(e){
 
 });
 
-$(document).on('submit', '#formaDodajPrijatelja', function(e) {
-    e.preventDefault();
-    var loggedIn;
-    var id = document.getElementById("hiddenDodaj").value;
-    var results = $('#resultsDiv');
-    $.ajax({
-        url: "/authenticate/getUser",
-        dataType: "json",
-        type: "GET",
-        success: function (data) {
-            loggedIn = data;
-        }
-    });
-
+function addFriend(id){
+    // var span = document.getElementById(id);
+    var span = $('#'+id+'');
     $.ajax({
         url: "/friends/addFriend/" + id,
         dataType: "text",
@@ -167,36 +171,17 @@ $(document).on('submit', '#formaDodajPrijatelja', function(e) {
             var added = data;
             if (added == "sent") {
                 toastr.success('Friend request sent');
-                $('#formaDodajPrijatelja').remove();
-                var forma = $('<form action="" class="form-horizontal" id="formaObrisiPrijatelja"></form>');
-                var hidden = $('<input id="hiddenObrisi" type="hidden" value="' + id + '">');
-                forma.append(hidden);
-                forma.append('<input class="btn" type="submit" value="Remove friend">');
-                results.append(forma);
+                span.empty();
+                span.append('<button class="btn" onclick="removeFriend('+id+')">Remove friend</button>');
             } else {
                 toastr.error('Cannot add user.');
             }
         }
     });
-});
-$(document).on('submit', '#formaObrisiPrijatelja', function(e){
-        e.preventDefault();
-       obrisiPrijatelja();
-});
+}
 
-function obrisiPrijatelja(){
-    var results = $('#resultsDiv');
-    var loggedIn;
-    var id = document.getElementById("hiddenObrisi").value;
-    $.ajax({
-        url: "/authenticate/getUser",
-        dataType: "json",
-        type: "GET",
-        success: function(data){
-            loggedIn = data;
-        }
-    });
-
+function removeFriend(id){
+    var span = $('#'+id+'');
     $.ajax({
         url: "/friends/declineRequest/" + id,
         dataType: "text",
@@ -205,12 +190,8 @@ function obrisiPrijatelja(){
             var added = data;
             if(added=="deleted"){
                 toastr.success('Friend removed');
-                $('#formaObrisiPrijatelja').remove();
-                var forma =$('<form action="" class="form-horizontal" id="formaDodajPrijatelja"></form>');
-                var hidden = $('<input id="hiddenDodaj" type="hidden" value="' + id + '">');
-                forma.append(hidden);
-                forma.append('<input class="btn" type="submit" value="Add friend">');
-                results.append(forma);
+                span.empty();
+                span.append('<button class="btn" onclick="addFriend('+id+')">Add friend</button>');
 
             }else{
                 toastr.error('Cannot delete user.');
@@ -218,6 +199,80 @@ function obrisiPrijatelja(){
         }
     });
 }
+
+// $(document).on('submit', '#formaDodajPrijatelja', function(e) {
+//     e.preventDefault();
+//     var loggedIn;
+//     var id = document.getElementById("hiddenDodaj").value;
+//     var results = $('#resultsDiv');
+//     $.ajax({
+//         url: "/authenticate/getUser",
+//         dataType: "json",
+//         type: "GET",
+//         success: function (data) {
+//             loggedIn = data;
+//         }
+//     });
+//
+//     $.ajax({
+//         url: "/friends/addFriend/" + id,
+//         dataType: "text",
+//         type: "GET",
+//         success: function (data) {
+//             var added = data;
+//             if (added == "sent") {
+//                 toastr.success('Friend request sent');
+//                 $('#formaDodajPrijatelja').remove();
+//                 var forma = $('<form action="" class="form-horizontal" id="formaObrisiPrijatelja"></form>');
+//                 var hidden = $('<input id="hiddenObrisi" type="hidden" value="' + id + '">');
+//                 forma.append(hidden);
+//                 forma.append('<input class="btn" type="submit" value="Remove friend">');
+//                 results.append(forma);
+//             } else {
+//                 toastr.error('Cannot add user.');
+//             }
+//         }
+//     });
+// });
+// $(document).on('submit', '#formaObrisiPrijatelja', function(e){
+//         e.preventDefault();
+//        obrisiPrijatelja();
+// });
+//
+// function obrisiPrijatelja(){
+//     var results = $('#resultsDiv');
+//     var loggedIn;
+//     var id = document.getElementById("hiddenObrisi").value;
+//     $.ajax({
+//         url: "/authenticate/getUser",
+//         dataType: "json",
+//         type: "GET",
+//         success: function(data){
+//             loggedIn = data;
+//         }
+//     });
+//
+//     $.ajax({
+//         url: "/friends/declineRequest/" + id,
+//         dataType: "text",
+//         type: "GET",
+//         success: function(data){
+//             var added = data;
+//             if(added=="deleted"){
+//                 toastr.success('Friend removed');
+//                 $('#formaObrisiPrijatelja').remove();
+//                 var forma =$('<form action="" class="form-horizontal" id="formaDodajPrijatelja"></form>');
+//                 var hidden = $('<input id="hiddenDodaj" type="hidden" value="' + id + '">');
+//                 forma.append(hidden);
+//                 forma.append('<input class="btn" type="submit" value="Add friend">');
+//                 results.append(forma);
+//
+//             }else{
+//                 toastr.error('Cannot delete user.');
+//             }
+//         }
+//     });
+// }
 
 $(document).on('submit', '#formaFriendRequests', function(e){
     e.preventDefault();

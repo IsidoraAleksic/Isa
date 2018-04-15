@@ -7,15 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public interface UserService {
 
-    public List<User> getAll(UserType userType);
-    public User findByEmail(String email);
-    public User getById(Long id);
-    public void saveUser(User user);
-    public List<User> findByFirstName(String firstName);
-    public List<User> findByLastName(String lastName);
-//    public List<User> findByName(String name);
-public List<User> findUsersByFirstNameContainsOrLastNameContains(String firstName, String lastName);
+    List<User> getAll(UserType userType);
+
+    User findByEmail(String email);
+
+    User getById(Long id);
+
+    void saveUser(User user);
+
+    List<User> findByFirstName(String firstName);
+
+    List<User> findByLastName(String lastName);
+
+    List<User> findUsersByFirstNameContainsOrLastNameContains(String firstName, String lastName);
 }

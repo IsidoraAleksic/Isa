@@ -2,63 +2,73 @@ package com.example.demo.model;
 
 import javax.persistence.*;
 
-@Entity(name="seats")
+@Entity(name = "seats")
 public class Seat {
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	private int row;
-	
-	private int col;
-	
-	@Enumerated(EnumType.STRING)
-	private SeatType seatType;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    private int row;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private int col;
 
-	public int getRow() {
-		return row;
-	}
+    @ManyToOne
+    private Hall hall;
 
-	public void setRow(int row) {
-		this.row = row;
-	}
+    @Enumerated(EnumType.STRING)
+    private SeatType seatType;
 
-	public int getCol() {
-		return col;
-	}
+    public Hall getHall() {
+        return hall;
+    }
 
-	public void setCol(int col) {
-		this.col = col;
-	}
+    public void setHall(Hall hall) {
+        this.hall = hall;
+    }
 
-	public Seat(Long id, int row, int col, SeatType seatType) {
-		this.id = id;
-		this.row = row;
-		this.col = col;
-		this.seatType = seatType;
-	}
-	
-	public Seat() {
-		
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public SeatType getSeatType() {
-		return seatType;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setSeatType(SeatType seatType) {
-		this.seatType = seatType;
-	}
+    public int getRow() {
+        return row;
+    }
 
-	
-	
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public Seat(Long id, int row, int col, SeatType seatType) {
+        this.id = id;
+        this.row = row;
+        this.col = col;
+        this.seatType = seatType;
+    }
+
+    public Seat() {
+
+    }
+
+    public SeatType getSeatType() {
+        return seatType;
+    }
+
+    public void setSeatType(SeatType seatType) {
+        this.seatType = seatType;
+    }
+
+
 }

@@ -45,7 +45,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if(userRepository.findByEmail(user.getEmail())!=null)
             return "exists";
 
-        user.setRole(UserType.OBICAN);
+        user.setRole(UserType.GUEST);
 
 
 //        userRepository.save(user);

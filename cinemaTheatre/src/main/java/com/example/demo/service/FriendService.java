@@ -9,11 +9,17 @@ import java.util.List;
 @Service
 public interface FriendService {
 
-    public List<Friends> findUsersByUserOne(User user);
-    public Friends findUserByUserOneAndUserTwo(User userOne, User userTwo);
-    public List<Friends> findUsersByUserTwo(User user);
-    public List<Friends> findUsersByUserOneOrUserTwo(User userOne, User userTwo);
-    public List<Friends> findByUserOneAndUserTwoOrUserTwoAndUserOne(User userOne, User userTwo,User user2, User user1);
-    public void delete(Friends friends);
-    public List<Friends> findAll();
+    List<Friends> findUsersByUserOne(User user);
+
+    Friends findUserByUserOneAndUserTwo(User userOne, User userTwo);
+
+    List<Friends> findUsersByUserTwo(User user);
+
+    List<Friends> findUsersByUserOneOrUserTwo(User userOne, User userTwo);
+
+    List<Friends> findByUserOneAndUserTwoOrUserTwoAndUserOne(User userOne, User userTwo, User user2, User user1);
+
+    void delete(Friends friends);
+
+    List<Friends> findAll();
 }

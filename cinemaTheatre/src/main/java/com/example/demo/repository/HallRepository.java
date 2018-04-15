@@ -9,5 +9,6 @@ import com.example.demo.model.Hall;
 public interface HallRepository extends JpaRepository<Hall ,Long>{
 
 	Hall findById(long id);
+
 	
 }

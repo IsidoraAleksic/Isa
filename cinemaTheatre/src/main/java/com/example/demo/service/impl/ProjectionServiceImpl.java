@@ -1,8 +1,11 @@
 package com.example.demo.service.impl;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.demo.model.CinemaTheater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ public class ProjectionServiceImpl implements ProjectionService{
 
 	@Autowired
 	private ProjectionRepository pRepository;
-	
+
 	@Override
 	public Projection save(Projection projection) {
 		return pRepository.save(projection);
@@ -41,9 +44,27 @@ public class ProjectionServiceImpl implements ProjectionService{
 		return pRepository.getOne(id);
 	}
 
+
 	@Override
 	public List<Projection> findByCtid(long id) {
 		return pRepository.findByCt(id);
 	}
+
+
+    @Override
+    public List<Projection> findProjectionsByName(String name) {
+        return pRepository.findProjectionsByName(name);
+    }
+
+    @Override
+    public List<Projection> findProjectionsByNameAndDate(String name, Date date) {
+        return pRepository.findProjectionsByNameAndDate(name,date);
+    }
+
+	@Override
+	public Projection findFirstByNameAndDateAndTime(String name, Date date, Time time) {
+		return pRepository.findFirstByNameAndDateAndTime(name,date,time);
+	}
+
 
 }
