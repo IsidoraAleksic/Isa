@@ -20,14 +20,6 @@ public class Projection {
 	@NotNull
 	private String name;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-
-    @NotNull
-    private String name;
-
     @NotNull
     private String actors;
 
@@ -64,10 +56,6 @@ public class Projection {
     @Column(nullable = false)
     private Time time;
 
-
-	public long getId() {
-		return id;
-	}
 
 	public void setId(long id) {
 		this.id = id;

@@ -9,14 +9,6 @@ import java.util.List;
 public interface ProjectionService {
 
 
-	public Projection save(Projection projection);
-
-	public Projection delete(long id);
-
-	public List<Projection> getAll();
-
-	public Projection findById(long id);
-
 	public List<Projection> findByCtid(long id);
 
 
