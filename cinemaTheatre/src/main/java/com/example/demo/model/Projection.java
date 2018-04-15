@@ -1,182 +1,198 @@
 package com.example.demo.model;
 
-import java.sql.Date;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.sql.Date;
+import java.sql.Time;
+import java.util.List;
 
 @Entity(name = "projections")
 public class Projection {
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotNull
-	private String name;
+    @NotNull
+    private String name;
 
-	@NotNull
-	private String actors;
+    @NotNull
+    private String actors;
 
-	@NotNull
-	private String genre;
+    @NotNull
+    private String genre;
 
-	@NotNull
-	private String director;
+    @NotNull
+    private String director;
 
-	@NotNull
-	private int duration;
+    @NotNull
+    private int duration;
 
-	@NotNull
-	private String imagePath;
+    @NotNull
+    private String imagePath;
 
-	@NotNull
-	@Size(max = 280)
-	private String description;
+    @NotNull
+    @Size(max = 280)
+    private String description;
 
-	@ManyToOne
-	private Hall hall;
+    @ManyToOne
+    private Hall hall;
 
-	@ManyToOne
-	private CinemaTheater ct;
+    @ManyToOne
+    private CinemaTheater ct;
 
-	@Column(nullable = false)
-	private Date date;
+    @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date date;
 
-	@Column(nullable = false)
-	private float price;
+    @Column(nullable = false)
+    private float price;
 
-	@ManyToMany
-	private List<Seat> taken;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    @Column(nullable = false)
+    private Time time;
 
-	@OneToMany
-	private List<Reservation> reserved;
+    @ManyToMany
+    private List<Seat> taken;
 
-	public Long getId() {
-		return id;
-	}
+    @OneToMany
+    private List<Reservation> reserved;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Time getTime() {
+        return time;
+    }
 
-	public Hall getHall() {
-		return hall;
-	}
+    public void setTime(Time time) {
+        this.time = time;
+    }
 
-	public void setHall(Hall hall) {
-		this.hall = hall;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public Hall getHall() {
+        return hall;
+    }
 
-	public Float getPrice() {
-		return price;
-	}
+    public void setHall(Hall hall) {
+        this.hall = hall;
+    }
 
-	public void setPrice(Float price) {
-		this.price = price;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public List<Seat> getTaken() {
-		return taken;
-	}
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	public void setTaken(List<Seat> taken) {
-		this.taken = taken;
-	}
+    public Float getPrice() {
+        return price;
+    }
 
-	public List<Reservation> getReserved() {
-		return reserved;
-	}
+    public void setPrice(Float price) {
+        this.price = price;
+    }
 
-	public void setReserved(List<Reservation> reserved) {
-		this.reserved = reserved;
-	}
+    public List<Seat> getTaken() {
+        return taken;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setTaken(List<Seat> taken) {
+        this.taken = taken;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public List<Reservation> getReserved() {
+        return reserved;
+    }
 
-	public String getActors() {
-		return actors;
-	}
+    public void setReserved(List<Reservation> reserved) {
+        this.reserved = reserved;
+    }
 
-	public void setActors(String actors) {
-		this.actors = actors;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getGenre() {
-		return genre;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
+    public String getActors() {
+        return actors;
+    }
 
-	public String getDirector() {
-		return director;
-	}
+    public void setActors(String actors) {
+        this.actors = actors;
+    }
 
-	public void setDirector(String director) {
-		this.director = director;
-	}
+    public String getGenre() {
+        return genre;
+    }
 
-	public int getDuration() {
-		return duration;
-	}
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
 
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
+    public String getDirector() {
+        return director;
+    }
 
-	public String getImagePath() {
-		return imagePath;
-	}
+    public void setDirector(String director) {
+        this.director = director;
+    }
 
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
+    public int getDuration() {
+        return duration;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getImagePath() {
+        return imagePath;
+    }
 
-	public Projection(Long id, String name, String actors, String genre, String director, int duration,
-			String imagePath, String description, Hall hall, Date date, Float price, List<Seat> taken,
-			List<Reservation> reserved) {
-		this.id = id;
-		this.name = name;
-		this.actors = actors;
-		this.genre = genre;
-		this.director = director;
-		this.duration = duration;
-		this.imagePath = imagePath;
-		this.description = description;
-		this.hall = hall;
-		this.date = date;
-		this.price = price;
-		this.taken = taken;
-		this.reserved = reserved;
-	}
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
-	public Projection() {
+    public String getDescription() {
+        return description;
+    }
 
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Projection(Long id, String name, String actors, String genre, String director, int duration,
+                      String imagePath, String description, Hall hall, Date date, Float price, List<Seat> taken,
+                      List<Reservation> reserved) {
+        this.id = id;
+        this.name = name;
+        this.actors = actors;
+        this.genre = genre;
+        this.director = director;
+        this.duration = duration;
+        this.imagePath = imagePath;
+        this.description = description;
+        this.hall = hall;
+        this.date = date;
+        this.price = price;
+        this.taken = taken;
+        this.reserved = reserved;
+    }
+
+    public Projection() {
+
+    }
 
 }

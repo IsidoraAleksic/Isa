@@ -6,13 +6,17 @@ import javax.persistence.*;
 public class Reservation {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private short discount;
 	
 	@ManyToOne
 	private Projection projection;
+
+//	@ManyToOne
+//	private User user;
+
 
 	public short getDiscount() {
 		return discount;

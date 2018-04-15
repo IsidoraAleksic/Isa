@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <script src="scripts/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -27,16 +28,24 @@
             <button class="w3-bar-item w3-button" onclick="listTickets()">Tickets</button>
             <button class="w3-bar-item w3-button" style="float: right" onclick="" id="userId"></button>
             <div id="divLogout"></div>
-
         </div>
 
     </div>
-    <div class="leftpane">
-        <h1>Test Page</h1></div>
-    <div class="middlepane" id="resultsDiv">Test Page</div>
+    <div class="leftpane" id="userInformation">
+    </div>
+    <div class="middlepane" id="friendsDiv">
+        <div class="row" id="sortByDiv"></div>
+        <div class="row" id="resultsDiv"></div>
+    </div>
 
-    <div class="rightpane">
-        <h1>Test Page</h1></div>
+    <div class="rightpane" id="visitedCinemaTheaterDiv">
+        <div class="row" id="searchCinemaTheaterDiv">
+
+        </div>
+        <div class="row" id="listCinemaTheaterDiv">
+
+        </div>
+     </div>
 </div>
 
 
