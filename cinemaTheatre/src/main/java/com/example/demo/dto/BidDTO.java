@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.model.Bid;
+import com.example.demo.model.AdBidStatus;
 
 public class BidDTO {
 
@@ -39,10 +40,11 @@ public class BidDTO {
         this.priceBid = priceBid;
     }
 
+
     public Bid createBid() {
         Bid bid = new Bid();
         bid.setPriceBid(priceBid);
-
+        bid.setAdBidStatus(AdBidStatus.WAITING);
         return bid;
     }
 

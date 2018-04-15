@@ -39,7 +39,7 @@ public class AuthenticationController {
         if(loggedIn== null)
             return "nok";
         else {
-            if (loggedIn.isEnabled()) {
+            if (loggedIn.getEnabled()) {
                 authenticationService.setLoggedInUser(loggedIn);
                 return "ok";
             }else
@@ -73,7 +73,7 @@ public class AuthenticationController {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        if(user.isEnabled())
+        if(user.getEnabled())
             return "ok";
         return "not confirmed";
     }
@@ -83,7 +83,7 @@ public class AuthenticationController {
         User user = authenticationService.findByConfirmationToken(token);
         if(user!=null) {
             authenticationService.deleteUser(user);
-            if(!user.isEnabled()) {
+            if(!user.getEnabled()) {
                 user.setEnabled(true);
                 authenticationService.saveUser(user);
             }
