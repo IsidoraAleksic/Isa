@@ -14,4 +14,6 @@ public interface ProjectionService {
 	
 	public Projection findById(long id);
 	
+	public List<Projection> findByCtid(long id);
+	
 }

@@ -10,8 +10,8 @@ import javax.validation.constraints.*;
 public class Projection {
 
 	@Id
-	@GeneratedValue
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
 	@NotNull
 	private String name;
@@ -53,11 +53,11 @@ public class Projection {
 	@OneToMany
 	private List<Reservation> reserved;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
