@@ -46,6 +46,9 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserType role;
 
+    @Enumerated(EnumType.STRING)
+    private UserTier userTier;
+
     private String confirmationToken;
 
 //    @OneToMany(mappedBy="user")
@@ -163,6 +166,18 @@ public class User implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public UserTier getUserTier() {
+        return userTier;
+    }
+
+    public void setUserTier(UserTier userTier) {
+        this.userTier = userTier;
     }
 
     public UserType getRole() {

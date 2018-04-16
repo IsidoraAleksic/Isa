@@ -2,10 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.NotificationDTO;
 import com.example.demo.model.Notification;
+import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,23 +16,22 @@ import java.util.List;
 @RequestMapping("/notification")
 public class NotificationController {
 
-    NotificationService notificationService;
-
     @Autowired
-    public NotificationController(NotificationService notificationService){
-        this.notificationService = notificationService;
-    }
+    NotificationService notificationService;
+    @Autowired
+    AuthenticationService authenticationService;
 
     @RequestMapping("{id}")
     public Notification getNotificationById(@PathVariable("id") Long id){
         return notificationService.getById(id);
     }
 
-    @RequestMapping("/userId/{id}")
-    public List<Notification> getNotificationsByRecieverId(@PathVariable("id") Long id){
-        return notificationService.getByReceiver(id);
+    @RequestMapping("/userId")
+    public List<Notification> getNotificationsByRecieverId(){
+        return notificationService.getByReceiver(authenticationService.getLoggedInUser().getId());
     }
 
+    @PreAuthorize("hasAuthority('ADMINFZ')")
     @PostMapping
     public ResponseEntity createNotification(@RequestBody NotificationDTO notificationDTO) {
         String result = notificationService.create(notificationDTO);

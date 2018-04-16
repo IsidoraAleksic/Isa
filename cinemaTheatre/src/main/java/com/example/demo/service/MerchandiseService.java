@@ -11,7 +11,7 @@ public interface MerchandiseService {
 
     public Merchandise getById(Long id_tr);
 
-    public String create(MerchandiseDTO merchandiseDTO);
+    public Merchandise create(MerchandiseDTO merchandiseDTO);
 
     public String update(Long merchandiseId, MerchandiseDTO merchandiseDTO);
 
