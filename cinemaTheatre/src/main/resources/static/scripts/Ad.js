@@ -12,14 +12,13 @@ Url = {
         return vars;
     }
 };
-$(window).load(function() {
+$(document).ready ( function(){
     var pathname = window.location.href;
     if(pathname.indexOf("adId") > -1){
         action="update";
         adId=Url.get.adId;
         getAd(adId);
     }
-
 });
 
 function makeAd(){
@@ -37,38 +36,19 @@ function makeAd(){
             "dateEndOfBids": $("#dateEndOfBids").val()
         }),
         success: function(data) {
-            window.open(data);
-            $(location).attr('href', 'FanZone.html')
+            uploadImageAdd(data);
         }
     });
 
 }
-function makeMerch(){
-    $.ajax({
-        url: "/merchandise",
-        contentType: "application/json",
-        dataType: "text",
-        type: "POST",
-        data: JSON.stringify({
-            "userId": "",
-            "nameMerchandise": $("#nameMerchandise").val(),
-            "description":  $("#descriptionMerch").val(),
-            "priceMerchandise":$("#priceMerchandise").val(),
-            "imageMerchandise": ""
-        }),
-        success: function(data) {
-            window.open(data);
-            $(location).attr('href', 'Merch.html')
-        }
-    });
 
-}
 function openUpdateAd(id){
     $(location).attr('href', 'Ad.html?adId='+id);
 }
 function chooseMethod(){
     if(action == "create"){
         makeAd();
+
     }else{
         updateAd(adId);
     }
@@ -80,7 +60,7 @@ function getAd(adId){
         dataType: "json",
         type: "GET",
         success: function(data) {
-
+            $("#userId").val(data.user.id);
             $("#nameAd").val(data.nameAd);
             $("#description").val(data.description);
             $("#imageAd").val(data.imageAd);
@@ -97,19 +77,19 @@ function updateAd(adId){
         dataType: "text",
         type: "POST",
         data: JSON.stringify({
-            "nameAd": $("#nameAd").disabled,
-            "description": $("#description").disabled,
-            "imageAd": $("#imageAd").disabled,
-            "userId": $("#userId").disabled,
+            "nameAd": $("#nameAd").val(),
+            "description": $("#description").val(),
+            "imageAd": $("#imageAd").val(),
+            "userId": $("#userId").val(),
             "priceAd": $("#priceAd").val(),
             "dateEndOfBids": $("#dateEndOfBids").val()
         }),
         success: function(data) {
-            window.open(data);
             $(location).attr('href', 'FanZone.html')
         }
     });
 }
+
 function deleteAd(adId){
     $.ajax({
         url: "/advert/"+adId,
@@ -123,24 +103,10 @@ function deleteAd(adId){
     });
 
 }
-function deleteAd(adId){
+function uploadImageAdd(adId){
     $.ajax({
-        url: "/advert/"+adId,
-        contentType: "application/json",
-        dataType: "text",
-        type: "DELETE",
-        success: function(data) {
-            window.open(data);
-            $(location).attr('href', 'FanZone.html')
-        }
-    });
-
-}
-
-function uploadImage(){
-    $.ajax({
-        url: "Upload/{imageName}",
-        contentType: "multipart/form-data",
+        url: "/advert/"+adId+"/image/",
+        contentType: false,
         dataType: "text",
         type: "POST",
         data: JSON.stringify({
@@ -152,7 +118,6 @@ function uploadImage(){
             "dateEndOfBids": $("#dateEndOfBids").val()
         }),
         success: function(data) {
-            window.open(data);
             $(location).attr('href', 'FanZone.html')
         }
     });

@@ -41,15 +41,17 @@ public class MerchandiseServiceImpl implements MerchandiseService {
 
     public Merchandise getById(Long id_tr){return merchandiseRepository.getById(id_tr);}
 
-    public String create(MerchandiseDTO merchandiseDTO){
+    public Merchandise create(MerchandiseDTO merchandiseDTO){
         if (merchandiseDTO == null) {
-            return ERRORR_CREATE_MERCH;
+           // return ERRORR_CREATE_MERCH;
+            return null;
         }
 
         Merchandise merchandise = merchandiseDTO.createMerchandise();
         merchandise.setUser(userRepository.getById(merchandiseDTO.getUserId()));
         merchandiseRepository.save(merchandise);
-        return SUCCESS_CREATED_MERCH;
+        return merchandise;
+        //return SUCCESS_CREATED_MERCH;
 
     }
 

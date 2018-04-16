@@ -17,7 +17,9 @@ public interface AdService {
 
     public List<Ad> getAllUserAds(Long userId);
 
-    public List<NotificationDTO> create(AdDTO adDTO);
+    public List<NotificationDTO> getNotifications(Long adId);
+
+    public Long create(AdDTO adDTO);
 
     public String update(Long adId, AdDTO adDTO);
 
