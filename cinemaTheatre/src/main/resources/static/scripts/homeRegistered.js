@@ -341,3 +341,7 @@ $(document).on('submit','#formaVisitCinemaTheater', function(e){
 
 
 });
+
+function openFanZone(){
+    $(location).attr('href', 'FanZone.html');
+}
