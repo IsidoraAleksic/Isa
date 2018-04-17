@@ -6,6 +6,7 @@ import com.example.demo.service.ReservationMerchandiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ public class ReservationMerchandiseController {
         final List<ReservationMerchandise> userReservations = reservationMerchandiseService.findUserReservations(userId);
         return new ResponseEntity<>(userReservations, HttpStatus.OK);
     }
+    @PreAuthorize("hasAuthority('GUEST')")
     @PostMapping
     public ResponseEntity createReservationMerchandise(@RequestBody ReservationMerchandiseDTO reservationMerchandiseDTO) {
         String result = reservationMerchandiseService.createReservationMerchandise(reservationMerchandiseDTO);

@@ -20,9 +20,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class BidServiceImpl implements BidService {
 
-    BidRepository bidRepository;
-    AdRepository adRepository;
-    UserRepository userRepository;
+    private BidRepository bidRepository;
+    private AdRepository adRepository;
+    private UserRepository userRepository;
 
     private static String SUCCESS_CREATED_BID = "Successfully created bid";
     private static String ERRORR_CREATE_BID = "Unsuccessful create bid";
@@ -58,9 +58,10 @@ public class BidServiceImpl implements BidService {
     }
 
     public String create(BidDTO bidDTO) {
-
+        List<BidDTO> bids = new ArrayList<>();
         if (bidDTO == null) {
             return ERRORR_CREATE_BID;
+            //return null;
         }
 
         Bid bid = bidDTO.createBid();
@@ -69,6 +70,7 @@ public class BidServiceImpl implements BidService {
         bid.setIdGuestBid(bidDTO.getIdGuestBid());
 
         bidRepository.save(bid);
+        //eturn resultBid.getId();
         return SUCCESS_CREATED_BID;
     }
 
@@ -121,9 +123,20 @@ public class BidServiceImpl implements BidService {
         for (Bid bid : bids) {
             User user = userRepository.getById(bid.getIdGuestBid());
 
-            notificationDTOS.add(new NotificationDTO(user.getId(), "Bid Notification", "Bid with id: " + bid.getId()+ " is " + bid.getAdBidStatus().name()));
+            notificationDTOS.add(new NotificationDTO(user.getId(), "Bid Notification", "Bid with id: " + bid.getId() + " is " + bid.getAdBidStatus().name()));
         }
         return notificationDTOS;
+    }
+
+    public List<Bid> getAllBidsForUsersAds(Long userId) {
+        List<Ad> ads = adRepository.getByUserId(userId);
+        List<Bid> bids = new ArrayList<>();
+        for (Ad ad : ads) {
+            if (ad.getBid() != null) {
+                bids.addAll(ad.getBid());
+            }
+        }
+        return bids;
     }
 
 }
