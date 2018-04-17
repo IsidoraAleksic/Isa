@@ -139,3 +139,17 @@ function listTheatres(){
         }
     });
 }
+
+$(document).ready ( function(){
+    $.ajax({
+        url: "/authenticate/checkIfFirstLogin",
+        contentType: "application/json",
+        dataType: "text",
+        type: "GET",
+        success: function(data) {
+            if(data=="true"){
+                $(location).attr('href', 'loginAgain.html');
+            }
+        }
+    });
+});

@@ -27,8 +27,6 @@ public class User implements Serializable {
     @NotEmpty(message = "Please enter your password")
     private String password;
 
-
-
     @Column(unique = true, nullable = false)
     @Email(message = "Enter email")
     @NotEmpty(message = "Please provide a valid email")
@@ -48,6 +46,8 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private UserTier userTier;
+
+    private boolean firstLogin;
 
     private String confirmationToken;
 
@@ -173,5 +173,13 @@ public class User implements Serializable {
 
     public void setRole(UserType role) {
         this.role = role;
+    }
+
+    public boolean isFirstLogin() {
+        return firstLogin;
+    }
+
+    public void setFirstLogin(boolean firstLogin) {
+        this.firstLogin = firstLogin;
     }
 }

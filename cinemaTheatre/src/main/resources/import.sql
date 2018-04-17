@@ -1,7 +1,7 @@
-insert into isadb.users(first_name, last_name,password_user, email,city,phone,enabled, role,user_tier) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE');
-insert into isadb.users(first_name, last_name,password_user, email,city,phone,enabled,role,user_tier) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE, 'GUEST','BRONZE');
-insert into isadb.users(first_name, last_name,password_user, email,city,phone,enabled, role,user_tier) values('isidora', 'isidora','isidora','isidora@gmail.com','novi sad','021',TRUE,'ADMINFZ','BRONZE');
-insert into isadb.users(first_name, last_name,password_user, email,city,phone,enabled, role,user_tier) values('njari', 'njari','njari','njari@gmail.com','novi sad','021',TRUE,'GUEST','BRONZE');
+insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE',true);
+insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE,'GUEST','BRONZE',true);
+insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login) values('isidora', 'isidora','isidora','isidora@gmail.com','novi sad','021',TRUE,'ADMINFZ','BRONZE',true);
+insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login) values('njari', 'njari','njari','njari@gmail.com','novi sad','021',TRUE,'GUEST','BRONZE',true);
 INSERT INTO friends(user_one_id,user_two_id,status) VALUES (1,2,1);
 INSERT INTO friends(user_one_id,user_two_id,status) VALUES (2,3,1);
 INSERT INTO friends(user_one_id,user_two_id,status) VALUES (1,3,1);
