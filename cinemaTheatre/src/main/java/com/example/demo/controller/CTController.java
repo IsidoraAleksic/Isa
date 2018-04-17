@@ -21,6 +21,8 @@ import com.example.demo.model.CTType;
 import com.example.demo.model.CinemaTheater;
 import com.example.demo.service.CTService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/")
 public class CTController {
@@ -36,6 +38,7 @@ public class CTController {
 		Page<CinemaTheater> page = ctService.getCinemaTheaterByType(CTType.CINEMA, p);
 		return new PageImpl<CTDTO>(toCTDTO.convert(page.getContent()), p, page.getTotalElements());
 	}
+
 
 	@RequestMapping(value = "/theaters", method = RequestMethod.GET)
 	public Page<?> getTheaters(Pageable p) {
@@ -62,4 +65,35 @@ public class CTController {
 	public ResponseEntity<?> getCT(@PathVariable long id){
 		return new ResponseEntity<>(ctService.find(id),HttpStatus.OK);
 	}
+
+    @RequestMapping(value = "/sortCinemasBy/{criteria}", method = RequestMethod.GET, produces = "application/json")
+    public List<CTDTO> sortCinemasBy(@PathVariable("criteria") String criteria){
+        List<CTDTO> cinemas;
+        switch (criteria){
+            case "name": cinemas = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByName(CTType.CINEMA)); break;
+            case "distance":  cinemas = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAddress(CTType.CINEMA)); break;
+            case "rating":  cinemas = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAmbient(CTType.CINEMA)); break;
+            default: cinemas =  null;
+        }
+        return cinemas;
+
+    }
+    @RequestMapping(value = "/sortTheatersBy/{criteria}", method = RequestMethod.GET, produces = "application/json")
+    public List<CTDTO> sortTheatersBy(@PathVariable("criteria") String criteria){
+        List<CTDTO> theaters;
+        switch (criteria){
+            case "distance":  theaters = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAddress(CTType.THEATER)); break;
+            case "name": theaters = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByName(CTType.THEATER)); break;
+            case "rating":  theaters = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAmbient(CTType.THEATER)); break;
+            default: theaters =  null;
+        }
+        return theaters;
+
+    }
+
+
+
+
 }
+
+

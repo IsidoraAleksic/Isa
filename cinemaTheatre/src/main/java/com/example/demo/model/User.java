@@ -58,12 +58,25 @@ public class User implements Serializable {
     @JsonIgnore
     private List<Notification> notifications;
 
+
+    @OneToMany
+    @JsonIgnore
+    private List<Reservation> reservedTickets;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<ReservationMerchandise> reservationMerchandise;
 
     public User(){
         this.enabled = false;
+    }
+
+    public List<Reservation> getReservedTickets() {
+        return reservedTickets;
+    }
+
+    public void setReservedTickets(List<Reservation> reservedTickets) {
+        this.reservedTickets = reservedTickets;
     }
 
     public List<ReservationMerchandise> getReservationMerchandise() {

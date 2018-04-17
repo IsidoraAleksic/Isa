@@ -6,14 +6,22 @@ import org.springframework.data.domain.Pageable;
 import com.example.demo.model.CTType;
 import com.example.demo.model.CinemaTheater;
 
-public interface CTService {
-	
-	Page<CinemaTheater> getCinemaTheaterByType(CTType type, Pageable pageable);
+import java.util.List;
 
-	CinemaTheater save(CinemaTheater ct);
-	
-	CinemaTheater find(long id);
-	
-	CinemaTheater delete(long id);
-	
+public interface CTService {
+
+    Page<CinemaTheater> getCinemaTheaterByType(CTType type, Pageable pageable);
+
+    List<CinemaTheater> getCinemaTheatersByTypeOrderByName(CTType ctType);
+
+    List<CinemaTheater> getCinemaTheatersByTypeOrderByAddress(CTType ctType);
+
+    List<CinemaTheater> getCinemaTheatersByTypeOrderByAmbient(CTType ctType);
+    
+    CinemaTheater save(CinemaTheater ct);
+
+    CinemaTheater find(long id);
+
+    CinemaTheater delete(long id);
+
 }

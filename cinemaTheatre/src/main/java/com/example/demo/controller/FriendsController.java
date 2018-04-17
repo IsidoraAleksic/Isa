@@ -15,6 +15,7 @@ import javax.jws.soap.SOAPBinding;
 import javax.persistence.Table;
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -45,6 +46,7 @@ public class FriendsController {
     @RequestMapping(value = "/allName/{name}", method = RequestMethod.GET)
     public List<User> listFriendsAndNonFriendsByName(@PathVariable("name") String name){
         List<User> users;
+        User user = authenticationService.getLoggedInUser();
         String fm = "", lm = "";
         if(name.contains(" ")){
             fm = name.split(" ")[0];
@@ -52,19 +54,21 @@ public class FriendsController {
             users = userService.findUsersByFirstNameContainsOrLastNameContains(fm,lm);
         } else
             users = userService.findUsersByFirstNameContainsOrLastNameContains(name,name);
+        if(users.contains(user))
+            users.remove(user);
         System.out.println(users.size());
         return users;
     }
     @RequestMapping(value = "/allFriends", method = RequestMethod.GET)
     public List<User> listAllFriends(){
         User user = authenticationService.getLoggedInUser();
-//        List<User> users = userService.findByFirstName(firstName);
-        List<User> ret = new ArrayList<>();
         List<Friends> friends = friendService.findUsersByUserOneOrUserTwo(user,user);
+        List<User> ret = new ArrayList<>();
         for(Friends friend: friends){
             //obe provere da li ret sadrzi jer jos uvek moze 2 usera jedan drugog da dodaju.
             // TODO: samo jedan par prijatelja moze da postoji
-            if(friend.getStatus()==1 && (!ret.contains(friend.getUserOne()))&& (!ret.contains(friend.getUserTwo()))){
+            if(friend.getStatus()==1 && (!ret.contains(friend.getUserOne()))
+                    && (!ret.contains(friend.getUserTwo()))){
                 if(friend.getUserOne().getId()==user.getId())
                     ret.add(friend.getUserTwo());
                 else if(friend.getUserTwo().getId()==user.getId())
@@ -74,8 +78,23 @@ public class FriendsController {
         return ret;
     }
 
+
+    @RequestMapping(value = "/sortFriendsBy/{criteria}", method = RequestMethod.GET, produces = "application/json")
+    public List<User> sortFriendsBy(@PathVariable("criteria") String criteria){
+        List<User> friends = listAllFriends();
+        switch (criteria){
+            case "firstName": friends.sort(Comparator.comparing(User::getFirstName)); break;
+            case "lastName":  friends.sort(Comparator.comparing(User::getFirstName)); break;
+            default: friends =  null;
+        }
+        return friends;
+
+    }
+
+
     @RequestMapping(value = "/friendsName/{name}", method = RequestMethod.GET)
     public List<User> listFriendsByName(@PathVariable("name") String name){
+        User loggedIn = authenticationService.getLoggedInUser();
         List<User> users;
         String fm = "", lm = "";
         if(name.contains(" ")){
@@ -88,7 +107,7 @@ public class FriendsController {
         List<User> ret = new ArrayList<>();
         for(User user: users){
             for(User friend: friends){
-                if(user.getId()==friend.getId())
+                if(user.getId()==friend.getId() && loggedIn.getId()!= friend.getId())
                     ret.add(user);
             }
         }
@@ -160,6 +179,9 @@ public class FriendsController {
        }
         return "cannot send request to yourself";
     }
+
+
+
     @RequestMapping(value = "/getFriendRequests", method = RequestMethod.GET, produces = "application/json")
     public List<User> getFriendRequests(){
         User user = authenticationService.getLoggedInUser();
@@ -209,7 +231,6 @@ public class FriendsController {
         }
         return "nothing to delete";
     }
-
 
 
 
