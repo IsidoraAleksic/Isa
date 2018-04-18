@@ -195,4 +195,5 @@ public class User implements Serializable {
     public void setFirstLogin(boolean firstLogin) {
         this.firstLogin = firstLogin;
     }
+
 }

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <script src="scripts/jquery-3.2.1.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script href="scripts/bootstrap.min.js" rel="stylesheet" type="text/javascript"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" id="toastr-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!--<script src = "scripts/userPage.js"></script>-->
@@ -27,19 +29,55 @@
             <button class="w3-bar-item w3-button" onclick="listTickets()">Tickets</button>
             <button class="w3-bar-item w3-button" onclick="registerAdmin()">Register Admin</button>
             <button class="w3-bar-item w3-button" onclick="openChangePasswordPage()">Change password</button>
+            <button class="w3-bar-item w3-button" onclick="openFanZone()">Fan Zone</button>
+            <button class="w3-bar-item w3-button" onclick="openModalScale()">Set New Scale</button>
             <button class="w3-bar-item w3-button" style="float: right" onclick="" id="userId"></button>
             <div id="divLogout"></div>
-
         </div>
 
     </div>
+    <div class="leftpane" id="userInformation">
+    </div>
+    <div class="middlepane" id="friendsDiv">
+        <div class="row" id="sortByDiv"></div>
+        <div class="row" id="resultsDiv"></div>
+    </div>
 
-    <div class="leftpane">
-        <h1>Test Page</h1></div>
-    <div class="middlepane" id="resultsDiv">Test Page</div>
+    <div class="rightpane" id="visitedCinemaTheaterDiv">
+        <div class="row" id="searchCinemaTheaterDiv">
 
-    <div class="rightpane">
-        <h1>Test Page</h1></div>
+        </div>
+        <div class="row" id="listCinemaTheaterDiv">
+
+        </div>
+     </div>
+
+    <div class="modal fade" id="scaleModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Set scale:</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-form-label">Min bronze points:</label>
+                        <input type="text" class="form-control" id="minBronzePoints">
+                        <label class="col-form-label">Min silver points:</label>
+                        <input type="text" class="form-control" id="minSilverPoints">
+                        <label class="col-form-label">Min golden points:</label>
+                        <input type="text" class="form-control" id="minGoldenPoints">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="setScale()">Set scale</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 

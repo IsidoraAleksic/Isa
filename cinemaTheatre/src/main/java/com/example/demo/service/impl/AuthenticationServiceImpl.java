@@ -49,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return "exists";
 
         user.setRole(user.getRole());
-
+        //user.setRole(UserType.GUEST);
 
 //        userRepository.save(user);
 
