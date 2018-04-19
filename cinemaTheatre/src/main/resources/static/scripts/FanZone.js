@@ -41,7 +41,7 @@ function getAllBids(){
             var bids = data;
             var content = "";
             for (var bid in bids) {
-                content+=createBidDiv(bids[bid]);
+                content+=createBidForMyAdsDiv(bids[bid]);
             }
             $("#ponudeOglasi").empty().append(content);
 
@@ -85,6 +85,16 @@ function createBidDiv(bid){
 
     return content;
 }
+
+function createBidForMyAdsDiv(bid){
+    var content = "";
+    content+="<div class=\"card bid-container\"><h2>"+ "Ad:" + bid.ad.id + "Price of bid:" + bid.priceBid + "</h2>"+"<button type=\"button\" class=\"btn btn-primary\" onclick=\"acceptBid("+bid.idGuestBid+")\">Accept Bid</button>" +
+        "<button type=\"button\" class=\"btn btn-primary\" onclick=\"rejectBid("+bid.idGuestBid+")\">Reject Bid</button></div>";
+
+    return content;
+}
+
+
 function createAdDiv(ad){
     var content = "";
     content+="<div class=\"card merch-container\"><h1 class=\"card-title\"> "+ad.priceAd+"<small class=\"text-muted\">$</small></h1><img class='merch-image' src="+ad.imageAd+">" + "  " + ad.nameAd + "<br/>" + ad.description+"<button type=\"button\"  class=\"btn btn-primary\" onclick=\"openModalBidCreate("+ad.id+")\">Create Bid</button> "+
@@ -171,7 +181,7 @@ function reserveMerchs(merchId) {
             "userId": ""
         }),
         success: function(data) {
-            window.open(data)
+            $(location).attr('href', 'FanZone.html');
         }
     });
 }

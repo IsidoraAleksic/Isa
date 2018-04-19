@@ -33,9 +33,6 @@ public class MerchandiseController {
     @Autowired
     AuthenticationService authenticationService;
 
-    @Autowired
-    StorageService storageService;
-
     @RequestMapping("/allMerchandise")
     public List<Merchandise> getAll(){
         return merchandiseService.getAll();
@@ -53,36 +50,7 @@ public class MerchandiseController {
         Merchandise result = merchandiseService.create(merchandiseDTO);
         return result.getId();
     }
-    //@PostMapping(value = "/addImage")
-    /*public void createMerchandiseImage(@RequestParam("file") InputStream file){
-        System.out.println("Works!");
-        *//*if (file.isEmpty()) {
-            try {
 
-                // Get the file and save it somewhere
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(this.getClass().getResource("/static/images").getFile() + file.getOriginalFilename());
-                Files.write(path, bytes);
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*//*
-    }*///SMILJANINO
-
-    @PostMapping("{id}/image/")
-    public ResponseEntity uploadFile(@PathVariable("id") long id,@RequestBody MerchandiseDTO merchandiseDTO, @RequestParam("file") MultipartFile file){
-        try{
-            String imageUrl = storageService.store(file);
-            merchandiseDTO.setImageMerchandise(imageUrl);
-            String result = merchandiseService.update(id, merchandiseDTO);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity(e,HttpStatus.NOT_FOUND);
-        }
-
-    }
 
     @PreAuthorize("hasAuthority('ADMINFZ')")
     @PostMapping("{id}")

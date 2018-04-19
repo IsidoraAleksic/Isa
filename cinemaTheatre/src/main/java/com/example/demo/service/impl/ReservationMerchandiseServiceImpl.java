@@ -37,6 +37,8 @@ public class ReservationMerchandiseServiceImpl implements ReservationMerchandise
         ReservationMerchandise reservationMerchandise = new ReservationMerchandise();
         reservationMerchandise.setUser(userRepository.getById(reservationMerchandiseDTO.getUserId()));
         reservationMerchandise.setMerch(merchandiseRepository.getById(reservationMerchandiseDTO.getMerchId()));
+        long n = 0;
+        reservationMerchandise.setVersion(n+1);
         reservationMerchandiseRepository.save(reservationMerchandise);
         return SUCCESSFULLY_CREATED;
     }
