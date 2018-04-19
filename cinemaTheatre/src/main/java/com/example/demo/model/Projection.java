@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +10,7 @@ import java.sql.Time;
 import java.util.List;
 
 @Entity(name = "projections")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Projection {
 
 
@@ -46,13 +47,13 @@ public class Projection {
     private CinemaTheater ct;
 
     @Column(nullable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date date;
 
     @Column(nullable = false)
     private float price;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     @Column(nullable = false)
     private Time time;
 
@@ -65,8 +66,20 @@ public class Projection {
     private List<Seat> taken;
 
     @OneToMany
-    private List<Reservation> reserved;
+    private List<Ticket> reserved;
 
+
+    public CinemaTheater getCt() {
+        return ct;
+    }
+
+    public void setCt(CinemaTheater ct) {
+        this.ct = ct;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
 
     public Time getTime() {
         return time;
@@ -116,11 +129,11 @@ public class Projection {
         this.taken = taken;
     }
 
-    public List<Reservation> getReserved() {
+    public List<Ticket> getReserved() {
         return reserved;
     }
 
-    public void setReserved(List<Reservation> reserved) {
+    public void setReserved(List<Ticket> reserved) {
         this.reserved = reserved;
     }
 
@@ -182,7 +195,7 @@ public class Projection {
 
     public Projection(Long id, String name, String actors, String genre, String director, int duration,
                       String imagePath, String description, Hall hall, Date date, Float price, List<Seat> taken,
-                      List<Reservation> reserved) {
+                      List<Ticket> reserved) {
         this.id = id;
         this.name = name;
         this.actors = actors;

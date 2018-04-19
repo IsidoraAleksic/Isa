@@ -4,6 +4,9 @@ import com.example.demo.model.User;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -63,13 +66,13 @@ public class AuthenticationController {
             return "nok";
         else if(registered.equals("exists"))
             return "exists";
-        String url = request.getScheme() + "://" + request.getServerName() + ":9080/authenticate/confirm";
+        String url ="To verify your account please click on the verification link below: \n" + request.getScheme() + "://" + request.getServerName() + ":9080/authenticate/confirm";
         user.setConfirmationToken(UUID.randomUUID().toString());
         user.setEnabled(false);
         authenticationService.saveUser(user);
         url = url + "/"+user.getConfirmationToken();
         try {
-            emailService.sendEmailVerification(user.getEmail(),url);
+            emailService.sendEmailVerification(user.getEmail(),url,"Verify email address");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -79,7 +82,7 @@ public class AuthenticationController {
     }
 
     @RequestMapping(value = "/confirm/{token}", method = RequestMethod.GET)
-    public void confirmEmail(@PathVariable String token){
+    public ResponseEntity confirmEmail(@PathVariable String token){
         User user = authenticationService.findByConfirmationToken(token);
         if(user!=null) {
             authenticationService.deleteUser(user);
@@ -88,6 +91,8 @@ public class AuthenticationController {
                 authenticationService.saveUser(user);
             }
         }
+
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "http://localhost:9080/index.html").build();
 
     }
 

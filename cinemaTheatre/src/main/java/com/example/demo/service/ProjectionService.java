@@ -11,6 +11,7 @@ public interface ProjectionService {
 
 	public List<Projection> findByCtid(long id);
 
+    Projection findProjectionById(long id);
 
     Projection save(Projection projection);
 

@@ -3,9 +3,12 @@ package com.example.demo.repository;
 import com.example.demo.model.User;
 import com.example.demo.model.UserType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+@Repository
 public interface UserRepository extends JpaRepository<User,Long> {
 
     public List<User> getUserByRole(UserType role);
@@ -20,4 +23,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
 //    public List<User> findUsersByFirstNameOrLastName(String firstName, String lastName);
 //    public List<User> findUsersByFirstNameIsLikeOrLastNameIsLike(String firstName, String lastName);
     public List<User> findUsersByFirstNameContainsOrLastNameContains(String firstName, String lastName);
+
 }

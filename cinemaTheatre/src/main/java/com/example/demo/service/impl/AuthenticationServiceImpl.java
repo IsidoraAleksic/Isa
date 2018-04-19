@@ -46,10 +46,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return "exists";
 
         user.setRole(UserType.GUEST);
-
-
-//        userRepository.save(user);
-
+        user.setPoints(0);
         return "registered";
     }
 
@@ -80,7 +77,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User getLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.getName());
+//        System.out.println(authentication.getName());
+        if(authentication==null)
+            return null;
         if(authentication.getName().equals("anonymousUser"))
             return null;
         System.out.println(authentication.getAuthorities());

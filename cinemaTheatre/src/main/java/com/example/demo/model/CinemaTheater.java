@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 import javax.persistence.*;
@@ -33,9 +35,11 @@ public class CinemaTheater {
 	private CTType type;
 
 	@OneToMany
+	@JsonIgnore
 	private List<Projection> projections;
 
 	@OneToMany
+	@JsonIgnore
 	private List<Hall> halls;
 
 	@Column(name = "ambient")

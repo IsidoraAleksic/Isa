@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.converters.CTtoCTDTO;
+import com.example.demo.dto.CTDTO;
+import com.example.demo.model.CTType;
+import com.example.demo.model.CinemaTheater;
+import com.example.demo.service.CTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -8,17 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.demo.converters.CTtoCTDTO;
-import com.example.demo.dto.CTDTO;
-import com.example.demo.model.CTType;
-import com.example.demo.model.CinemaTheater;
-import com.example.demo.service.CTService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,71 +21,90 @@ import java.util.List;
 @RequestMapping(value = "/")
 public class CTController {
 
-	@Autowired
-	private CTService ctService;
-	
-	@Autowired
-	private CTtoCTDTO toCTDTO;
+    @Autowired
+    private CTService ctService;
 
-	@RequestMapping(value = "/cinemas", method = RequestMethod.GET)
-	public Page<?> getCinemas(Pageable p) {
-		Page<CinemaTheater> page = ctService.getCinemaTheaterByType(CTType.CINEMA, p);
-		return new PageImpl<CTDTO>(toCTDTO.convert(page.getContent()), p, page.getTotalElements());
-	}
+    @Autowired
+    private CTtoCTDTO toCTDTO;
+
+    @RequestMapping(value = "/ct", method = RequestMethod.GET)
+    public Page<?> getAll(Pageable p) {
+        Page<CinemaTheater> page = ctService.getAllCinemaTheater(p);
+        return new PageImpl<CTDTO>(toCTDTO.convert(page.getContent()), p, page.getTotalElements());
+    }
+
+    @RequestMapping(value = "/cinemas", method = RequestMethod.GET)
+    public Page<?> getCinemas(Pageable p) {
+        Page<CinemaTheater> page = ctService.getCinemaTheaterByType(CTType.CINEMA, p);
+        return new PageImpl<CTDTO>(toCTDTO.convert(page.getContent()), p, page.getTotalElements());
+    }
 
 
-	@RequestMapping(value = "/theaters", method = RequestMethod.GET)
-	public Page<?> getTheaters(Pageable p) {
-		Page<CinemaTheater> page = ctService.getCinemaTheaterByType(CTType.THEATER, p);
-		return new PageImpl<CTDTO>(toCTDTO.convert(page.getContent()), p, page.getTotalElements());
-	}
-	
-	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<?> addCT(@Validated @RequestBody CinemaTheater ct, Errors errors) {
-		if(errors.hasErrors()) {
-			return new ResponseEntity<>(errors.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
-		}
-		CinemaTheater created = ctService.save(ct);
-		return new ResponseEntity<>(created,HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/ct/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<?> deleteCT(@PathVariable long id){
-		CinemaTheater deleted = ctService.delete(id);
-		return new ResponseEntity<>(deleted, HttpStatus.OK);
-	}
+    @RequestMapping(value = "/theaters", method = RequestMethod.GET)
+    public Page<?> getTheaters(Pageable p) {
+        Page<CinemaTheater> page = ctService.getCinemaTheaterByType(CTType.THEATER, p);
+        return new PageImpl<CTDTO>(toCTDTO.convert(page.getContent()), p, page.getTotalElements());
+    }
 
-	@RequestMapping(value = "/ct/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> getCT(@PathVariable long id){
-		return new ResponseEntity<>(ctService.find(id),HttpStatus.OK);
-	}
+    @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
+    public ResponseEntity<?> addCT(@Validated @RequestBody CinemaTheater ct, Errors errors) {
+        if (errors.hasErrors()) {
+            return new ResponseEntity<>(errors.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
+        }
+        CinemaTheater created = ctService.save(ct);
+        return new ResponseEntity<>(created, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/ct/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteCT(@PathVariable long id) {
+        CinemaTheater deleted = ctService.delete(id);
+        return new ResponseEntity<>(deleted, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/ct/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getCT(@PathVariable long id) {
+        return new ResponseEntity<>(ctService.find(id), HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/sortCinemasBy/{criteria}", method = RequestMethod.GET, produces = "application/json")
-    public List<CTDTO> sortCinemasBy(@PathVariable("criteria") String criteria){
+    public List<CTDTO> sortCinemasBy(@PathVariable("criteria") String criteria) {
         List<CTDTO> cinemas;
-        switch (criteria){
-            case "name": cinemas = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByName(CTType.CINEMA)); break;
-            case "distance":  cinemas = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAddress(CTType.CINEMA)); break;
-            case "rating":  cinemas = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAmbient(CTType.CINEMA)); break;
-            default: cinemas =  null;
+        switch (criteria) {
+            case "name":
+                cinemas = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByName(CTType.CINEMA));
+                break;
+            case "distance":
+                cinemas = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAddress(CTType.CINEMA));
+                break;
+            case "rating":
+                cinemas = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAmbient(CTType.CINEMA));
+                break;
+            default:
+                cinemas = null;
         }
         return cinemas;
 
     }
+
     @RequestMapping(value = "/sortTheatersBy/{criteria}", method = RequestMethod.GET, produces = "application/json")
-    public List<CTDTO> sortTheatersBy(@PathVariable("criteria") String criteria){
+    public List<CTDTO> sortTheatersBy(@PathVariable("criteria") String criteria) {
         List<CTDTO> theaters;
-        switch (criteria){
-            case "distance":  theaters = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAddress(CTType.THEATER)); break;
-            case "name": theaters = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByName(CTType.THEATER)); break;
-            case "rating":  theaters = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAmbient(CTType.THEATER)); break;
-            default: theaters =  null;
+        switch (criteria) {
+            case "distance":
+                theaters = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAddress(CTType.THEATER));
+                break;
+            case "name":
+                theaters = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByName(CTType.THEATER));
+                break;
+            case "rating":
+                theaters = toCTDTO.convert(ctService.getCinemaTheatersByTypeOrderByAmbient(CTType.THEATER));
+                break;
+            default:
+                theaters = null;
         }
         return theaters;
 
     }
-
-
 
 
 }
