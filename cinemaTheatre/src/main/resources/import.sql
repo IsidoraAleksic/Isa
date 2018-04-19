@@ -13,12 +13,16 @@ INSERT into ct(name,address,description,type,ambient) values('beograd Cinema','a
 INSERT into ct(name,address,description,type,ambient) values('cacak Theater','addressT','descriptionT','THEATER','2');
 INSERT into ct(name,address,description,type,ambient) values('Pozoriste mladih','Novi Sad','pozoriste','THEATER','5');
 
-INSERT INTO halls(rows,cols,name,ct_id) values ('10','10','hall 1','1');
+INSERT INTO halls(rows,cols,name,ct_id) values ('20','20','hall 1','1');
 INSERT INTO halls(rows,cols,name,ct_id) values ('5','5','hall 2','1');
 INSERT INTO halls(rows,cols,name,ct_id) values ('5','5','hall 3','1');
 INSERT INTO halls(rows,cols,name,ct_id) values ('5','5','hall 4','1');
 INSERT INTO halls(rows,cols,name,ct_id) values ('5','5','hall 5','1');
 INSERT INTO halls(rows,cols,name,ct_id) values ('5','5','hall 6','1');
+# INSERT into isadb.halls(name,rows,cols) values('1','10','10');
+# INSERT into isadb.halls(name,rows,cols) values('2','15','15');
+# INSERT into isadb.halls(name,rows,cols) values('3','10','10');
+# INSERT into isadb.halls(name,rows,cols) values('4','10','10');
 
 INSERT INTO ct_halls(cinema_theater_id, halls_id) values ('1','1');
 INSERT INTO ct_halls(cinema_theater_id, halls_id) values ('1','2');
@@ -33,9 +37,9 @@ INSERT INTO ct_halls(cinema_theater_id, halls_id) values ('1','6');
 # INSERT INTO projections(actors,description,director,duration,genre,image_path,name,price,ct_id,hall_id,date,time) VALUES ('name lastname, name2 lastname2','projection description','director name2','94','TRAGEDY','https://i.imgur.com/bOTGH4t.png','MOVIE NAME3','410','1','2','2018-04-26','12:00:00');
 # INSERT INTO projections(actors,description,director,duration,genre,image_path,name,price,ct_id,hall_id,date,time) VALUES ('name lastname, name3 lastname2','projection description','director name2','92','TRAGEDY','https://i.imgur.com/bOTGH4t.png','MOVIE NAME4','450','2','2','2018-04-26','13:00:00');
 # INSERT INTO projections(actors,description,director,duration,genre,image_path,name,price,ct_id,hall_id,date,time) VALUES ('name2 lastname2, name3 lastname2','projection description','director name3','98','TRAGEDY','https://i.imgur.com/bOTGH4t.png','SHOW NAME5','480','3','1','2018-04-26','13:00:00');
-INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Inception','Leonardo','Sci-Fy','Nolan','180','path','none','1','1','2018-04-19','250','17:50:00');
+INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Inception','Leonardo','Sci-Fy','Nolan','180','path','none','1','1','2018-04-19','250','09:50:00');
 INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Interstellar','Alright','Sci-Fy','Nolan','180','path','none','1','1','2018-05-25','250','19:00:00');
-INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Inception','Leonardo','Sci-Fy','Nolan','180','path','none','2','1','2018-04-19','250','12:05:00');
+INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Inception','Leonardo','Sci-Fy','Nolan','180','path','none','2','1','2018-04-19','250','18:00:00');
 INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Inception','Leonardo','Sci-Fy','Nolan','180','path','none','2','1','2018-04-19','250','17:00:00');
 INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Inception','Leonardo','Sci-Fy','Nolan','180','path','none','2','1','2018-04-26','250','19:00:00');
 
@@ -51,16 +55,14 @@ INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','1','A
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','2','AVAILABLE','1');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','3','TAKEN','1');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','4','AVAILABLE','1');
+INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','2','1','VIP','1');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','2','2','AVAILABLE','1');
-INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','2','1','AVAILABLE','1');
+INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','3','4','REDACTED','1');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','3','3','AVAILABLE','1');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','2','3','AVAILABLE','1');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','2','4','AVAILABLE','1');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','3','1','AVAILABLE','1');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','3','2','AVAILABLE','1');
-INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','4','1','VIP','1');
-INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','4','2','VIP','1');
-INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','3','4','REDACTED','1');
 
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','1','AVAILABLE','2');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','2','AVAILABLE','2');
@@ -75,7 +77,6 @@ INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','2','4','A
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','3','1','AVAILABLE','2');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','3','2','AVAILABLE','2');
 
-
 INSERT into halls_seats(halls_id,seats_id) values('1','1');
 INSERT into halls_seats(halls_id,seats_id) values('1','2');
 INSERT into halls_seats(halls_id,seats_id) values('1','3');
@@ -88,8 +89,6 @@ INSERT into halls_seats(halls_id,seats_id) values('1','9');
 INSERT into halls_seats(halls_id,seats_id) values('1','10');
 INSERT into halls_seats(halls_id,seats_id) values('1','11');
 INSERT into halls_seats(halls_id,seats_id) values('1','12');
-INSERT into halls_seats(halls_id,seats_id) values('1','23');
-INSERT into halls_seats(halls_id,seats_id) values('1','24');
 INSERT into halls_seats(halls_id,seats_id) values('2','23');
 
 
@@ -106,11 +105,15 @@ INSERT into halls_seats(halls_id,seats_id) values('1','20');
 INSERT into halls_seats(halls_id,seats_id) values('1','21');
 INSERT into halls_seats(halls_id,seats_id) values('1','22');
 
+
+
+
+
 create table user_tier_scale(id Long NOT NULL AUTO_INCREMENT, points INT,user_tier ENUM('BRONZE','SILVER','GOLDEN'),PRIMARY KEY(id));
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE',true);
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE,'GUEST','BRONZE',true);
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login) values('isidora', 'isidora','isidora','isidora@gmail.com','novi sad','021',TRUE,'ADMINFZ','BRONZE',true);
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login) values('njari', 'njari','njari','njari@gmail.com','novi sad','021',TRUE,'GUEST','BRONZE',true);
+insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE',true,'10');
+insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE,'GUEST','BRONZE',true,'10');
+insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('isidora', 'isidora','isidora','isidora@gmail.com','novi sad','021',TRUE,'ADMINFZ','BRONZE',true,'5');
+insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('njari', 'njari','njari','njari@gmail.com','novi sad','021',TRUE,'GUEST','BRONZE',true,'14');
 insert into user_tier_scale(points,user_tier) values (11,'BRONZE');
 insert into user_tier_scale(points,user_tier) values (20,'SILVER');
 insert into user_tier_scale(points,user_tier) values (30,'GOLDEN');

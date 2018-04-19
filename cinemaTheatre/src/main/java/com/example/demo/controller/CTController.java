@@ -22,7 +22,6 @@ import java.util.List;
 @RequestMapping(value = "/")
 public class CTController {
 
-<<<<<<< HEAD
     @Autowired
     private CTService ctService;
 

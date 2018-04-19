@@ -9,7 +9,7 @@ function loadIndex(){
         type: "GET",
        success: function(data){
             var user = data;
-            if(user!=null){
+            if(user.id!=null){
                 $('#loginLink').empty();
                 $('#loginLink').append(' <a href="userPage.html">'+user.firstName+'</a>');
             }
