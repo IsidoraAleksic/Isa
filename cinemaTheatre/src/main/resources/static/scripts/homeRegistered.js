@@ -711,6 +711,8 @@ function reserve(idH, idP,name,rows,cols) {
             dataType: "text",
             type: "GET",
             success: function (data) {
+                if(data=="already")
+                    toastr.error("Somebody else just reserved that seat. Please choose another one.");
                 if (data == "ok") {
                     toastr.success("Reserved!");
                     getSeats(idH, idP,name,rows,cols);

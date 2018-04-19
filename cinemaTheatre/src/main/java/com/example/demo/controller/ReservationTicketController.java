@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
@@ -152,7 +152,7 @@ public class ReservationTicketController {
 
     }
 
-    @Transactional(rollbackOn = Exception.class)
+    @Transactional
     @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping(value = "/reserveTickets/{id}/{reservedSeats[]}", method = RequestMethod.GET)
     public String reserveTickets(@PathVariable(value = "reservedSeats[]") List<Integer> reservedSeats,
@@ -189,6 +189,7 @@ public class ReservationTicketController {
                     }
             }
         }
+
         if(reserved){
             String message = "You have reserved projection of  " + projection.getName() + " on day: " + projection.getDate() + " at  " + projection.getTime();
             try {
@@ -196,6 +197,8 @@ public class ReservationTicketController {
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
+        } else{
+            return "already";
         }
         return "ok";
     }
