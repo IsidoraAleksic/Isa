@@ -24,6 +24,11 @@ public class CTServiceImpl implements CTService {
 	}
 
 	@Override
+	public Page<CinemaTheater> getAllCinemaTheater(Pageable pageable) {
+		return ctRepository.findAll(pageable);
+	}
+
+	@Override
 	public List<CinemaTheater> getCinemaTheatersByTypeOrderByName(CTType ctType) {
 		return ctRepository.getCinemaTheatersByTypeOrderByName(ctType);
 	}

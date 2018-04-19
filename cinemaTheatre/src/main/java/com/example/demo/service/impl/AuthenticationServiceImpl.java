@@ -48,7 +48,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (userRepository.findByEmail(user.getEmail()) != null)
             return "exists";
 
-        user.setRole(user.getRole());
+        user.setRole(UserType.GUEST);
+        user.setPoints(0);
+
+        // user.setRole(user.getRole());
         //user.setRole(UserType.GUEST);
 
 //        userRepository.save(user);
@@ -83,9 +86,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User getLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        System.out.println(authentication.getName());
+        if(authentication==null)
+            return null;
+
         System.out.println(authentication.getName());
         if (authentication.getName().equals("anonymousUser"))
-            return null;
+                    return null;
         System.out.println(authentication.getAuthorities());
         System.out.println(authentication.getDetails());
         System.out.println(authentication.getCredentials());

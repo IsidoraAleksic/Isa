@@ -1,10 +1,21 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.Projection;
-import com.example.demo.model.Reservation;
+import com.example.demo.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ReservationTicketRepository extends JpaRepository<Reservation,Long> {
+import java.util.List;
 
-    Reservation findByProjection(Projection projection);
+
+@Repository
+public interface ReservationTicketRepository extends JpaRepository<Ticket,Long> {
+
+    Ticket findByProjection(Projection projection);
+    Ticket findBySeat(Seat seat);
+//    Ticket findTicketBySeatAndHallAndProjection(Seat seat, Hall hall, Projection projection);
+    Ticket findTicketById(Long id);
+//    List<Ticket> findByUser(User user);
+
+
+
 }

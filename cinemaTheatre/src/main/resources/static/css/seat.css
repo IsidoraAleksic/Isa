@@ -1,0 +1,105 @@
+.seat-available {
+     background-color: #4CAF50; /* Green */
+     border: none;
+     color: white;
+     padding: 10px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+     font-size: 0px;
+     margin: 2px 1px;
+     cursor: pointer;
+     border-radius: 40%;
+ }
+.seat-selected {
+    background-color: greenyellow; /* Blue */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0px;
+    margin: 2px 1px;
+    cursor: pointer;
+    border-radius: 40%;
+}
+
+.seat-taken {
+    background-color:  darkred; /* Red */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0px;
+    margin: 2px 1px;
+    cursor: pointer;
+    border-radius: 40%;
+}
+
+.seat-vip {
+    background-color:  gold; /* Gold */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0px;
+    margin: 2px 1px;
+    cursor: pointer;
+    border-radius: 40%;
+}
+
+.seat-redacted {
+    background-color:  gray; /* GRAY */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0px;
+    margin: 2px 1px;
+    cursor: pointer;
+    border-radius: 40%;
+}
+
+.seat-speed {
+    background-color:  blanchedalmond; /* GRAY */
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0px;
+    margin: 0px 0px;
+    cursor: pointer;
+    border-radius: 40%;
+}
+
+table#seatsTable{
+    /*border-radius: 20%;*/
+    border: none;
+
+}
+
+th#seatsTh{
+    border: none;
+    /*background-color: #030303 ; !*black*!*/
+    background-color: transparent;
+    border-collapse: collapse;
+
+}
+
+td#seatsTd, tr#seatsTr {
+    border: none;
+    /*background-color: #030303 ;*/
+    border-collapse: collapse;
+    background-color: transparent;
+
+}
+

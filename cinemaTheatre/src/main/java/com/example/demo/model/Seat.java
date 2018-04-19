@@ -19,6 +19,9 @@ public class Seat {
     @Enumerated(EnumType.STRING)
     private SeatType seatType;
 
+    @ManyToOne
+    private Projection projection;
+
     public Hall getHall() {
         return hall;
     }
@@ -33,6 +36,14 @@ public class Seat {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Projection getProjection() {
+        return projection;
+    }
+
+    public void setProjection(Projection projection) {
+        this.projection = projection;
     }
 
     public int getRow() {

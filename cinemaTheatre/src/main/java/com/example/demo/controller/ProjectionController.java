@@ -41,5 +41,9 @@ public class ProjectionController {
 	public ResponseEntity<?> getProjection(@PathVariable long id) {
 		return new ResponseEntity<>(pService.findById(id), HttpStatus.OK);
 	}
+	@RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
+	public Projection getProjectionById(@PathVariable long id) {
+		return pService.findProjectionById(id);
+	}
 
 }
