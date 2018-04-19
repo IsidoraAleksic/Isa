@@ -47,7 +47,7 @@ public class AdServiceImpl implements AdService {
         return adRepository.getByUserId(userId);
     }
 
-    public List<NotificationDTO> create(AdDTO adDTO) {
+    public Long create(AdDTO adDTO) {
         if (adDTO == null) {
             //return ERRORR_CREATE_AD;
             return null;
@@ -61,9 +61,15 @@ public class AdServiceImpl implements AdService {
         ad.setUser(userRepository.getById(adDTO.getUserId()));//ovo radim jer necu da mi se u JSon objekat ispise ceo merchandise i ceo user. adDTO ce imati one stvari koje cu ispisati,
         ad.setAdBidStatus(AdBidStatus.WAITING);
         Ad resultAd = adRepository.save(ad);
-        return createNotificationsForAFZ(resultAd.getId());
+        return resultAd.getId();
+        //return createNotificationsForAFZ(resultAd.getId());
         //return SUCCESS_CREATED_AD;
     }
+
+    public List<NotificationDTO> getNotifications(Long adId) {
+        return createNotificationsForAFZ(adId);
+    }
+
     private List<NotificationDTO> createNotificationsForAFZ(Long idAd){
         List<User> users = userRepository.getUserByRole(UserType.ADMINFZ);
         List<NotificationDTO> notifications = new ArrayList<>();

@@ -10,19 +10,21 @@ import java.util.List;
 
 @Service
 public interface BidService {
-    public List<Bid> getAll();
+    List<Bid> getAll();
 
-    public Bid getById(Long id_bid);
+    Bid getById(Long id_bid);
 
-    public List<Bid> getByIdAd(Long id_ad);
+    List<Bid> getByIdAd(Long id_ad);
 
-    public List<Bid> getByGuest(Long id_guestBid);
+    List<Bid> getByGuest(Long id_guestBid);
 
-    public String create(BidDTO bidDTO);
+    String create(BidDTO bidDTO);
 
-    public String update(Long bidId, BidDTO bidDTO);
+    String update(Long bidId, BidDTO bidDTO);
 
-    public String delete(Long idBid);
+    String delete(Long idBid);
 
-    public List<NotificationDTO> updateBidStatus(Long id, AdBidStatus status);
+    List<NotificationDTO> updateBidStatus(Long id, AdBidStatus status);
+
+    List<Bid> getAllBidsForUsersAds(Long userId);
 }

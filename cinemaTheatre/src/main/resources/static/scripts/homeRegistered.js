@@ -344,7 +344,23 @@ function sortTheaters(criteria) {
     });
 }
 
-function listTheatres() {
+
+
+function listTheatres(){
+  // $(document).ready ( function(){
+  //     $.ajax({
+  //         url: "/authenticate/checkIfFirstLogin",
+  //         contentType: "application/json",
+  //         dataType: "text",
+  //         type: "GET",
+  //         success: function(data) {
+  //             if(data=="true"){
+  //                 $(location).attr('href', 'loginAgain.html');
+  //             }
+  //         }
+  //     });
+  // });
+
     var results = $('#resultsDiv');
     var leftPane = $('#userInformation');
     var searchDiv = $('#searchCinemaTheaterDiv');
@@ -786,3 +802,32 @@ function deselectSeat(row, col, id,idHall) {
     td.append('<button id=' + rowCol + ' class="seat-available" onclick="selectSeat(\'' + row + '\',\'' + col + '\',\'' + id +'\',\'' + idHall+'\')" ></button>');
 }
 
+
+function openFanZone(){
+    $(location).attr('href', 'FanZone.html');
+}
+
+function returnToHome(){
+    $(location).attr('href', 'homeRegistered.html');
+}
+
+function setScale(){
+    $.ajax({
+        url: "/userTierScale/setScale",
+        contentType: "application/json",
+        dataType: "text",
+        type: "POST",
+        data: JSON.stringify({
+            "minBronze": $('#minBronzePoints').val(),
+            "minSilver": $('#minSilverPoints').val(),
+            "minGolden": $('#minGoldenPoints').val()
+        }),
+        success: function(data) {
+            $('#scaleModal').modal('hide');
+        }
+    });
+}
+function openModalScale() {
+    $("#scaleModal").modal();
+
+}

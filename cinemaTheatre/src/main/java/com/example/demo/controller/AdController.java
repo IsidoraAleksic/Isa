@@ -5,11 +5,15 @@ import com.example.demo.dto.NotificationDTO;
 import com.example.demo.model.Ad;
 import com.example.demo.model.AdBidStatus;
 import com.example.demo.service.AdService;
+import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.NotificationService;
+import com.example.demo.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,41 +30,68 @@ public class AdController {
 
     @Autowired
     private NotificationService notificationService;
+    @Autowired
+    private AuthenticationService authenticationService;
+
+    @Autowired
+    private StorageService storageService;
 
     @RequestMapping("/allAds")
     public List<Ad> getAll(){
         return adService.getAll();
     }
 
+
     @RequestMapping("{id}")
     public Ad getById(@PathVariable("id") Long id_ad){
         return adService.getById(id_ad);
     }
 
-    @RequestMapping("/userId/{id}")
-    public List<Ad> getAllUserAds(@PathVariable("id") Long id_user) {
-        return adService.getAllUserAds(id_user);
+    @RequestMapping("/userId")
+    public List<Ad> getAllUserAds() {
+        return adService.getAllUserAds(authenticationService.getLoggedInUser().getId());
     }
 
+    @PreAuthorize("hasAuthority('GUEST')")
     @PostMapping
-    public ResponseEntity createAd(@RequestBody AdDTO adDTO) {
-        List<NotificationDTO> notifications = adService.create(adDTO);
+    public Long createAd(@RequestBody AdDTO adDTO) {
+        adDTO.setUserId(authenticationService.getLoggedInUser().getId());
+        Long adId = adService.create(adDTO);
+        List<NotificationDTO> notifications = adService.getNotifications(adId);
         if (notifications == null) {
-            return new ResponseEntity<>("Unsuccessfully created ad", HttpStatus.INTERNAL_SERVER_ERROR);
+            return adId;
+            //return new ResponseEntity<>("Unsuccessfully created ad", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         for (NotificationDTO notificationDTO : notifications) {
             notificationService.create(notificationDTO);
         }
-        return new ResponseEntity<>("Successfully created ad", HttpStatus.CREATED);
+        return adId;
+        //return new ResponseEntity<>("Successfully created ad", HttpStatus.CREATED);
     }
 
+    @PostMapping(value="{id}/image/")
+    public ResponseEntity uploadFile(@PathVariable("id") long id,@RequestBody AdDTO adDTO, @RequestParam("file") MultipartFile file){
+        try{
+            String imageUrl = storageService.store(file);
+            adDTO.setImageAd(imageUrl);
+            String result = adService.update(id, adDTO);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e,HttpStatus.NOT_FOUND);
+        }
+
+    }
+
+
+    @PreAuthorize("hasAuthority('GUEST')")
     @PostMapping("{id}")
     public ResponseEntity updateAd(@PathVariable("id") Long id_ad, @RequestBody AdDTO adDTO) {
         String result = adService.update(id_ad, adDTO);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAuthority('GUEST')")
     @DeleteMapping("{id}")
     public ResponseEntity deleteAd(@PathVariable("id") Long id_ad) {
         String result = adService.delete(id_ad);
@@ -77,7 +108,7 @@ public class AdController {
         return new ResponseEntity<>("Successfully updated ad's status", HttpStatus.OK);
     }
 
-    @PostMapping("Upload/{imageName}")
+  /*  @PostMapping("Upload/{imageName}")
     public String uploadImage(@PathVariable("imageName") String imageName, InputStream fileInputStream) throws Exception {
         String uploadFileLocation = "\\static\\images\\"+imageName+".png";
 
@@ -93,5 +124,5 @@ public class AdController {
         out.close();
 
         return uploadFileLocation;
-    }
+    }*/
 }

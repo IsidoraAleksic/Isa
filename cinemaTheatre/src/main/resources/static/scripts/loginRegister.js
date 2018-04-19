@@ -75,6 +75,8 @@ $(document).on('submit', '#register-form', function(e){
                 "password": password,
                 "city": city,
                 "phone": phone,
+                "role": $('#role').val()
+
             }),success: function(data){
                 var user = data;
                 if(user=="nok") {
@@ -95,7 +97,54 @@ $(document).on('submit', '#register-form', function(e){
             }
         });
     }
-
-
-
 });
+
+
+$(document).ready ( function(){
+    $.ajax({
+        url: "/authenticate/getUser",
+        dataType: "json",
+        type: "GET",
+        async: false,
+        success: function(data){
+            content = '';
+            if(data.role == "UNREGISTERED") {
+                content = '<option value=\"UNREGISTERED"\">';
+            } else if(data.role == 'ADMIN') {
+                content = '<option value=\"ADMIN"\">'+'<option value=\"ADMINCT"\">'+'<option value=\"ADMINFZ"\">';
+            }
+            $('#roles').append(content);
+        }
+    });
+});
+
+function changePassword(){
+    var newPassword = $("#passwordNew").val();
+    var newPasswordConfirm = $("#passwordNewConfirm").val();
+    if(newPassword!=newPasswordConfirm){
+        alert("Passwords don't match!");
+    }else{
+        $.ajax({
+            url: "/authenticate",
+            contentType: "application/json",
+            dataType: "text",
+            type: "POST",
+            data: JSON.stringify({
+                "userId":"",
+                "passwordOld": $("#passwordOld").val(),
+                "passwordNew": newPassword
+            }),
+            success: function(data) {
+                $(location).attr('href', 'homeRegistered.html')
+            }
+        });
+    }
+
+
+}
+function registerAdmin(){
+    $(location).attr('href', 'loginRegister.html');
+}
+function openChangePasswordPage(){
+    $(location).attr('href', 'loginAgain.html')
+}

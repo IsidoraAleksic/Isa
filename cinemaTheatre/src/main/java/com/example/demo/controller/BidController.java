@@ -4,11 +4,13 @@ import com.example.demo.dto.BidDTO;
 import com.example.demo.dto.NotificationDTO;
 import com.example.demo.model.Bid;
 import com.example.demo.model.AdBidStatus;
+import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.BidService;
 import com.example.demo.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +19,23 @@ import java.util.List;
 @RequestMapping("/bid")
 public class BidController {
     //uvek se autowire-uje interfejs.SOLID princip neki
-    BidService bidService;
-    NotificationService notificationService;
-
     @Autowired
-    public BidController(BidService bidService, NotificationService notificationService) {
-        this.bidService = bidService;
-        this.notificationService = notificationService;
-    }
+    BidService bidService;
+    @Autowired
+    NotificationService notificationService;
+    @Autowired
+    AuthenticationService authenticationService;
 
+    @PreAuthorize("hasAuthority('GUEST')")
     @RequestMapping("/allBids")
     public List<Bid> getAll() {
         return bidService.getAll();
+    }
+
+    @PreAuthorize("hasAuthority('GUEST')")
+    @RequestMapping("/allBidsForUsersAds")
+    public List<Bid> getAllBidsForUsersAds() {
+        return bidService.getAllBidsForUsersAds(authenticationService.getLoggedInUser().getId());
     }
 
     @RequestMapping("{id}")
@@ -41,17 +48,20 @@ public class BidController {
         return bidService.getByIdAd(id_ad);
     }
 
-    @RequestMapping("/guestId/{idGuest}")
-    public List<Bid> getByGuest(@PathVariable("idGuest") Long id_guestBid) {
-        return bidService.getByGuest(id_guestBid);
+    @PreAuthorize("hasAuthority('GUEST')")
+    @RequestMapping("/guestId")
+    public List<Bid> getByGuest() {
+        return bidService.getByGuest(authenticationService.getLoggedInUser().getId());
     }
 
+    @PreAuthorize("hasAuthority('GUEST')")
     @PostMapping
     public ResponseEntity createBid(@RequestBody BidDTO bidDTO) {
+        bidDTO.setIdGuestBid(authenticationService.getLoggedInUser().getId());
         String result = bidService.create(bidDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
-
+    @PreAuthorize("hasAuthority('GUEST')")
     @PostMapping("{id}")
     public ResponseEntity updateBid(@PathVariable("id") Long id_bid, @RequestBody BidDTO bidDTO) {
         String result = bidService.update(id_bid, bidDTO);
@@ -59,7 +69,7 @@ public class BidController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteAd(@PathVariable("id") Long id_bid) {
+    public ResponseEntity deleteBid(@PathVariable("id") Long id_bid) {
         String result = bidService.delete(id_bid);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

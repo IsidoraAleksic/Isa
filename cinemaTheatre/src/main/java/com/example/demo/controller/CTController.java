@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping(value = "/")
 public class CTController {
 
+<<<<<<< HEAD
     @Autowired
     private CTService ctService;
 
@@ -39,20 +41,20 @@ public class CTController {
         return new PageImpl<CTDTO>(toCTDTO.convert(page.getContent()), p, page.getTotalElements());
     }
 
-
     @RequestMapping(value = "/theaters", method = RequestMethod.GET)
     public Page<?> getTheaters(Pageable p) {
         Page<CinemaTheater> page = ctService.getCinemaTheaterByType(CTType.THEATER, p);
         return new PageImpl<CTDTO>(toCTDTO.convert(page.getContent()), p, page.getTotalElements());
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
     public ResponseEntity<?> addCT(@Validated @RequestBody CinemaTheater ct, Errors errors) {
-        if (errors.hasErrors()) {
-            return new ResponseEntity<>(errors.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
-        }
-        CinemaTheater created = ctService.save(ct);
-        return new ResponseEntity<>(created, HttpStatus.OK);
+      if(errors.hasErrors()) {
+        return new ResponseEntity<>(errors.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
+      }
+      CinemaTheater created = ctService.save(ct);
+      return new ResponseEntity<>(created,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/ct/{id}", method = RequestMethod.DELETE)
@@ -108,5 +110,3 @@ public class CTController {
 
 
 }
-
-

@@ -47,6 +47,11 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserType role;
 
+    @Enumerated(EnumType.STRING)
+    private UserTier userTier;
+
+    private boolean firstLogin;
+
     private String confirmationToken;
 
     @OneToMany(mappedBy = "receiver")
@@ -170,6 +175,18 @@ public class User implements Serializable {
         this.phone = phone;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public UserTier getUserTier() {
+        return userTier;
+    }
+
+    public void setUserTier(UserTier userTier) {
+        this.userTier = userTier;
+    }
+
     public UserType getRole() {
         return role;
     }
@@ -177,4 +194,13 @@ public class User implements Serializable {
     public void setRole(UserType role) {
         this.role = role;
     }
+
+    public boolean isFirstLogin() {
+        return firstLogin;
+    }
+
+    public void setFirstLogin(boolean firstLogin) {
+        this.firstLogin = firstLogin;
+    }
+
 }

@@ -13,9 +13,11 @@ public class Ad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "ad") // "Go look over on the bean property named 'ad' on the thing I have a collection of to find the configuration."mappedBy = "ad",
-    @JsonIgnore
-    private List<Bid> bid;//ponuda
+    private String nameAd;
+
+    private String description;
+
+    private String imageAd;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;//korisnik koji je objavio oglas
@@ -24,14 +26,12 @@ public class Ad {
 
     private Date dateEndOfBids;//datum isteka za prikupljanje ponuda
 
-    private String nameAd;
-
-    private String description;
-
-    private String imageAd;
-
     @Enumerated(EnumType.STRING)
     private AdBidStatus adBidStatus;
+
+    @OneToMany(mappedBy = "ad") // "Go look over on the bean property named 'ad' on the thing I have a collection of to find the configuration."mappedBy = "ad",
+    @JsonIgnore
+    private List<Bid> bid;//ponuda
 
     public Ad() {
 
@@ -114,14 +114,14 @@ public class Ad {
     public String toString() {
         return "Ad{" +
                 "id=" + id +
-                ", bid=" + bid +
-                ", user=" + user +
-                ", priceAd=" + priceAd +
-                ", dateEndOfBids=" + dateEndOfBids +
                 ", nameAd='" + nameAd + '\'' +
                 ", description='" + description + '\'' +
                 ", imageAd='" + imageAd + '\'' +
+                ", user=" + user +
+                ", priceAd=" + priceAd +
+                ", dateEndOfBids=" + dateEndOfBids +
                 ", adBidStatus=" + adBidStatus +
+                ", bid=" + bid +
                 '}';
     }
 }
