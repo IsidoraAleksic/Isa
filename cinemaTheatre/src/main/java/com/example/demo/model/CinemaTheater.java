@@ -134,4 +134,8 @@ public class CinemaTheater {
 		this.user = user;
 	}
 
+	public void addProjection(Projection p) {
+		this.projections.add(p);
+	}
+
 }

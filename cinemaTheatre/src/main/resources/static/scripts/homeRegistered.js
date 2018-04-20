@@ -117,7 +117,7 @@ function logOut() {
         success: function (data) {
             var ok = data;
             if (ok == "ok") {
-                window.location = "http://localhost:9080/loginRegister.html";
+                window.location = "/loginRegister.html";
             } else
                 toastr.error('logout failed');
         }
@@ -125,7 +125,7 @@ function logOut() {
 }
 
 function goToProfile() {
-    window.location = "http://localhost:9080/userPage.html";
+    window.location = "/userPage.html";
 }
 
 function listFriends() {
@@ -404,10 +404,10 @@ function showTheaters(data) {
 
 }
 
-$(document).on('submit', '#formaVisitCinemaTheater', function (e) {
+$(document).on('submit', '#formaVisitCinemaTheater', function (e, id) {
     e.preventDefault();
     var id = document.getElementById("hiddenVisitCT").value;
-    window.location = "http://localhost:9080/ctProfile.html?id=" + id;
+    window.location = "/ctProfile.html?id=" + id;
 });
 
 function tableList(data, type) {
@@ -745,7 +745,7 @@ function reserve(idH, idP,name,rows,cols) {
                             }
                         }
                     });
-                    // window.location = "http://localhost:9080/homeRegistered.html";
+                    // window.location = "/homeRegistered.html";
 
                 } else {
                     toastr.error("Reservation failed");
@@ -758,7 +758,7 @@ function reserve(idH, idP,name,rows,cols) {
 
 function noFriends(idP,idH){
     reservedSeats = [];
-    window.location = "http://localhost:9080/homeRegistered.html";
+    window.location = "/homeRegistered.html";
     toastr.success("Successful reservation");
 }
 

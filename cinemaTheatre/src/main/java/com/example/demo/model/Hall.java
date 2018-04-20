@@ -88,4 +88,8 @@ public class Hall {
 	public Hall() {
 
 	}
+	
+	public void addSeat(Seat seat) {
+		seats.add(seat);
+	}
 }

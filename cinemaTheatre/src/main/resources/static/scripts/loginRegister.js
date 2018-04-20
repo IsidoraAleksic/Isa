@@ -33,7 +33,7 @@ $(function() {
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>User with email and password not found</p>');
                 }else if(user=="ok"){
-                    window.location= "http://localhost:9080/homeRegistered.html";
+                    window.location= "/homeRegistered.html";
                 }else{
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>Email not confirmed. Please confirm email.</p>');
@@ -86,7 +86,7 @@ $(document).on('submit', '#register-form', function(e){
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>User already exists. </p>');
                 }else if(user=="ok"){
-                    window.location= "http://localhost:9080/homeRegistered.html";
+                    window.location= "/homeRegistered.html";
                 }else if(user=="not confirmed") {
                     $("#loginMessage").empty();
                     $("#register-form").empty();

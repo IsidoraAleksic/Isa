@@ -26,7 +26,7 @@ $(function() {
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>User with email and password not found</p>');
                 }else if(user=="ok"){
-                    window.location= "http://localhost:9080/invitation.html";
+                    window.location= "/invitation.html";
                 }
             }
         });

@@ -9,16 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.converters.ProjectionDTOtoProjection;
 import com.example.demo.converters.ProjectionToProjectionDTO;
 import com.example.demo.dto.ProjectionDTO;
+import com.example.demo.model.Hall;
 import com.example.demo.model.Projection;
-import com.example.demo.service.CTService;
+import com.example.demo.model.Seat;
+import com.example.demo.model.SeatType;
 import com.example.demo.service.ProjectionService;
+import com.example.demo.service.SeatService;
 import com.example.demo.util.Stat;
 
 @RestController
@@ -30,10 +31,13 @@ public class ProjectionController {
 
 	@Autowired
 	private ProjectionToProjectionDTO toDTO;
-	
+
 	@Autowired
 	private ProjectionDTOtoProjection toProj;
 
+	@Autowired
+	private SeatService seatService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ResponseEntity<?> getProjections() {
 		return new ResponseEntity<>(pService.getAll(), HttpStatus.OK);
@@ -42,8 +46,25 @@ public class ProjectionController {
 	@PreAuthorize("hasAuthority('ADMINCT')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<?> addProjection(@RequestBody ProjectionDTO pdto) {
-		
-		Projection created = pService.save(toProj.convert(pdto));
+
+		Projection p = pService.save(toProj.convert(pdto));
+		Hall hall = p.getHall();
+		int rows = hall.getRows();
+		int cols = hall.getCols();
+
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				SeatType type = (i == 0) ? SeatType.VIP
+						: (i == 1) ? SeatType.SPEED
+								: (i == rows - 1) ? SeatType.VIP
+										: (i == rows - 2) ? SeatType.REDACTED : SeatType.AVAILABLE;
+				Seat s = new Seat(i, j, type, p.getHall(), p);
+				hall.addSeat(seatService.addSeat(s));
+			}
+		}
+		p.getCt().addProjection(p);
+		Projection created = pService.save(p);
+
 		return new ResponseEntity<>(toDTO.convert(created), HttpStatus.OK);
 	}
 
@@ -58,6 +79,7 @@ public class ProjectionController {
 	public ResponseEntity<?> getProjection(@PathVariable long id) {
 		return new ResponseEntity<>(pService.findById(id), HttpStatus.OK);
 	}
+
 	@RequestMapping(value = "/getById/{id}", method = RequestMethod.GET)
 	public Projection getProjectionById(@PathVariable long id) {
 		return pService.findProjectionById(id);

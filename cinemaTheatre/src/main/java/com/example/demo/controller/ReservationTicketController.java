@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.converters.SeatToSeatDTO;
 import com.example.demo.dao.TicketsDao;
+import com.example.demo.dto.SeatDTO;
 import com.example.demo.model.*;
 import com.example.demo.service.*;
 import com.example.demo.service.impl.EmailService;
@@ -46,7 +48,8 @@ public class ReservationTicketController {
     private UserService userService;
     @Autowired
     private EmailService emailService;
-
+    @Autowired
+    private SeatToSeatDTO toDTO;
 
     @RequestMapping(value = "/getCinemaTheater/{id}", method = RequestMethod.GET, produces = "application/json")
     public List<Projection> getCinemaTheater(@PathVariable("id") long id) {
@@ -331,5 +334,54 @@ public class ReservationTicketController {
         }
         return ret;
     }
+    
+    @PreAuthorize("hasAuthority('GUEST')")
+	@RequestMapping(value = "/speed/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> getSpeedTickets(@PathVariable long id){
+		CinemaTheater ct = ctService.find(id);
+		List<SeatDTO> seats = new ArrayList<>();
+		for(Hall h : ct.getHalls()) {
+			for(Seat s : h.getSeats()) {
+				if(s.getSeatType()==SeatType.SPEED) {
+					seats.add(toDTO.convert(s));
+				}
+			}
+		}
+		
+		return new ResponseEntity<>(seats,HttpStatus.OK);
+		
+	}
+    
+    @PreAuthorize("hasAuthority('GUEST')")
+	@RequestMapping(value = "/speed/reserve/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> speedReserve(@PathVariable long id){
+    	User user = authenticationService.getLoggedInUser();
+    	boolean reserved = false;
+    	Seat speed = reservationTicketService.findSeatById(id);
+    	Ticket ticket = reservationTicketService.findBySeat(speed);
+    	speed.setSeatType(SeatType.TAKEN);
+    	if (ticket == null) {
+            ticketsDao.create((short) 0, 1, speed, speed.getProjection());
+            ticket = reservationTicketService.findBySeat(speed);
+            user.getReservedTickets().add(ticket);
+            user.setPoints(user.getPoints()+5);
+            userService.saveUser(user);
+            reserved = true;
+        }
+    	
+    	if(reserved){
+            String message = "You have reserved projection of  " + ticket.getProjection().getName() + " on day: " + ticket.getProjection().getDate() + " at  " + ticket.getProjection().getTime();
+            try {
+                emailService.sendEmailVerification(user.getEmail(), message, "Reservation information");
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+        } else{
+            return new ResponseEntity<>(HttpStatus.IM_USED);
+        }
+    	
+    	return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
 }
 

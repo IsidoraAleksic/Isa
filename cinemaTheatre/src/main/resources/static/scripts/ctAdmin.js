@@ -136,8 +136,8 @@ function halls(){
 			$("#hallTable").html('<tr class="header"><th>Name</th><th>Rows</th><th>Seats per row</th><th>Delete</th></tr>');
 			for(var i = 0; i < data.length; i++){
 				$("#hallTable").append('<tr>'
-				+'<td class="name first">'+data[i].name+'</td>'+
-				'<td class="rows second">'+data[i].rows+'</td>'
+				+'<td class="name first">'+data[i].name+'</td>'
+				+'<td class="rows second">'+data[i].rows+'</td>'
 				+'<td class="cols third">'+data[i].cols+'</td>'
 				+'<td><a class="delete" href="/hall/'+data[i].id+'"><img src="images/remove.gif"/></a>'
 				+'</tr>');

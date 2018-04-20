@@ -1,6 +1,6 @@
 $(function() {
     tgt = "/" + window.location.href.split("ct=")[1];
-    $.ajax({
+	$.ajax({
         url: tgt,
         success: function(data){
 
@@ -19,5 +19,9 @@ $(function() {
             }
         }
     });
+	
+	//#.ajax({
+	//	url: ""
+	//})
 
 });
