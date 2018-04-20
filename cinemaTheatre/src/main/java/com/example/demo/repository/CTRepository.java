@@ -23,4 +23,5 @@ public interface CTRepository extends JpaRepository<CinemaTheater, Long> {
 
     public CinemaTheater findById(long id);
 
+    public CinemaTheater findByUserId(long id);
 }

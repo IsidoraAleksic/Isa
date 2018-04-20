@@ -11,7 +11,6 @@ public interface ProjectionService {
 
 	public List<Projection> findByCtid(long id);
 
-
     Projection save(Projection projection);
 
     Projection delete(long id);
@@ -26,5 +25,8 @@ public interface ProjectionService {
 
     Projection findFirstByNameAndDateAndTime(String name, Date date, Time time);
 
+    List<Projection> findByCtidAndDateBetween(long id, String dateStart, String dateEnd);
+
+	List<Projection> findByCtidAndDateLike(long id, String first);
 
 }

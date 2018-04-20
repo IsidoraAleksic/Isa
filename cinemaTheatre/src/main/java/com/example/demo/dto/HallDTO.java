@@ -8,20 +8,14 @@ public class HallDTO {
 
 	private Long id;
 	
-	@NotNull
-	@Size(min=1)
 	private String name;
 
-	@NotNull
 	private int rows;
 	
-	@NotNull
 	private int cols;
 	
-	@NotNull
 	private Long ctId;
 	
-	private CinemaTheater ct;
 
 	public HallDTO() {
 
@@ -33,7 +27,6 @@ public class HallDTO {
 		this.rows = rows;
 		this.cols = cols;
 		this.ctId = ctId;
-		this.ct = ct;
 	}
 
 	public Long getId() {
@@ -76,12 +69,9 @@ public class HallDTO {
 		this.ctId = ctId;
 	}
 
-	public CinemaTheater getCt() {
-		return ct;
-	}
-
-	public void setCt(CinemaTheater ct) {
-		this.ct = ct;
+	@Override
+	public String toString() {
+		return "HallDTO [id=" + id + ", name=" + name + ", rows=" + rows + ", cols=" + cols + ", ctId=" + ctId + "]";
 	}
 
 }

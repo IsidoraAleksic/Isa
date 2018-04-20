@@ -59,4 +59,9 @@ public class CTServiceImpl implements CTService {
 		
 	}
 
+	@Override
+	public CinemaTheater getCinemaTheaterByUser(long id) {
+		return ctRepository.findByUserId(id);
+	}
+
 }

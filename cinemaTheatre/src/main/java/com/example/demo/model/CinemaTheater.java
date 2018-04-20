@@ -38,6 +38,9 @@ public class CinemaTheater {
 	@OneToMany
 	private List<Hall> halls;
 
+	@OneToOne
+	private User user;
+
 	@Column(name = "ambient")
 	private float ambient;
 
@@ -78,8 +81,7 @@ public class CinemaTheater {
 	}
 
 	public CinemaTheater(long id, @NotNull @Size(min = 2, max = 60) String name,
-			@NotNull @Size(max = 120) String address, @Size(max = 280) String description, CTType type,
-			float ambient) {
+			@NotNull @Size(max = 120) String address, @Size(max = 280) String description, CTType type, float ambient) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
@@ -118,6 +120,14 @@ public class CinemaTheater {
 
 	public void setAmbient(float ambient) {
 		this.ambient = ambient;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

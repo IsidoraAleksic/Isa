@@ -202,4 +202,16 @@ public class Projection {
 
     }
 
+	public CinemaTheater getCt() {
+		return ct;
+	}
+
+	public void setCt(CinemaTheater ct) {
+		this.ct = ct;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
 }

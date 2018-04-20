@@ -1,7 +1,7 @@
 insert into isadb.users(first_name, last_name,password_user, email,city,phone,enabled, role,user_tier) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE');
 insert into isadb.users(first_name, last_name,password_user, email,city,phone,enabled,role,user_tier) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE, 'GUEST','BRONZE');
 insert into isadb.users(first_name, last_name,password_user, email,city,phone,enabled, role,user_tier) values('isidora', 'isidora','isidora','isidora@gmail.com','novi sad','021',TRUE,'ADMINFZ','BRONZE');
-insert into isadb.users(first_name, last_name,password_user, email,city,phone,enabled, role,user_tier) values('njari', 'njari','njari','njari@gmail.com','novi sad','021',TRUE,'GUEST','BRONZE');
+insert into isadb.users(first_name, last_name,password_user, email,city,phone,enabled, role,user_tier) values('njari', 'njari','njari','njaridaniel@gmail.com','novi sad','021',TRUE,'ADMINCT','BRONZE');
 INSERT INTO friends(user_one_id,user_two_id,status) VALUES (1,2,1);
 INSERT INTO friends(user_one_id,user_two_id,status) VALUES (2,3,1);
 INSERT INTO friends(user_one_id,user_two_id,status) VALUES (1,3,1);
@@ -18,9 +18,9 @@ INSERT INTO bids(id_ad,id_guest_bid,price_bid,ad_bid_status) VALUES (1,1,3,'WAIT
 INSERT INTO bids(id_ad,id_guest_bid,price_bid,ad_bid_status) VALUES (1,1,5,'WAITING');
 INSERT INTO bids(id_ad,id_guest_bid,price_bid,ad_bid_status) VALUES (2,1,25,'WAITING');
 
-INSERT INTO ct(name,address,description,type,ambient) VALUES ('Arena Cineplex','Bulevar Mihajla Pupina 3, Novi Sad','A short description that is absolutely  pointless','CINEMA','3.443');
-INSERT INTO ct(name,address,description,type,ambient) VALUES ('CineStar','Sentandrejski Put 11, Novi Sad','A short description that is absolutely  pointless','CINEMA','4.501');
-INSERT INTO ct(name,address,description,type,ambient) VALUES ('Sprsko Narodno Pozoriste','Pozorisni Trg 1, Novi Sad','A short description that is absolutely  pointless','THEATER','4.500');
+INSERT INTO ct(name,address,description,type,ambient) VALUES ('Arena Cineplex','Bulevar Mihajla Pupina 3, Novi Sad','A short description that is absolutely  pointless','CINEMA','0');
+INSERT INTO ct(name,address,description,type,ambient) VALUES ('CineStar','Sentandrejski Put 11, Novi Sad','A short description that is absolutely  pointless','CINEMA','0');
+INSERT INTO ct(name,address,description,type,ambient) VALUES ('Sprsko Narodno Pozoriste','Pozorisni Trg 1, Novi Sad','A short description that is absolutely  pointless','THEATER','0');
 
 INSERT INTO halls(rows,cols,name,ct_id) values ('10','10','hall 1','1');
 INSERT INTO halls(rows,cols,name,ct_id) values ('10','8','hall 2','1');
@@ -43,8 +43,6 @@ INSERT INTO reservations_merchandise(user_id,merchandise_id) VALUES (1,1);
 INSERT INTO isadb.merchandise(user_id, name_merchandise,description,price_merchandise,image_merchandise) VALUES (1,'badge','starwars badge',5,'/images/jediresize.jpg');
 INSERT INTO isadb.merchandise(user_id, name_merchandise,description,price_merchandise,image_merchandise) VALUES (1,'cup','frozen cup',8,'/images/frozen.jpg');
 
-INSERT into isadb.ct(name,address,description,type,ambient) values('nameC','addressC','descriptionC','CINEMA','0');
-INSERT into isadb.ct(name,address,description,type,ambient) values('nameT','addressT','descriptionT','THEATER','0');
 INSERT INTO isadb.bids(id_ad,id_guest_bid,price_bid,ad_bid_status) VALUES (1,3,3,'WAITING');
 INSERT INTO isadb.bids(id_ad,id_guest_bid,price_bid,ad_bid_status) VALUES (1,2,5,'WAITING');
 INSERT INTO isadb.bids(id_ad,id_guest_bid,price_bid,ad_bid_status) VALUES (2,2,25,'WAITING');
@@ -54,8 +52,6 @@ INSERT INTO isadb.reservations_merchandise(user_id,merchandise_id) VALUES (1,1);
 
 
 
-INSERT INTO ct(name,address,description,type,ambient) VALUES ('Arena Cineplex','Bulevar Mihajla Pupina 3, Novi Sad','A short description that is absolutely  pointless','CINEMA','3');
-INSERT INTO ct(name,address,description,type,ambient) VALUES ('CineStar','Sentandrejski Put 11, Novi Sad','A short description that is absolutely  pointless','CINEMA','4');
 INSERT into isadb.ct(name,address,description,type,ambient) values('beograd Cinema','addressC','descriptionC','CINEMA','0');
 INSERT into isadb.ct(name,address,description,type,ambient) values('cacak Theater','addressT','descriptionT','THEATER','0');
 INSERT into isadb.ct(name,address,description,type,ambient) values('Pozoriste mladih','Novi Sad','pozoriste','THEATER','0');
@@ -82,4 +78,7 @@ INSERT into isadb.seats(hall_id,row,col) values('2','7','7');
 INSERT into isadb.seats(hall_id,row,col) values('3','5','5');
 INSERT into isadb.seats(hall_id,row,col) values('4','4','4');
 
- INSERT into isadb.seats(hall_id,rows,cols) values('4','4','4');
+INSERT into isadb.seats(hall_id,rows,cols) values('4','4','4');
+
+--TEST
+UPDATE ct set user_id = 4 where id = 1;
