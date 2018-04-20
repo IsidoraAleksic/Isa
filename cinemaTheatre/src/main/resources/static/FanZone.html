@@ -25,14 +25,15 @@
         </div>
     </div>
     <h2>Fan Zone</h2>
-    <button type="button" class="btn btn-primary" onclick="openAdPage()">New Ad</button>
-    <button type="button" class="btn btn-primary" onclick="openMerchPage()">New Merch</button>
+    <div class="container" id="NewAdMerch">
 
-    <ul class="nav nav-pills">
+
+    </div>
+
+    <ul class="nav nav-pills" id="pills">
         <li><a data-toggle="pill" href="#menu1" onclick="getAllMerchs()">Offical shop</a></li>
         <li><a data-toggle="pill" href="#menu2" onclick="getAllAds()">Ads</a></li>
-        <li><a data-toggle="pill" href="#menu3" onclick="getAllBidsByGuestId()">My Bids</a></li>
-        <li><a data-toggle="pill" href="#menu4" onclick="getAllBids()">All Bids for my ads</a></li>
+
     </ul>
 
     <div class="tab-content">
@@ -80,6 +81,8 @@
 
         </div>
     </div>
+
+
 
 
 

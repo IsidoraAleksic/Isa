@@ -1,3 +1,38 @@
+var userr;
+$(document).ready(function () {
+    getUser();
+});
+
+
+function getUser(){
+$.ajax({
+    url: "/authenticate/getUser",
+    dataType: "json",
+    type: "GET",
+    success: function (data) {
+        userr = data;
+        var content2="";
+        var content="";
+        if(userr.role == "GUEST"){
+            content+="<button type=\"button\" class=\"btn btn-primary\" onclick=\"openAdPage()\">New Ad</button>";
+
+            content2+="<li><a data-toggle=\"pill\" href=\"#menu3\" onclick=\"getAllBidsByGuestId()\">My Bids</a></li>\n" +
+                "<li><a data-toggle=\"pill\" href=\"#menu4\" onclick=\"getAllBids()\">All Bids for my ads</a></li>";
+            pillsBids(content2);
+            return $("#NewAdMerch").append(content);
+
+        }else if(userr.role == "ADMINFZ"){
+            content+="<button type=\"button\" class=\"btn btn-primary\" onclick=\"openMerchPage()\">New Merch</button>";
+            return $("#NewAdMerch").append(content);
+        }
+
+    }
+});
+}
+function pillsBids(content2){
+    content=content2;
+    return $("#pills").append(content);
+}
 function getAllMerchs(){
     $.ajax({
         url: "/merchandise/allMerchandise",
@@ -72,9 +107,13 @@ function createMerchDiv(merch) {
         +merch.priceMerchandise+"<small class=\"text-muted\">$</small>" +
         "</h1><img class='merch-image' src="+merch.imageMerchandise+">" + "  " + merch.nameMerchandise + "<br/>"
         + merch.description+"  <input type=\"submit\" onclick=\"reserveMerchs("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Reserve\">"+
-     "<input type=\"submit\" onclick=\"deleteMerch("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Delete Merch\">"+
-     "<input type=\"submit\" onclick=\"openUpdateMerch("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Update Merch\"></div>";
+        "<input type=\"submit\" id=\"deleteM\" onclick=\"deleteMerch("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Delete Merch\">"+
+        "<input type=\"submit\" id=\"updateM\" onclick=\"openUpdateMerch("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Update Merch\"></div>";
 
+        /*if(userr.role!="ADMINFZ"){
+            document.getElementById('deleteM').style.display='none';
+            document.getElementById('updateM').style.display='none';
+        }*/
     return content;
 }
 
@@ -181,7 +220,13 @@ function reserveMerchs(merchId) {
             "userId": ""
         }),
         success: function(data) {
-            $(location).attr('href', 'FanZone.html');
+            content="";
+            if(data=="Successfully created merch reservation."){
+               $(location).attr('href', 'FanZone.html');
+            }else{
+                alert("That merchandise has been already reserved by another user!");
+            }
+
         }
     });
 }

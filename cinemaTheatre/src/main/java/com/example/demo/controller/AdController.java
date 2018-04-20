@@ -7,7 +7,6 @@ import com.example.demo.model.AdBidStatus;
 import com.example.demo.service.AdService;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.NotificationService;
-import com.example.demo.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 @RestController
@@ -33,8 +28,6 @@ public class AdController {
     @Autowired
     private AuthenticationService authenticationService;
 
-    @Autowired
-    private StorageService storageService;
 
     @RequestMapping("/allAds")
     public List<Ad> getAll(){
@@ -68,19 +61,6 @@ public class AdController {
         }
         return adId;
         //return new ResponseEntity<>("Successfully created ad", HttpStatus.CREATED);
-    }
-
-    @PostMapping(value="{id}/image/")
-    public ResponseEntity uploadFile(@PathVariable("id") long id,@RequestBody AdDTO adDTO, @RequestParam("file") MultipartFile file){
-        try{
-            String imageUrl = storageService.store(file);
-            adDTO.setImageAd(imageUrl);
-            String result = adService.update(id, adDTO);
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity(e,HttpStatus.NOT_FOUND);
-        }
-
     }
 
 

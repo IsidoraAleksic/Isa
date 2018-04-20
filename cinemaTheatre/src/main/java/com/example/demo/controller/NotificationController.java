@@ -32,7 +32,6 @@ public class NotificationController {
         return notificationService.getByReceiver(authenticationService.getLoggedInUser().getId());
     }
 
-
     @PostMapping
     public ResponseEntity createNotification(@RequestBody NotificationDTO notificationDTO) {
         String result = notificationService.create(notificationDTO);

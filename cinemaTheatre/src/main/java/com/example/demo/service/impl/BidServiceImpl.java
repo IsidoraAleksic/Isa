@@ -2,16 +2,14 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dto.BidDTO;
 import com.example.demo.dto.NotificationDTO;
-import com.example.demo.model.Ad;
-import com.example.demo.model.Bid;
+import com.example.demo.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.demo.model.AdBidStatus;
-import com.example.demo.model.User;
 import com.example.demo.repository.AdRepository;
 import com.example.demo.repository.BidRepository;
+import com.example.demo.repository.NotificationRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +18,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class BidServiceImpl implements BidService {
 
+    @Autowired
     private BidRepository bidRepository;
+    @Autowired
     private AdRepository adRepository;
+    @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     private static String SUCCESS_CREATED_BID = "Successfully created bid";
     private static String ERRORR_CREATE_BID = "Unsuccessful create bid";
@@ -32,13 +35,6 @@ public class BidServiceImpl implements BidService {
 
     private static String SUCCESS_DELETED_BID = "Successfully deleted bid";
     private static String BID_DOESNT_EXISTS = "Bid can't be deleted because it doesn't exist.";
-
-    @Autowired
-    public BidServiceImpl(BidRepository bidRepository, AdRepository adRepository, UserRepository userRepository) {
-        this.bidRepository = bidRepository;
-        this.adRepository = adRepository;
-        this.userRepository = userRepository;
-    }
 
     public List<Bid> getAll() {
         return bidRepository.findAll();
@@ -58,7 +54,13 @@ public class BidServiceImpl implements BidService {
     }
 
     public String create(BidDTO bidDTO) {
-        List<BidDTO> bids = new ArrayList<>();
+
+        List<Ad> ads = adRepository.findAll();
+        for(Ad ad:ads){
+            if(ad.getAdBidStatus() != AdBidStatus.ACCEPTED){
+                return ERRORR_CREATE_BID;
+            }
+        }
         if (bidDTO == null) {
             return ERRORR_CREATE_BID;
             //return null;
@@ -70,7 +72,7 @@ public class BidServiceImpl implements BidService {
         bid.setIdGuestBid(bidDTO.getIdGuestBid());
 
         bidRepository.save(bid);
-        //eturn resultBid.getId();
+
         return SUCCESS_CREATED_BID;
     }
 
@@ -83,9 +85,19 @@ public class BidServiceImpl implements BidService {
             return ERRORR_UPDATE_BID;
         }
         bid.setPriceBid(bidDTO.getPriceBid());
-        bidRepository.save(bid);
-        return SUCCESS_UPDATED_BID;
-    }
+
+        Long idAd=bid.getAd().getId();
+        Ad ad = adRepository.getById(idAd);
+        List<Bid> bids = ad.getBid();//al the bids for the ad
+        for(Bid bidd:bids){
+            if(bidd.getAdBidStatus() == AdBidStatus.ACCEPTED){
+                return ERRORR_UPDATE_BID;
+            }
+        }
+            bidRepository.save(bid);
+            return SUCCESS_UPDATED_BID;
+        }
+
 
     public String delete(Long idBid) {
         if (bidRepository.getById(idBid) == null) {

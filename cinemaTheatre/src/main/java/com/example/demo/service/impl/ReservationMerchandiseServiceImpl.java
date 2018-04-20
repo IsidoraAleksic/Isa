@@ -18,6 +18,9 @@ public class ReservationMerchandiseServiceImpl implements ReservationMerchandise
     private MerchandiseRepository merchandiseRepository;
 
     private static final String SUCCESSFULLY_CREATED ="Successfully created merch reservation.";
+
+    private static final String UNSUCCESSFULLY_CREATED = "Unsuccessfully created merch reservation.";
+
     @Autowired
     ReservationMerchandiseServiceImpl(ReservationMerchandiseRepository reservationMerchandiseRepository, UserRepository userRepository, MerchandiseRepository merchandiseRepository) {
         this.reservationMerchandiseRepository = reservationMerchandiseRepository;
@@ -37,10 +40,13 @@ public class ReservationMerchandiseServiceImpl implements ReservationMerchandise
         ReservationMerchandise reservationMerchandise = new ReservationMerchandise();
         reservationMerchandise.setUser(userRepository.getById(reservationMerchandiseDTO.getUserId()));
         reservationMerchandise.setMerch(merchandiseRepository.getById(reservationMerchandiseDTO.getMerchId()));
-        long n = 0;
-        reservationMerchandise.setVersion(n+1);
-        reservationMerchandiseRepository.save(reservationMerchandise);
-        return SUCCESSFULLY_CREATED;
+        Long mercId = reservationMerchandiseDTO.getMerchId();
+            if(reservationMerchandiseRepository.findByMerchId(mercId)!=null){
+                return UNSUCCESSFULLY_CREATED;
+            }else{
+                reservationMerchandiseRepository.save(reservationMerchandise);
+                return SUCCESSFULLY_CREATED;
+            }
     }
 
 }

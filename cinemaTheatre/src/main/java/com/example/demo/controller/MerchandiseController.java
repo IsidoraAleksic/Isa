@@ -1,27 +1,15 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.BidDTO;
 import com.example.demo.dto.MerchandiseDTO;
 import com.example.demo.model.Merchandise;
-import com.example.demo.repository.MerchandiseRepository;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.MerchandiseService;
-import com.example.demo.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
-import javax.websocket.server.PathParam;
-import java.io.*;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 @RestController
 @RequestMapping("/merchandise")
