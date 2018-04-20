@@ -29,6 +29,7 @@ public class ProjectionServiceImpl implements ProjectionService{
 		Projection p = pRepository.getOne(id);
 		if(p == null)
 			throw new IllegalArgumentException("Tried to delete non-existing projection");
+		pRepository.deleteById(id);
 		return p;
 	}
 
@@ -47,7 +48,7 @@ public class ProjectionServiceImpl implements ProjectionService{
 
 	@Override
 	public List<Projection> findByCtid(long id) {
-		return pRepository.findByCt(id);
+		return pRepository.findByCtId(id);
 	}
 
 	@Override
@@ -70,6 +71,18 @@ public class ProjectionServiceImpl implements ProjectionService{
 	public Projection findFirstByNameAndDateAndTime(String name, Date date, Time time) {
 		return pRepository.findFirstByNameAndDateAndTime(name,date,time);
 	}
+
+	@Override
+	public List<Projection> findByCtidAndDateBetween(long id, String dateStart, String dateEnd) {
+		
+		return pRepository.findByCtAndDateBetween(id, dateStart, dateEnd);
+	}
+
+	@Override
+	public List<Projection> findByCtidAndDateLike(long id, String date) {
+		return pRepository.findByCtAndDateLike(id, date);
+	}
+
 
 
 }

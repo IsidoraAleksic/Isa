@@ -25,4 +25,6 @@ public interface CTService {
 
     CinemaTheater delete(long id);
 
+	CinemaTheater getCinemaTheaterByUser(long id);
+
 }
