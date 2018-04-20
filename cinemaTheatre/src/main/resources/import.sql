@@ -105,10 +105,6 @@ INSERT into halls_seats(halls_id,seats_id) values('1','20');
 INSERT into halls_seats(halls_id,seats_id) values('1','21');
 INSERT into halls_seats(halls_id,seats_id) values('1','22');
 
-
-
-
-
 create table user_tier_scale(id Long NOT NULL AUTO_INCREMENT, points INT,user_tier ENUM('BRONZE','SILVER','GOLDEN'),PRIMARY KEY(id));
 insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE',true,'10');
 insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE,'GUEST','BRONZE',true,'10');
