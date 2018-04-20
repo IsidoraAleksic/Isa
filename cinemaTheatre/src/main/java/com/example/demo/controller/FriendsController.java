@@ -30,8 +30,7 @@ public class FriendsController {
     AuthenticationService authenticationService;
     @Autowired
     FriendsDao friendsDao;
-    @Autowired
-    private TicketsDao ticketsDao;
+
     @Autowired
     private ReservationTicketService reservationTicketService;
     @Autowired
@@ -39,17 +38,6 @@ public class FriendsController {
     @Autowired
     private EmailService emailService;
 
-//    @RequestMapping(value = "/allFirstName/{firstName}", method = RequestMethod.GET)
-//    public List<User> listFriendsAndNonFriendsByFirstName(@PathVariable("firstName") String firstName){
-//        List<User> users = userService.findByFirstName(firstName);
-//        System.out.println(users.size());
-//        return users;
-//    }
-//    @RequestMapping(value = "/allLastName/{lastName}", method = RequestMethod.GET)
-//    public List<User> listFriendsAndNonFriendsByLastName(@PathVariable("lastName") String lastName){
-//        List<User> users = userService.findByLastName(lastName);
-//        return users;
-//    }
 
     @RequestMapping(value = "/allName/{name}", method = RequestMethod.GET)
     public List<User> listFriendsAndNonFriendsByName(@PathVariable("name") String name) {
@@ -128,33 +116,6 @@ public class FriendsController {
         return ret;
     }
 
-    //    @RequestMapping(value = "/friendsFirstName/{firstName}", method = RequestMethod.GET)
-//    public List<User> listFriendsByFirstName(@PathVariable("firstName") String firstName){
-//        List<User> users = userService.findByFirstName(firstName);
-//        List<User> friends =  listAllFriends();
-//        List<User> ret = new ArrayList<>();
-//        for(User user: users){
-//            for(User friend: friends){
-//                if(user.getId()==friend.getId())
-//                    ret.add(user);
-//            }
-//        }
-//        return ret;
-//    }
-//
-//    @RequestMapping(value = "/friendsLastName/{lastName}", method = RequestMethod.GET)
-//    public List<User> listFriendsByLastName(@PathVariable("lastName") String lastName){
-//        List<User> users = userService.findByLastName(lastName);
-//        List<User> friends = listAllFriends();
-//        List<User> ret = new ArrayList<>();
-//        for(User user: users){
-//            for(User friend: friends){
-//                if(user.getId()==friend.getId())
-//                    ret.add(user);
-//            }
-//        }
-//        return ret;
-//    }
     @RequestMapping(value = "/isFriends/{id}", method = RequestMethod.GET, produces = "text/plain")
     public String isFriends(@PathVariable("id") Long id) {
         User user = authenticationService.getLoggedInUser();

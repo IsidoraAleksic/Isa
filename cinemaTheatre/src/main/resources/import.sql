@@ -1,8 +1,4 @@
 create table user_tier_scale(id Long NOT NULL AUTO_INCREMENT, points INT,user_tier ENUM('BRONZE','SILVER','GOLDEN'),PRIMARY KEY(id));
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE',true,'10');
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE,'GUEST','BRONZE',true,'10');
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('isidora', 'isidora','isidora','isidora@gmail.com','novi sad','021',TRUE,'ADMINFZ','BRONZE',true,'5');
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('njari', 'njari','njari','njari@gmail.com','novi sad','021',TRUE,'ADMINCT','BRONZE',true,'14');
 insert into user_tier_scale(points,user_tier) values (11,'BRONZE');
 insert into user_tier_scale(points,user_tier) values (20,'SILVER');
 insert into user_tier_scale(points,user_tier) values (30,'GOLDEN');
@@ -135,6 +131,12 @@ INSERT INTO bids(id_ad,id_guest_bid,price_bid,ad_bid_status) VALUES (2,2,25,'WAI
 INSERT INTO notifications(id_receiver, topic, message) VALUES (1,'Bid notification','Your bid has been rejected.');
 INSERT INTO notifications(id_receiver, topic, message) VALUES (1,'Ad notification','Your ad has been approved.');
 INSERT INTO reservations_merchandise(user_id,merchandise_id) VALUES (1,1);
+
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Jefimija', 'Zivkovic','123','isamejl811@gmail.com','Novi Sad','021', TRUE, 'GUEST','BRONZE',true,'10');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('Isidora', 'Aleksic','1234','isidora@gmail.com','Novi Sad','021', TRUE,'GUEST','BRONZE',true,'10');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Daniel', 'Njari','12345','daniel@gmail.com','Novi Sad','021',TRUE,'ADMINFZ','BRONZE',true,'5');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Pera', 'Markovic','123','pama@gmail.com','Beograd','011',TRUE,'ADMINCT','BRONZE',true,'14');
+
 
 --TEST
 UPDATE ct set user_id = 4 where id = 1;

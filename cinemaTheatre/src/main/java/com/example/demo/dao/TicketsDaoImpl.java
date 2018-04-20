@@ -27,6 +27,7 @@ public class TicketsDaoImpl implements TicketsDao {
                 .addValue("discount", discount)
                 .addValue("status", status)
                 .addValue("seat", seat.getId())
+//                .addValue("seat", version)
                 .addValue("projection",projection.getId());
         namedParameterJdbcTemplate.update(INSERT_SQL, parameters, holder);
         // friends.setId(holder.getKey().intValue());
