@@ -22,6 +22,8 @@ public interface ProjectionRepository extends JpaRepository<Projection, Long> {
 
 	List<Projection> findProjectionsByNameAndDate(String name, Date date);
 
+    Projection findProjectionById(long id);
+
 	Projection findFirstByNameAndDateAndTime(String name, Date date, Time time);
 
 	List<Projection> findByCtAndDateLike(long id, String date);

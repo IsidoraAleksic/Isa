@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 import javax.persistence.*;
@@ -18,6 +20,7 @@ public class Hall {
 	private int cols;
 
 	@OneToMany
+	@JsonIgnore
 	private List<Seat> seats;
 
 	@ManyToOne
@@ -55,10 +58,12 @@ public class Hall {
 		this.cols = cols;
 	}
 
+	@JsonIgnore
 	public List<Seat> getSeats() {
 		return seats;
 	}
 
+	@JsonIgnore
 	public void setSeats(List<Seat> seats) {
 		this.seats = seats;
 	}

@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.converters.CTtoCTDTO;
+import com.example.demo.dto.CTDTO;
+import com.example.demo.model.CTType;
+import com.example.demo.model.CinemaTheater;
+import com.example.demo.service.CTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -9,17 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.demo.converters.CTtoCTDTO;
-import com.example.demo.dto.CTDTO;
-import com.example.demo.model.CTType;
-import com.example.demo.model.CinemaTheater;
-import com.example.demo.service.CTService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,16 +44,6 @@ public class CTController {
 	}
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<?> addCT(@Validated @RequestBody CinemaTheater ct, Errors errors) {
-		if (errors.hasErrors()) {
-			return new ResponseEntity<>(errors.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
-		}
-		CinemaTheater created = ctService.save(ct);
-		return new ResponseEntity<>(created, HttpStatus.OK);
-	}
-
-	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/ct/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> deleteCT(@PathVariable long id) {
 		CinemaTheater deleted = ctService.delete(id);
@@ -68,6 +53,22 @@ public class CTController {
 	@RequestMapping(value = "/ct/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> getCT(@PathVariable long id) {
 		return new ResponseEntity<>(ctService.find(id), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/ct", method = RequestMethod.GET)
+	public Page<?> getAll(Pageable p) {
+		Page<CinemaTheater> page = ctService.getAllCinemaTheater(p);
+		return new PageImpl<CTDTO>(toCTDTO.convert(page.getContent()), p, page.getTotalElements());
+	}
+
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = "application/json")
+	public ResponseEntity<?> addCT(@RequestBody CinemaTheater ct, Errors errors) {
+		if (errors.hasErrors()) {
+			return new ResponseEntity<>(errors.getAllErrors().toString(), HttpStatus.BAD_REQUEST);
+		}
+		CinemaTheater created = ctService.save(ct);
+		return new ResponseEntity<>(created, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/sortCinemasBy/{criteria}", method = RequestMethod.GET, produces = "application/json")
@@ -107,7 +108,6 @@ public class CTController {
 			theaters = null;
 		}
 		return theaters;
-
 	}
 
 	@RequestMapping(value = "/admin/{id}", method = RequestMethod.GET, produces = "application/json")
@@ -127,10 +127,10 @@ public class CTController {
 				edit.setAddress(ct.getAddress());
 			if (ct.getDescription() != null || ct.getDescription().trim().equals(""))
 				edit.setDescription(ct.getDescription());
-			
+
 			ctService.save(edit);
 
-			return new ResponseEntity<>("ok",HttpStatus.OK);
+			return new ResponseEntity<>("ok", HttpStatus.OK);
 		}
 
 		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

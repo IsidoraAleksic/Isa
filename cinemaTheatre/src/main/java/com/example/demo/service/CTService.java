@@ -11,6 +11,7 @@ import java.util.List;
 public interface CTService {
 
     Page<CinemaTheater> getCinemaTheaterByType(CTType type, Pageable pageable);
+    Page<CinemaTheater> getAllCinemaTheater( Pageable pageable);
 
     List<CinemaTheater> getCinemaTheatersByTypeOrderByName(CTType ctType);
 

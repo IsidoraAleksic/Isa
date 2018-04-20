@@ -21,24 +21,16 @@ public class EmailService {
     private JavaMailSender javaMailSender;
 
     @Async
-    public void sendEmailVerification(String to, String body) throws MailException, MessagingException {
+    public void sendEmailVerification(String to, String body, String subject) throws MailException, MessagingException {
 
         MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true, "UTF-8");
 
         helper.setTo(to);
         helper.setFrom("${spring.mail.username}");
-        helper.setSubject("Verify email address");
-        helper.setText("To verify your account please click on the verification link below: \n" + body, true);
+        helper.setSubject(subject);
+        helper.setText(body, true);
         javaMailSender.send(mail);
-
-//        System.out.println("Email poslat!");
-//        SimpleMailMessage mail = new SimpleMailMessage();
-//        mail.setTo(to);
-//        mail.setFrom(environment.getProperty("${spring.mail.username}"));
-//        mail.setSubject("Verify email address");
-//        mail.setText("To verify your account please click on the verification link below: \n" + body);
-//        javaMailSender.send(mail);
 
     }
 }

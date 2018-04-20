@@ -51,8 +51,13 @@ public class ProjectionServiceImpl implements ProjectionService{
 		return pRepository.findByCtId(id);
 	}
 
+	@Override
+	public Projection findProjectionById(long id) {
+		return pRepository.findProjectionById(id);
+	}
 
-    @Override
+
+	@Override
     public List<Projection> findProjectionsByName(String name) {
         return pRepository.findProjectionsByName(name);
     }

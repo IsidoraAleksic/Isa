@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User implements Serializable {
 
     @Id
@@ -22,11 +22,12 @@ public class User implements Serializable {
     @NotEmpty(message = "Please enter your last name")
     private String lastName;
 
-    @Column(name="password_user", nullable = false)
-    @Length(min=3, message = "Password must have at least 3 characters")
+    private int points;
+
+    @Column(name = "password_user", nullable = false)
+    @Length(min = 3, message = "Password must have at least 3 characters")
     @NotEmpty(message = "Please enter your password")
     private String password;
-
 
 
     @Column(unique = true, nullable = false)
@@ -40,7 +41,7 @@ public class User implements Serializable {
     @NotEmpty(message = "Please enter your phone number")
     private String phone;
 
-    @Column(name="enabled")
+    @Column(name = "enabled")
     private boolean enabled;
 
     @Enumerated(EnumType.STRING)
@@ -49,33 +50,39 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserTier userTier;
 
-    private String confirmationToken;
+    private boolean firstLogin;
 
-//    @OneToMany(mappedBy="user")
-//    private List<User> friends;
+    private String confirmationToken;
 
     @OneToMany(mappedBy = "receiver")
     @JsonIgnore
     private List<Notification> notifications;
 
-
     @OneToMany
     @JsonIgnore
-    private List<Reservation> reservedTickets;
+    private List<Ticket> reservedTickets;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<ReservationMerchandise> reservationMerchandise;
 
-    public User(){
+    public User() {
         this.enabled = false;
     }
 
-    public List<Reservation> getReservedTickets() {
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public List<Ticket> getReservedTickets() {
         return reservedTickets;
     }
 
-    public void setReservedTickets(List<Reservation> reservedTickets) {
+    public void setReservedTickets(List<Ticket> reservedTickets) {
         this.reservedTickets = reservedTickets;
     }
 
@@ -187,4 +194,13 @@ public class User implements Serializable {
     public void setRole(UserType role) {
         this.role = role;
     }
+
+    public boolean isFirstLogin() {
+        return firstLogin;
+    }
+
+    public void setFirstLogin(boolean firstLogin) {
+        this.firstLogin = firstLogin;
+    }
+
 }
