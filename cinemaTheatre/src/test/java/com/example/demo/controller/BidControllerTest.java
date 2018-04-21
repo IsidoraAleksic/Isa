@@ -2,14 +2,15 @@ package com.example.demo.controller;
 
 import com.example.demo.TestUtil;
 import com.example.demo.dto.AdDTO;
-import com.example.demo.model.Ad;
 import com.example.demo.model.AdBidStatus;
+import com.example.demo.model.Bid;
 import com.example.demo.model.User;
 import com.example.demo.model.UserType;
 import com.example.demo.service.AdService;
 import com.example.demo.service.AuthenticationService;
 import com.example.demo.service.NotificationService;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,10 +19,9 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import org.junit.runner.RunWith;
-
-import java.util.Date;
+import javax.annotation.PostConstruct;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,14 +32,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles(profiles = "test")
 @AutoConfigureMockMvc
-public class AdControllerTest {
-
+public class BidControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    private static final String BASE_URL = "/advert";
+    private static final String BASE_URL = "/bid";
 
-    private static final long EXISTING_AD_ID = 1;
+    private static final long EXISTING_BID_ID = 1;
 
     @Autowired
     private AdService adService;
@@ -54,7 +53,7 @@ public class AdControllerTest {
     @WithMockUser
     public void getAllAdsShouldReturnOk() throws  Exception{
 
-        mockMvc.perform(get(BASE_URL + "/allAds/"))
+        mockMvc.perform(get(BASE_URL + "/allBids/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json;charset=UTF-8"));
 
@@ -62,45 +61,31 @@ public class AdControllerTest {
 
     @Test
     @WithMockUser
-    public void createWithValidDataShouldReturnCreated() throws Exception {
-        Ad ad = new Ad();
-        ad.setNameAd("test ad");
-        ad.setDescription("test description");
-        ad.setImageAd("test image");
-        ad.setPriceAd(1L);
-        ad.setDateEndOfBids(new Date());
-        ad.setAdBidStatus(AdBidStatus.WAITING);
-        ad.setVersion(0L);
+    public void createWithValidDataShouldReturnError() throws Exception {
         User user = new User();
         user.setEmail("isamejl811@gmail.com");
         user.setPassword("jefimija");
-        user.setRole(UserType.GUEST);
-        ad.setUser(user);
-        mockMvc.perform(post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(TestUtil.json(ad)))
-                .andExpect(status().isCreated());
+        String json = TestUtil.json(user);
+        mockMvc.perform(post("/authenticate/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk());
+        user.setRole(UserType.ADMIN);
+        mockMvc.perform(get("bid/")).andExpect(status().isNotFound());
     }
 
     @Test
     @WithMockUser
-    public void updateWithValidDataShouldReturnCreated() throws Exception {
-       Ad ad = new Ad();
-       ad.setNameAd("test ad");
-       ad.setDescription("test description");
-       ad.setImageAd("test image");
-       ad.setPriceAd(1L);
-       ad.setDateEndOfBids(new Date());
-       ad.setAdBidStatus(AdBidStatus.WAITING);
-       ad.setVersion(0L);
-       User user = new User();
-       user.setEmail("isamejl811@gmail.com");
-       user.setPassword("jefimija");
-       user.setRole(UserType.GUEST);
-       ad.setUser(user);
-       ad.setId(EXISTING_AD_ID);
-       mockMvc.perform(post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(TestUtil.json(ad)))
-                .andExpect(status().isCreated());
+    public void updateWithValidDataShouldReturnError() throws Exception {
+        User user = new User();
+        user.setEmail("isamejl811@gmail.com");
+        user.setPassword("jefimija");
+        String json = TestUtil.json(user);
+        mockMvc.perform(post("/authenticate/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk());
+        user.setRole(UserType.ADMIN);
+        mockMvc.perform(get("bid/")).andExpect(status().isNotFound());
     }
-
 }

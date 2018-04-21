@@ -389,19 +389,19 @@ function sortTheaters(criteria) {
 
 
 function listTheatres(){
-  // $(document).ready ( function(){
-  //     $.ajax({
-  //         url: "/authenticate/checkIfFirstLogin",
-  //         contentType: "application/json",
-  //         dataType: "text",
-  //         type: "GET",
-  //         success: function(data) {
-  //             if(data=="true"){
-  //                 $(location).attr('href', 'loginAgain.html');
-  //             }
-  //         }
-  //     });
-  // });
+    // $(document).ready ( function(){
+    //     $.ajax({
+    //         url: "/authenticate/checkIfFirstLogin",
+    //         contentType: "application/json",
+    //         dataType: "text",
+    //         type: "GET",
+    //         success: function(data) {
+    //             if(data=="true"){
+    //                 $(location).attr('href', 'loginAgain.html');
+    //             }
+    //         }
+    //     });
+    // });
 
     var results = $('#resultsDiv');
     var leftPane = $('#userInformation');
@@ -508,7 +508,7 @@ function tableList(data, type) {
         $.each(data, function (idx, projection) {
             var well = $(' <div class="well"></div>');
             var media = $(' <div class="media"></div>');
-			var img = projection.imagePath === "path" ? "../images/movie.jpg" : projection.imagePath;
+            var img = projection.imagePath === "path" ? "../images/movie.jpg" : projection.imagePath;
             var image = $(' <a class="pull-left" href="#"><img width="220" height="178" class="media-object" src="'+img+'" ></a>');
             var body = $(' <div id="' + projection.id + '"class="media-body"></div>');
             var starsUl = $(' <ul class="list-inline list-unstyled"></ul>');
