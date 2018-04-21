@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface NotificationRepository extends JpaRepository<Notification,Long> {
     public Notification getById(Long id);
-
+    public Notification getByMessage(String message);//po topicu vraca
 }

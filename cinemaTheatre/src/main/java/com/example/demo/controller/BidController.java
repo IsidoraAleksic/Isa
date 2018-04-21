@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,6 +55,7 @@ public class BidController {
         return bidService.getByGuest(authenticationService.getLoggedInUser().getId());
     }
 
+    @Transactional
     @PreAuthorize("hasAuthority('GUEST')")
     @PostMapping
     public ResponseEntity createBid(@RequestBody BidDTO bidDTO) {
@@ -61,6 +63,7 @@ public class BidController {
         String result = bidService.create(bidDTO);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+
     @PreAuthorize("hasAuthority('GUEST')")
     @PostMapping("{id}")
     public ResponseEntity updateBid(@PathVariable("id") Long id_bid, @RequestBody BidDTO bidDTO) {

@@ -1,3 +1,4 @@
+
 $(function() {
 
     $('#login-form-link').click(function(e) {
@@ -36,7 +37,7 @@ $(function() {
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>User with email and password not found</p>');
                 }else if(user=="ok"){
-                    window.location= "http://localhost:9080/homeRegistered.html";
+                    window.location= "/homeRegistered.html";
                 }else{
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>Email not confirmed. Please confirm email.</p>');
@@ -123,7 +124,7 @@ $(document).on('submit', '#register-form', function(e){
                     $("#loginMessage").empty();
                     $("#loginMessage").append('<p>User already exists. </p>');
                 }else if(user=="ok"){
-                    window.location= "http://localhost:9080/homeRegistered.html";
+                    window.location= "/homeRegistered.html";
                 }else if(user=="not confirmed") {
                     $("#loginMessage").empty();
                     // $("#register-form").empty();
@@ -154,9 +155,9 @@ $(document).ready ( function(){
         success: function(data){
             content = '';
             if(data.role == "UNREGISTERED") {
-                content = '<option value=\"UNREGISTERED"\">';
+                content ='<option value=\"GUEST"\">';
             } else if(data.role == 'ADMIN') {
-                content = '<option value=\"ADMIN"\">'+'<option value=\"ADMINCT"\">'+'<option value=\"ADMINFZ"\">';
+               content = '<option value=\"ADMIN"\">'+'<option value=\"ADMINCT"\">'+'<option value=\"ADMINFZ"\">';
             }
             $('#roles').append(content);
         }

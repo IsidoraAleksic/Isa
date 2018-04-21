@@ -69,6 +69,14 @@ public class Seat {
         this.seatType = seatType;
     }
 
+    public Seat(int row, int col, SeatType seatType, Hall h, Projection p) {
+        this.row = row;
+        this.col = col;
+        this.seatType = seatType;
+        this.hall = h;
+        this.projection = p;
+    }
+    
     public Seat() {
 
     }

@@ -57,10 +57,32 @@ function loadHome() {
                 // userInformation.append('<p>' + user.city + '</p>');
                 // userInformation.append('<p>' + user.phone + '</p>');
                 listVisitedCinemaTheaters(user);
+                makeBtnForAdmin(user);
+                makeBtnForAdminCTandFZ(user);
+
             }
         }
     });
 }
+function makeBtnForAdmin(userId){
+
+    var content="";
+    if(userId.role == "ADMIN"){
+        content+="<button class=\"w3-bar-item w3-button\" onclick=\"registerAdmin()\"id=\"btnRegAdmin\">Register Admin</button>"+
+       "<button class=\"w3-bar-item w3-button\" onclick=\"openModalScale()\">Set New Scale</button>";
+    }
+
+    return $("#tabDivGlavni").append(content);
+}
+function makeBtnForAdminCTandFZ(userId){
+    var content="";
+    if(userId.role == "ADMINCT" || userId.role=="ADMINFZ"){
+        content+="<button class=\"w3-bar-item w3-button\" onclick=\"openChangePasswordPage()\">Change password</button>";
+    }
+
+    return $("#tabDivGlavni").append(content);
+}
+
 
 function listVisitedCinemaTheaters(user) {
     var searchDiv = $('#searchCinemaTheaterDiv');
@@ -135,7 +157,7 @@ function logOut() {
         success: function (data) {
             var ok = data;
             if (ok == "ok") {
-                window.location = "http://localhost:9080/loginRegister.html";
+                window.location = "/loginRegister.html";
             } else
                 toastr.error('logout failed');
         }
@@ -143,7 +165,7 @@ function logOut() {
 }
 
 function goToProfile() {
-    window.location = "http://localhost:9080/userPage.html";
+    window.location = "/userPage.html";
 }
 
 function listFriends() {
@@ -423,9 +445,8 @@ function showTheaters(data) {
 }
 
 function visitCT(id){
-    window.location = "http://localhost:9080/ctProfile.html?id=" + id;
+    window.location = "/ctProfile.html?id=" + id;
 }
-
 
 
 
@@ -447,7 +468,7 @@ function tableList(data, type) {
         for (i = 0; i < data.content.length; i++) {
             var well = $(' <div class="well"></div>');
             var media = $(' <div class="media"></div>');
-            var image = $(' <a class="pull-left" href="#"><img class="media-object" src="../images/movie.jpg"></a>');
+            var image = $(' <a class="pull-left" href="#"><img width="220" height="178" class="media-object" src="../images/movie.jpg" ></a>');
             var body = $(' <div class="media-body"></div>');
             var starsUl = $(' <ul class="list-inline list-unstyled"></ul>');
             var starsLi = $('<li></li>');
@@ -485,7 +506,8 @@ function tableList(data, type) {
         $.each(data, function (idx, projection) {
             var well = $(' <div class="well"></div>');
             var media = $(' <div class="media"></div>');
-            var image = $(' <a class="pull-left" href="#"><img class="media-object" src="../images/movie.jpg"></a>');
+			var img = projection.imagePath === "path" ? "../images/movie.jpg" : projection.imagePath;
+            var image = $(' <a class="pull-left" href="#"><img width="220" height="178" class="media-object" src="'+img+'" ></a>');
             var body = $(' <div id="' + projection.id + '"class="media-body"></div>');
             var starsUl = $(' <ul class="list-inline list-unstyled"></ul>');
             var dugme = $('<p class="text-right" ></p>');
@@ -765,7 +787,7 @@ function reserve(idH, idP,name,rows,cols) {
                             }
                         }
                     });
-                    // window.location = "http://localhost:9080/homeRegistered.html";
+                    // window.location = "/homeRegistered.html";
 
                 } else {
                     toastr.error("Reservation failed");
@@ -778,7 +800,7 @@ function reserve(idH, idP,name,rows,cols) {
 
 function noFriends(idP,idH){
     reservedSeats = [];
-    window.location = "http://localhost:9080/homeRegistered.html";
+    window.location = "/homeRegistered.html";
     toastr.success("Successful reservation");
 }
 
@@ -825,6 +847,7 @@ function deselectSeat(row, col, id,idHall) {
 
 function openFanZone(){
     $(location).attr('href', 'FanZone.html');
+
 }
 
 function returnToHome(){

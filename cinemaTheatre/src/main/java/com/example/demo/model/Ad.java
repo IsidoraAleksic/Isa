@@ -33,6 +33,9 @@ public class Ad {
     @JsonIgnore
     private List<Bid> bid;//ponuda
 
+    @Version
+    private Long version;
+
     public Ad() {
 
     }
@@ -109,6 +112,16 @@ public class Ad {
     public void setAdBidStatus(AdBidStatus adBidStatus) {
         this.adBidStatus = adBidStatus;
     }
+
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
 
     @Override
     public String toString() {

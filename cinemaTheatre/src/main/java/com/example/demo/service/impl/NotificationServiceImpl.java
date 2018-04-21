@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.dto.NotificationDTO;
 import com.example.demo.model.Notification;
 import com.example.demo.model.User;
+import com.example.demo.repository.AdRepository;
 import com.example.demo.repository.NotificationRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.NotificationService;
@@ -15,16 +16,17 @@ import java.util.List;
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
+    @Autowired
     NotificationRepository notificationRepository;
+    @Autowired
     UserRepository userRepository;
+    @Autowired
+    AdRepository adRepository;
+
     private static String SUCCESS_CREATED_NOTIFICATION = "Successfully created notification";
     private static String ERROR = "Unsuccessfully created notification";
 
-    @Autowired
-    public NotificationServiceImpl(NotificationRepository notificationRepository, UserRepository userRepository) {
-        this.notificationRepository = notificationRepository;
-        this.userRepository = userRepository;
-    }
+
 
     public Notification getById(Long id) {
         return notificationRepository.getById(id);
@@ -37,6 +39,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     public String create(NotificationDTO notificationDTO) {
         User user = userRepository.getById(notificationDTO.getReceiverId());
+
         if (user == null) {
             return ERROR;
         }

@@ -20,12 +20,17 @@ public class Rating {
 	private short ambientGrade;
 	
 	@ManyToOne
+	//@JoinColumn(name = "projection_id")
 	private Projection projection;
 	
 	@ManyToOne
+	//@JoinColumn(name = "ct_id")
 	private CinemaTheater ct;
 	
 	@ManyToOne
+	//@JoinColumn(name = "user_id")
 	private User user;
+
+
 	
 }

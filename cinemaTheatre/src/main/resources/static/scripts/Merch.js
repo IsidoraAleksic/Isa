@@ -48,8 +48,6 @@ function chooseMethodMerch(){
 }
 function makeMerch(){
     //e.preventDefault();
-    var objFile = $('#icon');
-    var file = objFile[0].files[0];
     $.ajax({
         url: "/merchandise",
         contentType: "application/json",
@@ -60,10 +58,10 @@ function makeMerch(){
             "nameMerchandise": $("#nameMerchandise").val(),
             "description":  $("#descriptionMerch").val(),
             "priceMerchandise":$("#priceMerchandise").val(),
-            "imageMerchandise": ""
+            "imageMerchandise":$("#imageMerchandise").val()
         }),
         success: function(data) {
-            sendIcon(data,file);
+            $(location).attr('href', 'FanZone.html')
         }
     });
 
@@ -79,13 +77,14 @@ function updateMerch(merchId) {
             "nameMerchandise": $("#nameMerchandise").val(),
             "description":  $("#descriptionMerch").val(),
             "priceMerchandise":$("#priceMerchandise").val(),
-            "imageMerchandise": ""
+            "imageMerchandise": $("#imageMerchandise").val()
         }),
         success: function(data) {
             $(location).attr('href', 'FanZone.html')
         }
     });
 }
+/*
 function sendIcon(id, file) {
     $.ajax({
         async : false,
@@ -100,4 +99,4 @@ function sendIcon(id, file) {
             $(location).attr('href', 'FanZone.html')
         }
     });
-}
+}*/

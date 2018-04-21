@@ -19,6 +19,10 @@ public class Bid {
     @Enumerated(EnumType.STRING)
     private AdBidStatus adBidStatus;
 
+    @Version
+    private Long version;
+
+
     public Bid() {
 
     }
@@ -61,6 +65,14 @@ public class Bid {
 
     public void setAdBidStatus(AdBidStatus adBidStatus) {
         this.adBidStatus = adBidStatus;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     @Override

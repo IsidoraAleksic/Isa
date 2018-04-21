@@ -8,4 +8,5 @@ import java.util.List;
 public interface BidRepository extends JpaRepository<Bid,Long> {
     public Bid getById(Long id_bid);
     public List<Bid> getByIdGuestBid(Long id_guestBid);
+   // public List<Bid> getByIdAd(Long id_ad);
 }

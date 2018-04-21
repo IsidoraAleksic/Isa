@@ -1,3 +1,38 @@
+var userr;
+$(document).ready(function () {
+    getUser();
+});
+
+
+function getUser(){
+$.ajax({
+    url: "/authenticate/getUser",
+    dataType: "json",
+    type: "GET",
+    success: function (data) {
+        userr = data;
+        var content2="";
+        var content="";
+        if(userr.role == "GUEST"){
+            content+="<button type=\"button\" class=\"btn btn-primary\" onclick=\"openAdPage()\">New Ad</button>";
+
+            content2+="<li><a data-toggle=\"pill\" href=\"#menu3\" onclick=\"getAllBidsByGuestId()\">My Bids</a></li>\n" +
+                "<li><a data-toggle=\"pill\" href=\"#menu4\" onclick=\"getAllBids()\">All Bids for my ads</a></li>";
+            pillsBids(content2);
+            return $("#NewAdMerch").append(content);
+
+        }else if(userr.role == "ADMINFZ"){
+            content+="<button type=\"button\" class=\"btn btn-primary\" onclick=\"openMerchPage()\">New Merch</button>";
+            return $("#NewAdMerch").append(content);
+        }
+
+    }
+});
+}
+function pillsBids(content2){
+    content=content2;
+    return $("#pills").append(content);
+}
 function getAllMerchs(){
     $.ajax({
         url: "/merchandise/allMerchandise",
@@ -41,7 +76,7 @@ function getAllBids(){
             var bids = data;
             var content = "";
             for (var bid in bids) {
-                content+=createBidDiv(bids[bid]);
+                content+=createBidForMyAdsDiv(bids[bid]);
             }
             $("#ponudeOglasi").empty().append(content);
 
@@ -72,8 +107,13 @@ function createMerchDiv(merch) {
         +merch.priceMerchandise+"<small class=\"text-muted\">$</small>" +
         "</h1><img class='merch-image' src="+merch.imageMerchandise+">" + "  " + merch.nameMerchandise + "<br/>"
         + merch.description+"  <input type=\"submit\" onclick=\"reserveMerchs("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Reserve\">"+
-     "<input type=\"submit\" onclick=\"deleteMerch("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Delete Merch\">"+
-     "<input type=\"submit\" onclick=\"openUpdateMerch("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Update Merch\"></div>";
+        "<input type=\"submit\" id=\"deleteM\" onclick=\"deleteMerch("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Delete Merch\">"+
+        "<input type=\"submit\" id=\"updateM\" onclick=\"openUpdateMerch("+merch.id+")\" class=\"btn btn-primary btn-md\" value=\"Update Merch\"></div>";
+
+    /*    if(userr.role!="ADMINFZ"){
+            document.getElementById('deleteM').style.display='none';
+            document.getElementById('updateM').style.display='none';
+        }*/
 
     return content;
 }
@@ -85,14 +125,72 @@ function createBidDiv(bid){
 
     return content;
 }
+
+function createBidForMyAdsDiv(bid){
+    var content = "";
+    content+="<div class=\"card bid-container\"><h2>"+ "Ad:" + bid.ad.id + "Price of bid:" + bid.priceBid + "</h2>"+"<button type=\"button\" class=\"btn btn-primary\" onclick=\"resetBidAcceptStatus("+bid.id+")\">Accept Bid</button>" +
+        "<button type=\"button\" class=\"btn btn-primary\" onclick=\"resetBidRejectStatus("+bid.id+")\">Reject Bid</button></div>";
+
+    return content;
+}
+
+
 function createAdDiv(ad){
     var content = "";
     content+="<div class=\"card merch-container\"><h1 class=\"card-title\"> "+ad.priceAd+"<small class=\"text-muted\">$</small></h1><img class='merch-image' src="+ad.imageAd+">" + "  " + ad.nameAd + "<br/>" + ad.description+"<button type=\"button\"  class=\"btn btn-primary\" onclick=\"openModalBidCreate("+ad.id+")\">Create Bid</button> "+
         "<button type=\"button\" class=\"btn btn-primary\" onclick=\"openUpdateAd("+ad.id+")\">Update Ad</button><br/>" +
         "<button type=\"button\" class=\"btn btn-primary\" onclick=\"deleteAd("+ad.id+")\">Delete Ad</button>" +
-        "<button type=\"button\" class=\"btn btn-primary\" onclick=\"acceptAd("+ad.user.id+")\">Accept Ad</button>" +
-        "<button type=\"button\" class=\"btn btn-primary\" onclick=\"rejectAd("+ad.user.id+")\">Reject Ad</button></div>";
+        "<button type=\"button\" class=\"btn btn-primary\" onclick=\"resetAdAcceptStatus("+ad.id+")\">Accept Ad</button>" +
+        "<button type=\"button\" class=\"btn btn-primary\" onclick=\"resetAdRejectStatus("+ad.id+")\">Reject Ad</button></div>";
     return content;
+
+}
+function resetAdAcceptStatus(adId){
+    $.ajax({
+        url: "/advert/"+adId+"/status/ACCEPTED",
+        contentType: "application/json",
+        dataType: "text",
+        type: "POST",
+        success: function(data) {
+            acceptAd(adId.userId);
+        }
+    });
+
+}
+function resetAdRejectStatus(adId){
+    $.ajax({
+        url: "/advert/"+adId+"/status/REJECTED",
+        contentType: "application/json",
+        dataType: "text",
+        type: "POST",
+        success: function(data) {
+            rejectAd(adId.userId);
+        }
+    });
+
+}
+function resetBidAcceptStatus(bidId){
+    $.ajax({
+        url: "/bid/"+bidId+"/status/ACCEPTED",
+        contentType: "application/json",
+        dataType: "text",
+        type: "POST",
+        success: function(data) {
+            acceptBid(bidId.userId);
+        }
+    });
+
+}
+function resetBidRejectStatus(bidId){
+    $.ajax({
+        url: "/bid/"+bidId+"/status/ACCEPTED",
+        contentType: "application/json",
+        dataType: "text",
+        type: "POST",
+        success: function(data) {
+            rejectBid(bidId.userId);
+        }
+    });
 
 }
 function acceptAd(adUserId){
@@ -108,6 +206,7 @@ function acceptAd(adUserId){
         }),
         success: function(data) {
             window.open(data)
+
         }
     });
 }
@@ -171,7 +270,13 @@ function reserveMerchs(merchId) {
             "userId": ""
         }),
         success: function(data) {
-            window.open(data)
+            content="";
+            if(data=="Successfully created merch reservation."){
+               $(location).attr('href', 'FanZone.html');
+            }else{
+                alert("That merchandise has been already reserved by another user!");
+            }
+
         }
     });
 }
