@@ -1,19 +1,9 @@
-spring:
-    profiles:
-        active: test
-    datasource:
-        url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE
-        driverClassName: org.h2.Driver
-        username: root
-        password: root
-        dbcp2:
-          rollback-on-return: true
-    jpa:
-        database-platform: org.hibernate.dialect.H2Dialect
-        database: H2
-        show_sql: true
-        hibernate:
-            ddl-auto: create-drop
-            naming:
-                strategy: org.hibernate.cfg.ImprovedNamingStrategy
-                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImplo
+lanuguage: java
+jdk: - oraclejdk8
+    
+before_install:
+ - chmod +x mvnw
+ 
+ install:
+ - mvnw -N io.takari:maven:wrapper
+ +=- ./mvnw install -DskipTests=True -Dmaven javadoc.skip=true -B -V

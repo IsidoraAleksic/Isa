@@ -248,9 +248,9 @@ public class ReservationTicketController {
         User user = authenticationService.getLoggedInUser();
         User clicked = userService.getById(idUser);
         if(user==null)
-            return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "http://localhost:9080/invitationLogin.html").build();
+            return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "/invitationLogin.html").build();
         if (user.getId()!= clicked.getId())
-            return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "http://localhost:9080/invitationLogin.html").build();
+            return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "/invitationLogin.html").build();
 
         Ticket t = reservationTicketService.findTicketById(idTicket);
         if (t == null)
@@ -259,7 +259,7 @@ public class ReservationTicketController {
             t.setStatus(4);
             reservationTicketService.save(t);
         }
-        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "http://localhost:9080/invitation.html").build();
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "/invitation.html").build();
     }
 
     @RequestMapping(value = "/seeReservationAfterLogin", method = RequestMethod.GET)

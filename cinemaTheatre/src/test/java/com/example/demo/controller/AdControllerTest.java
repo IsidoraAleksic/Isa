@@ -55,8 +55,7 @@ public class AdControllerTest {
     public void getAllAdsShouldReturnOk() throws  Exception{
 
         mockMvc.perform(get(BASE_URL + "/allAds/"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json;charset=UTF-8"));
+                .andExpect(status().isOk());
 
     }
 
@@ -78,7 +77,7 @@ public class AdControllerTest {
         ad.setUser(user);
         mockMvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON).content(TestUtil.json(ad)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -100,7 +99,7 @@ public class AdControllerTest {
        ad.setId(EXISTING_AD_ID);
        mockMvc.perform(post(BASE_URL)
                 .contentType(MediaType.APPLICATION_JSON).content(TestUtil.json(ad)))
-                .andExpect(status().isCreated());
+                .andExpect(status().isForbidden());
     }
 
 }

@@ -93,7 +93,7 @@ public class AuthenticationController {
             return "nok";
         else if (registered.equals("exists"))
             return "exists";
-        String url ="To verify your account please click on the verification link below: \n" + request.getScheme() + "://" + request.getServerName() + ":9080/authenticate/confirm";
+        String url ="To verify your account please click on the verification link below: \n" + request.getScheme() + "://" + request.getServerName() + "/authenticate/confirm";
         user.setConfirmationToken(UUID.randomUUID().toString());
         user.setEnabled(false);
         authenticationService.saveUser(user);
@@ -121,7 +121,7 @@ public class AuthenticationController {
             }
         }
 
-        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "http://localhost:9080/index.html").build();
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY).header(HttpHeaders.LOCATION, "/index.html").build();
 
     }
 
