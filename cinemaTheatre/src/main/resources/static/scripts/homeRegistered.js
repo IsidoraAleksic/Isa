@@ -33,11 +33,29 @@ function loadHome() {
                 $('#divLogout').empty();
                 $('#divLogout').append('<button class="w3-bar-item w3-button" style="float: right" onclick="logOut()">Logout</button>');
                 userInformation.empty();
-                userInformation.append('<img src="images\\userImage.png " height="62" width="62">');
-                userInformation.append('<h3><b>' + user.firstName + '  ' + user.lastName + ' </b></h3>');
-                userInformation.append('<p>' + user.email + '</p>');
-                userInformation.append('<p>' + user.city + '</p>');
-                userInformation.append('<p>' + user.phone + '</p>');
+
+                var djuro = '<div class="card">\n' +
+                    '  <img src="images\\userImage.png " alt="John" style="width:90%">\n' +
+                    '  <h1>'+ user.firstName + '  ' + user.lastName + '</h1>\n' +
+                    '  <p class="title">'+user.email+'</p>\n' +
+                    '  <p>'+user.city+'</p>\n' +
+                    '  <div style="margin: 24px 0;">\n' +
+                    '    <a href="#"><i class="fa fa-dribbble"></i></a> \n' +
+                    '    <a href="#"><i class="fa fa-twitter"></i></a>  \n' +
+                    '    <a href="#"><i class="fa fa-linkedin"></i></a>  \n' +
+                    '    <a href="#"><i class="fa fa-facebook"></i></a> \n' +
+                    ' </div>\n' +
+                    ' <p><button class="userInfo" onclick="goToProfile()">Profile</button></p>\n' +
+                    '</div>';
+
+                userInformation.append(djuro);
+
+
+                // userInformation.append('<img src="images\\userImage.png " height="62" width="62">');
+                // userInformation.append('<h3><b>' + user.firstName + '  ' + user.lastName + ' </b></h3>');
+                // userInformation.append('<p>' + user.email + '</p>');
+                // userInformation.append('<p>' + user.city + '</p>');
+                // userInformation.append('<p>' + user.phone + '</p>');
                 listVisitedCinemaTheaters(user);
             }
         }
@@ -50,7 +68,7 @@ function listVisitedCinemaTheaters(user) {
     var forma = $('<form action="" class="form-horizontal" id="formaSearchCinemaTheaters"></form>');
     var span = $('<span></span>');
     var input = $('<input type="text" class="form-control" name="search" id="searchCinemaTheater" placeholder="Search visited"/>');
-    var search = $('<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Search</button>');
+    var search = $('<button type="submit" style="background: black;" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Search</button>');
     var i;
     var newct;
     var tickets;
@@ -259,7 +277,7 @@ function showCinemas(data) {
         newct = "<tr><td>" + data.content[i].name + "</td>"
             + "<td>" + data.content[i].address + "</td>"
             + "<td>" + data.content[i].ambient + "</td>"
-            + "<td><form action=\"\" class=\"form-horizontal\" id=\"formaVisitCinemaTheater\"><input id='hiddenVisitCT' type='hidden' value='" + data.content[i].id + "'><input class=\"btn\"  type=\"submit\" value=\"Visit\"/></form></td></tr>";
+            + "<td><button class=\"btn\"  onclick='visitCT("+data.content[i].id+")' value=\"Visit\">Visit</button></td></tr>";
         table.append(newct);
         results.append(table);
     }
@@ -297,7 +315,7 @@ function sortCinemas(criteria) {
                 newct = "<tr><td>" + data[i].name + "</td>"
                     + "<td>" + data[i].address + "</td>"
                     + "<td>" + data[i].ambient + "</td>"
-                    + "<td><form action=\"\" class=\"form-horizontal\" id=\"formaVisitCinemaTheater\"><input id='hiddenVisitCT' type='hidden' value='" + data[i].id + "'><input class=\"btn\"  type=\"submit\" value=\"Visit\"/></form></td></tr>";
+                    + "<td><button class=\"btn\"  onclick='visitCT("+data[i].id+")' value=\"Visit\">Visit</button></td></tr>";
                 table.append(newct);
                 results.append(table);
             }
@@ -335,7 +353,7 @@ function sortTheaters(criteria) {
                 newct = "<tr><td>" + data[i].name + "</td>"
                     + "<td>" + data[i].address + "</td>"
                     + "<td>" + data[i].ambient + "</td>"
-                    + "<td><form action=\"\" class=\"form-horizontal\" id=\"formaVisitCinemaTheater\"><input id='hiddenVisitCT' type='hidden' value='" + data[i].id + "'><input class=\"btn\" type=\"submit\" value=\"Visit\"/></form></td></tr>";
+                    + "<td><button class=\"btn\"  onclick='visitCT("+data[i].id+")' value=\"Visit\">Visit</button></td></tr>";
                 table.append(newct);
                 results.append(table);
             }
@@ -397,18 +415,21 @@ function showTheaters(data) {
         newct = "<tr><td>" + data.content[i].name + "</td>"
             + "<td>" + data.content[i].address + "</td>"
             + "<td>" + data.content[i].ambient + "</td>"
-            + "<td><form action=\"\" class=\"form-horizontal\" id=\"formaVisitCinemaTheater\"><input id='hiddenVisitCT' type='hidden' value='" + data.content[i].id + "'><input class=\"btn\" type=\"submit\" value=\"Visit\"/></form></td></tr>";
+            + "<td><button class=\"btn\"  onclick='visitCT("+data.content[i].id+")' value=\"Visit\">Visit</button></td></tr>";
         table.append(newct);
         results.append(table);
     }
 
 }
 
-$(document).on('submit', '#formaVisitCinemaTheater', function (e, id) {
-    e.preventDefault();
-    var _id = document.getElementById("hiddenVisitCT").value;
+function visitCT(id){
     window.location = "/ctProfile.html?id=" + id;
-});
+}
+
+
+
+
+>>>>>>> 80b7aa0a2bbaa382fb1dc68f5c06deddf1437080
 
 function tableList(data, type) {
     var results = $('#resultsDiv');

@@ -1,0 +1,6 @@
+language: java
+rvm:
+ - jdk1.8.0_131
+
+ script:
+  - src/test/java/com.example.demo

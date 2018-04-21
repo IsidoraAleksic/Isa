@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//@Transactional
+
+
 @Service
 public class ReservationTicketServiceImpl implements ReservationTicketService {
     @Autowired
@@ -76,13 +77,13 @@ public class ReservationTicketServiceImpl implements ReservationTicketService {
         reservationTicketRepository.delete(ticket);
     }
 
-//    @Transactional
+
     @Override
     public void save(Ticket ticket) {
         reservationTicketRepository.save(ticket);
     }
 
-//    @Transactional
+
     @Override
     public void save(Seat seat) {
         seatRepository.save(seat);

@@ -1,5 +1,13 @@
 window.onload = editUser;
 function editUser(){
+        var left = $('#userInfo');
+    var middle = $('#editDiv');
+    var right = $('#resultsDiv');
+    var poruka = $('#porukaDiv');
+    left.empty();
+    middle.empty();
+    right.empty();
+    poruka.empty();
 
     $.ajax({
         url: "/authenticate/getUser",
@@ -7,24 +15,72 @@ function editUser(){
         type: "GET",
         success: function(data){
             var user = data;
-            if(user!=null){
-                $('#editFNdiv').empty();
-                $('#editLNdiv').empty();
-                $('#editCitydiv').empty();
-                $('#editPhonediv').empty();
-                $('#editPassdiv').empty();
-                $('#username').empty();
-                $('#username').append('<img src="images\\userImage.png " height="62" width="62">'+user.firstName+' '+user.lastName+'');
-                $('#editFNdiv').append(' <br><label>First Name: </label><input type="text" class="form-control" id="editFirstName" placeholder="First Name" value="'+user.firstName+'"><br>');
-                $('#editLNdiv').append(' <br><label>Last Name: </label><input type="text" class="form-control" id="editLastName" placeholder="Last Name" value="'+user.lastName+'"><br>');
-                $('#editCitydiv').append(' <br><label>City: </label><input type="text" class="form-control" id="editCity" placeholder="City" value="'+user.city+'"><br>');
-                $('#editPhonediv').append(' <br><label>Phone: </label><input type="text" class="form-control" id="editPhone" placeholder="Phone" value="'+user.phone+'"><br>');
-                $('#editPassdiv').append(' <br><label>Password: </label><input type="password" class="form-control" id="editPassword" placeholder="Password" value="'+user.password+'"><br>');
+            if(user.id!=null){
+                $('#userInfo').empty();
+                var djuro = '<div class="card">\n' +
+                    '  <img src="images\\userImage.png " alt="John" style="width:90%">\n' +
+                    '  <h1>'+ user.firstName + '  ' + user.lastName + '</h1>\n' +
+                    '  <p class="title">'+user.email+'</p>\n' +
+                    '  <p>'+user.city+'</p>\n' +
+                    '  <div style="margin: 24px 0;">\n' +
+                    '    <a href="#"><i class="fa fa-dribbble"></i></a> \n' +
+                    '    <a href="#"><i class="fa fa-twitter"></i></a>  \n' +
+                    '    <a href="#"><i class="fa fa-linkedin"></i></a>  \n' +
+                    ' </div>\n' +
+                    ' <p> <button class = "userInfo" onclick="home()">Home</button> </p>\n' +
+                    ' <p>  <button class="userInfo" onclick="editInfo()">Edit</button></p>\n' +
+                    '</div>';
+                $('#userInfo').append(djuro);
+
+            }
+        }
+    });
+}
+function home(){
+    window.location = "/homeRegistered.html";
+}
+
+function editInfo(){
+    $.ajax({
+        url: "/authenticate/getUser",
+        dataType: "json",
+        type: "GET",
+        success: function(data){
+            var user = data;
+            if(user.id!=null){
+                $('#editDiv').empty();
+                var forma = $('<form action="" class="form-horizontal" id="formaEditUser">');
+                var  editFNdiv = $('<div class="row class-md-1" id="editFNdiv" ></div>');
+                var  editLNdiv = $(' <div class="row class-md-1" id="editLNdiv" ></div>');
+                var  editCitydiv = $('<div class="row" id="editCitydiv"  ></div>');
+                var  editPhonediv = $(' <div class="row" id="editPhonediv"  ></div>');
+                var  editPassdiv = $('<div class="row" id="editPassdiv" > </div>');
+                var  buttonEdit = $('<div class="row" ><input class="button" type="submit" value="Edit"></div>');
+
+                forma.append(editFNdiv);
+                forma.append(editLNdiv);
+                forma.append(editCitydiv);
+                forma.append(editPhonediv);
+                forma.append(editPassdiv);
+                forma.append(buttonEdit);
+                editFNdiv.empty();
+                editLNdiv .empty();
+                editCitydiv.empty();
+                editPhonediv .empty();
+                editPassdiv.empty();
+                editFNdiv.append(' <br><label>First Name: </label><input type="text" class="form-control" id="editFirstName" placeholder="First Name" value="'+user.firstName+'"><br>');
+                editLNdiv.append(' <br><label>Last Name: </label><input type="text" class="form-control" id="editLastName" placeholder="Last Name" value="'+user.lastName+'"><br>');
+                editCitydiv.append(' <br><label>City: </label><input type="text" class="form-control" id="editCity" placeholder="City" value="'+user.city+'"><br>');
+                editPhonediv.append(' <br><label>Phone: </label><input type="text" class="form-control" id="editPhone" placeholder="Phone" value="'+user.phone+'"><br>');
+                editPassdiv.append(' <br><label>Password: </label><input type="password" class="form-control" id="editPassword" placeholder="Password" value="'+user.password+'"><br>');
+                $('#editDiv').append(forma);
+
 
 
             }
         }
     });
+
 
 }
 
@@ -39,8 +95,9 @@ $(document).on('submit', '#formaEditUser', function(e){
     var ok = true;
     if(!firstName || !lastName || !password || !city || !phone ) {
         ok = false;
-        $('#porukaDiv').empty();
-        $('#porukaDiv').append('<label class="col-lg-8 control-label">All fields must me filled</label>');
+        toastr.error("All fields must me filled");
+        // $('#porukaDiv').empty();
+        // $('#porukaDiv').append('<label class="col-lg-8 control-label">All fields must me filled</label>');
     }
     if(ok){
         $.ajax({
@@ -57,11 +114,10 @@ $(document).on('submit', '#formaEditUser', function(e){
             }),
             success: function (data) {
                 if(data=="nok"){
-                    $('#porukaDiv').empty();
-                    $('#porukaDiv').append('<label class="col-lg-8 control-label">Edit unsuccessful. User not found.</label>');
+                    toastr.error("Edit unsuccessful. User not found.");
                 } else  if(data=="ok"){
-                    $('#porukaDiv').empty();
-                    $('#porukaDiv').append('<label class="col-lg-8 control-label">User information updated.</label>');
+                    toastr.success("User information updated.");
+                    editUser();
                 }
 
             }
@@ -101,14 +157,6 @@ $(document).on('submit', '#formaSearchByName', function(e){
                         span.append('<button class="btn" onclick="removeFriend('+friend.id+')">Remove friend</button>');
                         div.append(span);
                         results.append(div);
-
-
-                        // results.append('<h4>'+friend.firstName+' '+friend.lastName+'</h4><p>'+friend.email+'</p><br>');
-                        // var forma =$('<form action="" class="form-horizontal" id="formaObrisiPrijatelja"></form>');
-                        // var hidden = $('<input id="hiddenObrisi" type="hidden" value="' + friend.id + '">');
-                        // forma.append(hidden);
-                        // forma.append('<input class="btn" type="submit" value="Remove friend">');
-                        // results.append(forma);
 
                     });
 
