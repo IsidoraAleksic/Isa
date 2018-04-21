@@ -57,10 +57,32 @@ function loadHome() {
                 // userInformation.append('<p>' + user.city + '</p>');
                 // userInformation.append('<p>' + user.phone + '</p>');
                 listVisitedCinemaTheaters(user);
+                makeBtnForAdmin(user);
+                makeBtnForAdminCTandFZ(user);
+
             }
         }
     });
 }
+function makeBtnForAdmin(userId){
+
+    var content="";
+    if(userId.role == "ADMIN"){
+        content+="<button class=\"w3-bar-item w3-button\" onclick=\"registerAdmin()\"id=\"btnRegAdmin\">Register Admin</button>"+
+       "<button class=\"w3-bar-item w3-button\" onclick=\"openModalScale()\">Set New Scale</button>";
+    }
+
+    return $("#tabDivGlavni").append(content);
+}
+function makeBtnForAdminCTandFZ(userId){
+    var content="";
+    if(userId.role == "ADMINCT" || userId.role=="ADMINFZ"){
+        content+="<button class=\"w3-bar-item w3-button\" onclick=\"openChangePasswordPage()\">Change password</button>";
+    }
+
+    return $("#tabDivGlavni").append(content);
+}
+
 
 function listVisitedCinemaTheaters(user) {
     var searchDiv = $('#searchCinemaTheaterDiv');
@@ -827,6 +849,7 @@ function deselectSeat(row, col, id,idHall) {
 
 function openFanZone(){
     $(location).attr('href', 'FanZone.html');
+
 }
 
 function returnToHome(){

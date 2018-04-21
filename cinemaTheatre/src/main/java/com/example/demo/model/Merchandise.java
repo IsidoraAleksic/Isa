@@ -25,6 +25,7 @@ public class Merchandise {
     private Long priceMerchandise;//ovo treba za blagajnu. kao neka realna cena
     private String imageMerchandise;
 
+
     public Merchandise() {
 
     }
@@ -83,6 +84,7 @@ public class Merchandise {
     public void setReservationMerchandise(List<ReservationMerchandise> reservationMerchandise) {
         this.reservationMerchandise = reservationMerchandise;
     }
+
 
     @Override
     public String toString() {

@@ -8,4 +8,5 @@ import java.util.List;
 public interface ReservationMerchandiseRepository  extends JpaRepository<ReservationMerchandise,Long> {
     ReservationMerchandise getById(Long id_reservationMerch);
     List<ReservationMerchandise> findByUserId(Long user_id);
+    ReservationMerchandise findByMerchId(Long merchandise_id);
 }

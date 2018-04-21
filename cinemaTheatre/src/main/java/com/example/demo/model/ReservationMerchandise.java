@@ -18,6 +18,9 @@ public class ReservationMerchandise {
     @JoinColumn(name = "merchandise_id")
     private Merchandise merch;
 
+    @Version
+    private Long version;
+
     public ReservationMerchandise(){
 
     }
@@ -51,6 +54,13 @@ public class ReservationMerchandise {
         this.merch = merch;
     }
 
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 
     @Override
     public String toString() {

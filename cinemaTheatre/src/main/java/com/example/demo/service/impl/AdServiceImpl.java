@@ -11,6 +11,7 @@ import com.example.demo.service.AdService;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,15 +106,19 @@ public class AdServiceImpl implements AdService {
         return SUCCESS_DELETED_AD;
     }
 
+    @Transactional
     public NotificationDTO updateAdStatus(Long id, AdBidStatus status){
         Ad ad = adRepository.getById(id);
         if (ad == null) {
             return null;
         }
-
+        if(ad.getAdBidStatus() != AdBidStatus.WAITING){
+            return null;
+        }else {
         ad.setAdBidStatus(status);
         adRepository.save(ad);
         return new NotificationDTO(ad.getUser().getId(), "Ad Notification", "Ad with id: " + ad.getId()+ " is " + ad.getAdBidStatus().name());
+        }
     }
 
 

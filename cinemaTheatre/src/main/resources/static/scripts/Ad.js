@@ -29,14 +29,14 @@ function makeAd(){
         type: "POST",
         data: JSON.stringify({
             "nameAd": $("#nameAd").val(),
-            "description": $("#description").val(),
+            "description": $("#descriptionAd").val(),
             "imageAd": "",
             "userId": "",
             "priceAd": $("#priceAd").val(),
             "dateEndOfBids": $("#dateEndOfBids").val()
         }),
         success: function(data) {
-            uploadImageAdd(data);
+            $(location).attr('href', 'FanZone.html');
         }
     });
 
@@ -62,7 +62,7 @@ function getAd(adId){
         success: function(data) {
             $("#userId").val(data.user.id);
             $("#nameAd").val(data.nameAd);
-            $("#description").val(data.description);
+            $("#descriptionAd").val(data.description);
             $("#imageAd").val(data.imageAd);
             $("#priceAd").val(data.priceAd);
             $("#dateEndOfBids").val(data.dateEndOfBids);
@@ -78,7 +78,7 @@ function updateAd(adId){
         type: "POST",
         data: JSON.stringify({
             "nameAd": $("#nameAd").val(),
-            "description": $("#description").val(),
+            "description": $("#descriptionAd").val(),
             "imageAd": $("#imageAd").val(),
             "userId": $("#userId").val(),
             "priceAd": $("#priceAd").val(),
@@ -102,25 +102,6 @@ function deleteAd(adId){
         }
     });
 
-}
-function uploadImageAdd(adId){
-    $.ajax({
-        url: "/advert/"+adId+"/image/",
-        contentType: false,
-        dataType: "text",
-        type: "POST",
-        data: JSON.stringify({
-            "nameAd": $("#nameAd").val(),
-            "description": $("#description").val(),
-            "imageAd": "",
-            "userId": "",
-            "priceAd": $("#priceAd").val(),
-            "dateEndOfBids": $("#dateEndOfBids").val()
-        }),
-        success: function(data) {
-            $(location).attr('href', 'FanZone.html')
-        }
-    });
 }
 function openFanZone(){
     $(location).attr('href', 'FanZone.html')

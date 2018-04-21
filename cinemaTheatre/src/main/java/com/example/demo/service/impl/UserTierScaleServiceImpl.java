@@ -75,7 +75,7 @@ public class UserTierScaleServiceImpl implements UserTierScaleService {
     public void updateUsers() {
         List<User> users = userRepository.findAll();
         for (User user : users) {
-            //user.setUserTier(getUserTierByPoints(user.getPoints()));
+            user.setUserTier(getUserTierByPoints(user.getPoints()));
             userRepository.save(user);
         }
 
