@@ -7,5 +7,5 @@ import com.example.demo.model.User;
 
 public interface TicketsDao {
 
-    public boolean create(short discount, int status, Seat seat, Projection projection);
+    public boolean create(short discount, int status, Seat seat, Projection projection, long version);
 }

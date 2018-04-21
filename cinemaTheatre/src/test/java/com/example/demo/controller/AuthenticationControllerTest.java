@@ -32,11 +32,10 @@ import java.nio.charset.Charset;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
+//@AutoConfigureMockMvc
 public class AuthenticationControllerTest {
 
 
-    @Autowired
     private MockMvc mockMvc;
 
     @Autowired
@@ -47,16 +46,11 @@ public class AuthenticationControllerTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-    @MockBean
-    private AuthenticationController authenticationController;
 
     private static final String BASE_URL = "/authenticate";
     private static final String REGISTER = "/register";
     private static final String LOGIN = "/login";
     private static final String LOGOUT = "/logout";
-    private static final String GETUSER = "/getUser";
-    private MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-            MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
 
 
@@ -80,14 +74,14 @@ public class AuthenticationControllerTest {
         mockMvc.perform(post(BASE_URL + LOGIN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isOk());
     }
 
 
     @Test
-    public void logoutNotAllowed() throws Exception {
+    public void logoutInvalidOk() throws Exception {
         mockMvc.perform(get(BASE_URL + LOGOUT))
-                .andExpect(status().isMethodNotAllowed());
+                .andExpect(status().isOk());
     }
     @Test
     @WithMockUser
@@ -110,7 +104,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void registerUserOkMissingEmail() throws Exception {
+    public void registerUserMissingEmail() throws Exception {
         User user = new User(5L, DB_FIRST_NAME,DB_LAST_NAME,10,DB_PASSWORD,"Novi Sad","021",true, UserType.GUEST, UserTier.BRONZE);
         user.setConfirmationToken("1111");
         user.setEnabled(true);
@@ -119,7 +113,7 @@ public class AuthenticationControllerTest {
         mockMvc.perform(post(BASE_URL + REGISTER)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json))
-                .andExpect(status().isOk());
+                .andExpect(status().isBadRequest());
     }
 
     @Test

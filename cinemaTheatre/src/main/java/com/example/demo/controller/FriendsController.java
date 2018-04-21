@@ -62,8 +62,6 @@ public class FriendsController {
         List<Friends> friends = friendService.findUsersByUserOneOrUserTwo(user, user);
         List<User> ret = new ArrayList<>();
         for (Friends friend : friends) {
-            //obe provere da li ret sadrzi jer jos uvek moze 2 usera jedan drugog da dodaju.
-            // TODO: samo jedan par prijatelja moze da postoji
             if (friend.getStatus() == 1 && (!ret.contains(friend.getUserOne()))
                     && (!ret.contains(friend.getUserTwo()))) {
                 if (friend.getUserOne().getId() == user.getId())

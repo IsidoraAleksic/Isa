@@ -14,19 +14,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class TicketsDaoImpl implements TicketsDao {
 
-    private final String INSERT_SQL = "INSERT INTO TICKET(discount, status, seat_id,projection_id) values(:discount,:status,:seat,:projection)";
+    private final String INSERT_SQL = "INSERT INTO TICKET(discount, status, seat_id,projection_id,version) values(:discount,:status,:seat,:projection,:version)";
 //    private final String UPDATE_SQL = "UPDATE TICKETS SET status=:status where user_one_id = :userOne and user_two_id = :userTwo";
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
-    public boolean create(short discount, int status, Seat seat, Projection projection) {
+    public boolean create(short discount, int status, Seat seat, Projection projection, long version) {
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("discount", discount)
                 .addValue("status", status)
                 .addValue("seat", seat.getId())
+                .addValue("version", version)
 //                .addValue("seat", version)
                 .addValue("projection",projection.getId());
         namedParameterJdbcTemplate.update(INSERT_SQL, parameters, holder);
