@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,14 +73,24 @@ public class ProjectionServiceImpl implements ProjectionService{
 	}
 
 	@Override
-	public List<Projection> findByCtidAndDateBetween(long id, String dateStart, String dateEnd) {
-		
-		return pRepository.findByCtAndDateBetween(id, dateStart, dateEnd);
+	public List<Projection> findByCtidAndDateBetween(long id, Date dateStart, Date dateEnd) {
+		return pRepository.findByCtIdAndDateBetween(id, dateStart, dateEnd);
 	}
 
 	@Override
-	public List<Projection> findByCtidAndDateLike(long id, String date) {
-		return pRepository.findByCtAndDateLike(id, date);
+	public List<Projection> findByCtidAndDateLike(long id, Date date) {
+		return pRepository.findByCtIdAndDate(id, date);
+	}
+
+	@Override
+	public List<Projection> findByDateBetween(Date dateStart, Date dateEnd) {
+		return pRepository.findByDateBetween(dateStart, dateEnd);
+	}
+
+	@Override
+	public List<Projection> findByDateLike(Date first) {
+		// TODO Auto-generated method stub
+		return pRepository.findByDate(first);
 	}
 
 

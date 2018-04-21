@@ -178,9 +178,9 @@ function projections(){
 function addH(){
 	$("#middle").empty();
 	$("#middle").html('<form id="hallForm"></form>');
-	$("#hallForm").html('<label>Name: <input type="text" class="form-control" id ="hallName" placeholder="Name"><br>'
-	+'<label>Rows: <input type="text" class="form-control" id ="hallRows" placeholder="Rows" onkeyup="this.value=this.value.replace(/[^\\d]/,\'\')"><br>'
-	+'<label>Seats per row: <input type="text" class="form-control" id ="hallCols" placeholder="Cols" onkeyup="this.value=this.value.replace(/[^\\d]/,\'\')"><br>'
+	$("#hallForm").html('<label>Name: </label><input type="text" class="form-control" id ="hallName" placeholder="Name"><br>'
+	+'<label>Rows: </label><input type="text" class="form-control" id ="hallRows" placeholder="Rows" onkeyup="this.value=this.value.replace(/[^\\d]/,\'\')"><br>'
+	+'<label>Seats per row: </label><input type="text" class="form-control" id ="hallCols" placeholder="Cols" onkeyup="this.value=this.value.replace(/[^\\d]/,\'\')"><br>'
 	+'<input class="button" type="submit" value="Add">');
 	
 }
@@ -297,17 +297,17 @@ function statistics(){
 	$("#statisticsForm").html('<input type="radio" name="dwm" value="day">Day<br>'
 	+'<input type="radio" name="dwm" value="week">Week<br>'
 	+'<input type="radio" name="dwm" value="month">Month<br>'
-	+'<input type="text" id="statText" onkeyup="this.value=this.value.replace(/[^\\d]/,\'\')">'
-	+'<input type="button" class="submit" value="Get Statistics">'
+	+'<input type="text" id="statText" onkeyup="this.value=this.value.replace(/[^\\d]/,\'\')"><br>'
 	);
-
+	$("#middle").append('<br><button class="btnStat">Get Statistics</button><br><br><div id="canvDiv"></div>');
+	$("#canvDiv").append('<canvas id="graph" width="60%" height="400"></canvas>');
 }
 
-$(document).on('submit', '#statisticsForm', function(e){
+$(document).on("click", ".btnStat", function(e){
 	e.preventDefault();
 	var ctid = $('#ctid').text();
 	var sForm = document.getElementById("statisticsForm");
-	var s = ""
+	var s = "";
 	for(var i = 0; i < sForm.length; i++){
 		if(sForm[i].checked) {
 			s = sForm[i].value;
@@ -326,8 +326,6 @@ $(document).on('submit', '#statisticsForm', function(e){
 			statGraph(values);
 		}
 	});
-	
-	$("#middle").append('<br><canvas id="graph" width="60%" height="400"></canvas>');
 	
 	
 });

@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.Projection;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.util.List;
 
@@ -27,8 +27,12 @@ public interface ProjectionService {
 
     Projection findFirstByNameAndDateAndTime(String name, Date date, Time time);
 
-    List<Projection> findByCtidAndDateBetween(long id, String dateStart, String dateEnd);
+    List<Projection> findByCtidAndDateBetween(long id, Date dateStart, Date dateEnd);
 
-	List<Projection> findByCtidAndDateLike(long id, String first);
+    List<Projection> findByCtidAndDateLike(long id, Date first);
+
+    List<Projection> findByDateBetween(Date dateStart, Date dateEnd);
+
+    List<Projection> findByDateLike(Date first);
 
 }

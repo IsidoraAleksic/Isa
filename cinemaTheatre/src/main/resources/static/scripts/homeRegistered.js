@@ -406,7 +406,7 @@ function showTheaters(data) {
 
 $(document).on('submit', '#formaVisitCinemaTheater', function (e, id) {
     e.preventDefault();
-    var id = document.getElementById("hiddenVisitCT").value;
+    var _id = document.getElementById("hiddenVisitCT").value;
     window.location = "/ctProfile.html?id=" + id;
 });
 
@@ -427,7 +427,7 @@ function tableList(data, type) {
         for (i = 0; i < data.content.length; i++) {
             var well = $(' <div class="well"></div>');
             var media = $(' <div class="media"></div>');
-            var image = $(' <a class="pull-left" href="#"><img class="media-object" src="../images/movie.jpg"></a>');
+            var image = $(' <a class="pull-left" href="#"><img width="220" height="178" class="media-object" src="../images/movie.jpg" ></a>');
             var body = $(' <div class="media-body"></div>');
             var starsUl = $(' <ul class="list-inline list-unstyled"></ul>');
             var starsLi = $('<li></li>');
@@ -465,7 +465,8 @@ function tableList(data, type) {
         $.each(data, function (idx, projection) {
             var well = $(' <div class="well"></div>');
             var media = $(' <div class="media"></div>');
-            var image = $(' <a class="pull-left" href="#"><img class="media-object" src="../images/movie.jpg"></a>');
+			var img = projection.imagePath === "path" ? "../images/movie.jpg" : projection.imagePath;
+            var image = $(' <a class="pull-left" href="#"><img width="220" height="178" class="media-object" src="'+img+'" ></a>');
             var body = $(' <div id="' + projection.id + '"class="media-body"></div>');
             var starsUl = $(' <ul class="list-inline list-unstyled"></ul>');
             var dugme = $('<p class="text-right" ></p>');

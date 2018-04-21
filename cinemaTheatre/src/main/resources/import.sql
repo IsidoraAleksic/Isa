@@ -1,8 +1,9 @@
 create table user_tier_scale(id Long NOT NULL AUTO_INCREMENT, points INT,user_tier ENUM('BRONZE','SILVER','GOLDEN'),PRIMARY KEY(id));
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE',true,'10');
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE,'GUEST','BRONZE',true,'10');
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('isidora', 'isidora','isidora','isidora@gmail.com','novi sad','021',TRUE,'ADMINFZ','BRONZE',true,'5');
-insert into isadb.users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('njari', 'njari','njari','njari@gmail.com','novi sad','021',TRUE,'ADMINCT','BRONZE',true,'14');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE',true,'10');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE,'GUEST','BRONZE',true,'10');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('isidora', 'isidora','isidora','isidora@gmail.com','novi sad','021',TRUE,'ADMINFZ','BRONZE',true,'5');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('njari', 'njari','njari','njari@gmail.com','novi sad','021',TRUE,'ADMINCT','BRONZE',true,'14');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('jefimija', 'jefimija','jefimija','isamejl8111@gmail.com','jefimija','jefimija', TRUE,'GUEST','BRONZE',true,'10');
 insert into user_tier_scale(points,user_tier) values (11,'BRONZE');
 insert into user_tier_scale(points,user_tier) values (20,'SILVER');
 insert into user_tier_scale(points,user_tier) values (30,'GOLDEN');
@@ -46,7 +47,6 @@ INSERT into ct_projections(cinema_theater_id,projections_id) values('1','2');
 INSERT into ct_projections(cinema_theater_id,projections_id) values('1','3');
 INSERT into ct_projections(cinema_theater_id,projections_id) values('1','4');
 INSERT into ct_projections(cinema_theater_id,projections_id) values('1','5');
-
 
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','1','AVAILABLE','1');
 INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','2','AVAILABLE','1');
@@ -115,8 +115,8 @@ INSERT INTO notifications(id_receiver, topic, message) VALUES (1,'Ad notificatio
 
 INSERT INTO reservations_merchandise(user_id,merchandise_id) VALUES (1,1);
 
-INSERT INTO isadb.merchandise(user_id, name_merchandise,description,price_merchandise,image_merchandise) VALUES (1,'badge','starwars badge',5,'/images/jediresize.jpg');
-INSERT INTO isadb.merchandise(user_id, name_merchandise,description,price_merchandise,image_merchandise) VALUES (1,'cup','frozen cup',8,'/images/frozen.jpg');
+INSERT INTO merchandise(user_id, name_merchandise,description,price_merchandise,image_merchandise) VALUES (1,'badge','starwars badge',5,'/images/jediresize.jpg');
+INSERT INTO merchandise(user_id, name_merchandise,description,price_merchandise,image_merchandise) VALUES (1,'cup','frozen cup',8,'/images/frozen.jpg');
 
 INSERT INTO bids(id_ad,id_guest_bid,price_bid,ad_bid_status) VALUES (1,3,3,'WAITING');
 INSERT INTO bids(id_ad,id_guest_bid,price_bid,ad_bid_status) VALUES (1,2,5,'WAITING');
@@ -127,3 +127,47 @@ INSERT INTO reservations_merchandise(user_id,merchandise_id) VALUES (1,1);
 
 --TEST
 UPDATE ct set user_id = 4 where id = 1;
+
+--dont delete below
+
+INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Inception','Leonardo','Sci-Fy','Nolan','180','path','none','1','1','2018-04-18','250','09:00:00');
+INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Interstellar','Alright','Sci-Fy','Nolan','180','path','none','1','1','2018-03-17','250','19:00:00');
+INSERT into projections(name,actors,genre,director,duration,image_path, description, hall_id, ct_id,date,price, time) values('Interstellar','Alright','Sci-Fy','Nolan','180','path','none','2','1','2018-04-11','250','16:00:00');
+
+INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','1','AVAILABLE','6');
+INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','2','AVAILABLE','6');
+INSERT into seats(hall_id,row,col,seat_type,projection_id) values('1','1','1','AVAILABLE','7');
+INSERT into seats(hall_id,row,col,seat_type,projection_id) values('2','1','2','AVAILABLE','8');
+INSERT into seats(hall_id,row,col,seat_type,projection_id) values('2','1','2','AVAILABLE','8');
+
+
+INSERT into halls_seats(halls_id,seats_id) values('1','25');
+INSERT into halls_seats(halls_id,seats_id) values('1','26');
+INSERT into halls_seats(halls_id,seats_id) values('1','27');
+
+INSERT into halls_seats(halls_id,seats_id) values('2','28');
+INSERT into halls_seats(halls_id,seats_id) values('2','29');
+
+insert into ticket(discount, status, projection_id, seat_id) values('0','1','6','25');
+insert into ticket(discount, status, projection_id, seat_id) values('0','1','6','26');
+insert into ticket(discount, status, projection_id, seat_id) values('0','1','7','27');
+insert into ticket(discount, status, projection_id, seat_id) values('0','1','8','28');
+insert into ticket(discount, status, projection_id, seat_id) values('0','1','8','29');
+
+insert into users_reserved_tickets(user_id, reserved_tickets_id) values('2','1');
+insert into users_reserved_tickets(user_id, reserved_tickets_id) values('2','2');
+insert into users_reserved_tickets(user_id, reserved_tickets_id) values('2','3');
+insert into users_reserved_tickets(user_id, reserved_tickets_id) values('2','4');
+insert into users_reserved_tickets(user_id, reserved_tickets_id) values('2','5');
+
+insert into projections_taken(projections_id,taken_id) values('6','1');
+insert into projections_taken(projections_id,taken_id) values('6','2');
+insert into projections_taken(projections_id,taken_id) values('7','3');
+insert into projections_taken(projections_id,taken_id) values('8','4');
+insert into projections_taken(projections_id,taken_id) values('8','5');
+
+INSERT into ct_projections(cinema_theater_id,projections_id) values('1','6');
+INSERT into ct_projections(cinema_theater_id,projections_id) values('1','7');
+INSERT into ct_projections(cinema_theater_id,projections_id) values('1','8');
+
+--dont delete above
