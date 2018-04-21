@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,17 +23,21 @@ public class HallServiceImpl implements HallService {
 	@Override
 	public Hall delete(Long id) {
 		Hall h = hallRepository.getOne(id);
-		if(h == null)
-			throw new IllegalArgumentException("Tried to delete"
-					+ "non-existant hall");
+		if (h == null)
+			throw new IllegalArgumentException("Tried to delete non-existant hall");
 		hallRepository.deleteById(id);
 		return h;
-		
+
 	}
 
 	@Override
 	public Hall findById(long id) {
 		return hallRepository.findById(id);
+	}
+
+	@Override
+	public List<Hall> findByCTId(long id) {
+		return hallRepository.findByCtId(id);
 	}
 
 }

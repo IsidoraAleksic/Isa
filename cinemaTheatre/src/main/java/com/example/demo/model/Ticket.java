@@ -16,6 +16,9 @@ public class Ticket {
 
     @OneToOne
     private Seat seat;
+
+//    @Version
+//    private long version;
 //
 //    @ManyToOne
 //    private User user;
@@ -26,6 +29,14 @@ public class Ticket {
     public int getStatus() {
         return status;
     }
+
+//    public long getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion(long version) {
+//        this.version = version;
+//    }
 
 
 //    public User getUser() {

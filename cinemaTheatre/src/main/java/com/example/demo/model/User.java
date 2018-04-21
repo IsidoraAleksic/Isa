@@ -66,6 +66,36 @@ public class User implements Serializable {
     @JsonIgnore
     private List<ReservationMerchandise> reservationMerchandise;
 
+
+    public User(Long id, String firstName,String lastName, int points,String password, String email,
+                String city, String phone, boolean enabled, UserType role, UserTier userTier) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.points = points;
+        this.password = password;
+        this.email = email;
+        this.city = city;
+        this.phone = phone;
+        this.enabled = enabled;
+        this.role = role;
+        this.userTier = userTier;
+    }
+
+    public User(Long id, String firstName,String lastName, int points,String password,
+                String city, String phone, boolean enabled, UserType role, UserTier userTier) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.points = points;
+        this.password = password;
+        this.city = city;
+        this.phone = phone;
+        this.enabled = enabled;
+        this.role = role;
+        this.userTier = userTier;
+    }
+
     public User() {
         this.enabled = false;
     }

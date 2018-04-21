@@ -6,21 +6,21 @@ import com.example.demo.service.*;
 import com.example.demo.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.Time;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -131,6 +131,7 @@ public class ReservationTicketController {
     }
 
 
+
     @RequestMapping(value = "/getHall/{id}", method = RequestMethod.GET, produces = "application/json")
     public Hall getHall(@PathVariable("id") long id) {
         Projection projection = projectionService.findProjectionById(id);
@@ -142,6 +143,7 @@ public class ReservationTicketController {
 
     }
 
+    @Transactional
     @RequestMapping(value = "/getSeats/{idP}/{idH}", method = RequestMethod.GET, produces = "application/json")
     public List<Seat> getSeats(@PathVariable("idP") long idP,@PathVariable("idH") Long idH) {
         Hall provera = hallService.findById(idH);

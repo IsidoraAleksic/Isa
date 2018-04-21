@@ -5,30 +5,33 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.HallDTO;
 import com.example.demo.model.Hall;
 
-public class HallToHallDTO implements Converter<HallDTO, Hall> {
+@Component
+public class HallToHallDTO implements Converter<Hall, HallDTO> {
 
 	@Override
-	public Hall convert(HallDTO hallDTO) {
+	public HallDTO convert(Hall hall) {
 
-		if (hallDTO == null)
+		if (hall == null)
 			return null;
 
 		ModelMapper modelMapper = new ModelMapper();
 
-		Hall result = modelMapper.map(hallDTO, Hall.class);
+		HallDTO result = modelMapper.map(hall, HallDTO.class);
 		return result;
 
 	}
 
-	public List<Hall> convert(List<HallDTO> hallDTOs) {
-		List<Hall> halls = new ArrayList<Hall>();
-		for (HallDTO hallDTO : hallDTOs) {
-			halls.add(convert(hallDTO));
+	public List<HallDTO> convert(List<Hall> halls) {
+		List<HallDTO> hallDTOs = new ArrayList<>();
+		for (Hall h : halls) {
+			hallDTOs.add(convert(h));
 		}
-		return halls;
+		return hallDTOs;
 	}
+
 }

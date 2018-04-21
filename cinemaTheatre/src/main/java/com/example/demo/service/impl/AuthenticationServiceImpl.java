@@ -52,7 +52,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPoints(0);
 
         // user.setRole(user.getRole());
-        //user.setRole(UserType.GUEST);
+        //user.setRole(UserType.GUEST   );
 
 //        userRepository.save(user);
 

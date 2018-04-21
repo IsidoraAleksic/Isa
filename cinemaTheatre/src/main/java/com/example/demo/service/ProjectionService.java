@@ -27,5 +27,8 @@ public interface ProjectionService {
 
     Projection findFirstByNameAndDateAndTime(String name, Date date, Time time);
 
+    List<Projection> findByCtidAndDateBetween(long id, String dateStart, String dateEnd);
+
+	List<Projection> findByCtidAndDateLike(long id, String first);
 
 }
