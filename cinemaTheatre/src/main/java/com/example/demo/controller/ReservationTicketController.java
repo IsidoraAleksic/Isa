@@ -363,7 +363,7 @@ public class ReservationTicketController {
     	Ticket ticket = reservationTicketService.findBySeat(speed);
     	speed.setSeatType(SeatType.TAKEN);
     	if (ticket == null) {
-            ticketsDao.create((short) 0, 1, speed, speed.getProjection());
+            ticketsDao.create((short) 0, 1, speed, speed.getProjection(),0);
             ticket = reservationTicketService.findBySeat(speed);
             user.getReservedTickets().add(ticket);
             user.setPoints(user.getPoints()+5);
