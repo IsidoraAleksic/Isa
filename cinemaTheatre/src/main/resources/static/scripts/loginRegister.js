@@ -1,3 +1,4 @@
+
 $(function() {
 
     $('#login-form-link').click(function(e) {
@@ -154,9 +155,9 @@ $(document).ready ( function(){
         success: function(data){
             content = '';
             if(data.role == "UNREGISTERED") {
-                content = '<option value=\"UNREGISTERED"\">';
+                content ='<option value=\"GUEST"\">';
             } else if(data.role == 'ADMIN') {
-                content = '<option value=\"ADMIN"\">'+'<option value=\"ADMINCT"\">'+'<option value=\"ADMINFZ"\">';
+               content = '<option value=\"ADMIN"\">'+'<option value=\"ADMINCT"\">'+'<option value=\"ADMINFZ"\">';
             }
             $('#roles').append(content);
         }

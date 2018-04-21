@@ -53,14 +53,12 @@ public class AdController {
         List<NotificationDTO> notifications = adService.getNotifications(adId);
         if (notifications == null) {
             return adId;
-            //return new ResponseEntity<>("Unsuccessfully created ad", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         for (NotificationDTO notificationDTO : notifications) {
             notificationService.create(notificationDTO);
         }
         return adId;
-        //return new ResponseEntity<>("Successfully created ad", HttpStatus.CREATED);
     }
 
 

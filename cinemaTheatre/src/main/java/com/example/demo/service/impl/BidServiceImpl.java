@@ -14,6 +14,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BidService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BidServiceImpl implements BidService {
@@ -55,12 +56,11 @@ public class BidServiceImpl implements BidService {
 
     public String create(BidDTO bidDTO) {
 
-        List<Ad> ads = adRepository.findAll();
-        for(Ad ad:ads){
-            if(ad.getAdBidStatus() != AdBidStatus.ACCEPTED){
+        Ad ad = adRepository.getById(bidDTO.getAdId());
+        if(ad.getAdBidStatus() != AdBidStatus.ACCEPTED){
                 return ERRORR_CREATE_BID;
-            }
         }
+
         if (bidDTO == null) {
             return ERRORR_CREATE_BID;
             //return null;
@@ -76,6 +76,7 @@ public class BidServiceImpl implements BidService {
         return SUCCESS_CREATED_BID;
     }
 
+    @Transactional
     public String update(Long bidId, BidDTO bidDTO) {
 
         Bid bid = bidRepository.getById(bidId);
@@ -107,6 +108,7 @@ public class BidServiceImpl implements BidService {
         return SUCCESS_DELETED_BID;
     }
 
+    @Transactional
     public List<NotificationDTO> updateBidStatus(Long id, AdBidStatus status) {
         Bid bid = bidRepository.getById(id);
         if (bid == null) {

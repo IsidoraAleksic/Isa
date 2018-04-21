@@ -8,6 +8,7 @@ import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ReservationMerchandiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -36,6 +37,7 @@ public class ReservationMerchandiseServiceImpl implements ReservationMerchandise
         return reservationMerchandiseRepository.findByUserId(user_id);
     }
 
+    @Transactional
     public String createReservationMerchandise(ReservationMerchandiseDTO reservationMerchandiseDTO) {
         ReservationMerchandise reservationMerchandise = new ReservationMerchandise();
         reservationMerchandise.setUser(userRepository.getById(reservationMerchandiseDTO.getUserId()));

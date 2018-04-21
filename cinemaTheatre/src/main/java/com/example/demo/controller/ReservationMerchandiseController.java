@@ -35,7 +35,7 @@ public class ReservationMerchandiseController {
         return new ResponseEntity<>(userReservations, HttpStatus.OK);
     }
 
-    @Transactional(rollbackFor = Exception.class)
+
     @PreAuthorize("hasAuthority('GUEST')")
     @PostMapping
     public ResponseEntity createReservationMerchandise(@RequestBody ReservationMerchandiseDTO reservationMerchandiseDTO) {
