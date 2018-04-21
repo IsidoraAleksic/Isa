@@ -3,18 +3,16 @@ $(function() {
 	$.ajax({
         url: tgt,
         success: function(data){
-
-            console.log(data.content);
+			$("#dataTable").append('<tr class="header"><th>Name</th><th>Address</th><th>Description</th><th>Ambient Rating</th><th>View page</th></tr>');
             for(i = 0; i < data.content.length;i++){
-                newct =  "<tr class=\"bottom\"><td rowspan=\"5\" class=\"pic\">"
-					+"<a href=\"ctProfile.html?id="+data.content[i].id+"\">"
-					+"<img src=\"images/placeholder.png\"/></a></td>"
-                    +"<td class=\"irs\">Name: "+data.content[i].name+"</td></tr>"
-                    +"<tr><td class=\"irs\">Address: "+data.content[i].address+"</td></tr>"
-                    +"<tr><td rowspan=\"2\">Description: "+data.content[i].description+"</td></tr>"
-                    +"<tr></tr>"
-                    +"<tr><td class=\"irs\">Rating: "+data.content[i].ambient+"</td></tr>"
-                    +"<tr><td class=\"extra\" colspan=\"2\"></td></tr>";
+				newct = '<tr>'
+				+'<td>'+data.content[i].name+'</td>'
+				+'<td>'+data.content[i].address+'</td>'
+				+'<td>'+data.content[i].description+'</td>'
+				+'<td>'+data.content[i].ambient+'</td>'
+				+'<td><a href="ctProfile.html?id='+data.content[i].id+'"><img src ="/images/edit.gif"/></a></td>'
+				+'</tr>';
+				
                 $("#dataTable").append(newct);
             }
         }

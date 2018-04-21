@@ -191,6 +191,11 @@ function changePassword(){
 function registerAdmin(){
     $(location).attr('href', 'loginRegister.html');
 }
+
+function admininstrationCT(){
+	$(location).attr('href', 'ctAdmin.html');	
+}
+
 function openChangePasswordPage(){
     $(location).attr('href', 'loginAgain.html')
 }

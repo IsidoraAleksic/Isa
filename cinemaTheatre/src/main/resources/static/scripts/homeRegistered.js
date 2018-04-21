@@ -70,7 +70,9 @@ function makeBtnForAdmin(userId){
     if(userId.role == "ADMIN"){
         content+="<button class=\"w3-bar-item w3-button\" onclick=\"registerAdmin()\"id=\"btnRegAdmin\">Register Admin</button>"+
        "<button class=\"w3-bar-item w3-button\" onclick=\"openModalScale()\">Set New Scale</button>";
-    }
+    } else if (userId.role == "ADMINCT"){
+		content+="<button class=\"w3-bar-item w3-button\" onclick=\"admininstrationCT()\"id=\"btnCTAdmin\">Administration</button>";
+	}
 
     return $("#tabDivGlavni").append(content);
 }

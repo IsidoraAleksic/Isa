@@ -354,6 +354,7 @@ public class ReservationTicketController {
 		
 	}
     
+    @Transactional    
     @PreAuthorize("hasAuthority('GUEST')")
 	@RequestMapping(value = "/speed/reserve/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> speedReserve(@PathVariable long id){

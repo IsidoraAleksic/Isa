@@ -110,8 +110,8 @@ public class ProjectionController {
 	}
 
 	@PreAuthorize("hasAuthority('ADMINCT')")
-	@RequestMapping(value = "stats/{id}/{s}/{num}", method = RequestMethod.GET)
-	public ResponseEntity<?> getStatistics(@PathVariable long id, @PathVariable String s, @PathVariable int num)
+	@RequestMapping(value = "stats/{num}/{s}", method = RequestMethod.GET)
+	public ResponseEntity<?> getStatistics(@PathVariable String s, @PathVariable int num)
 			throws ParseException {
 		SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-dd");
 		Calendar cal = Calendar.getInstance();
@@ -127,8 +127,6 @@ public class ProjectionController {
 		User user = authenticationService.getLoggedInUser();
 		CinemaTheater ct = ctService.getCinemaTheaterByUser(user.getId());
 		List<Projection> projs = ct.getProjections();
-
-		System.out.println("const " + calConst);
 		
 		for (int i = 0; i < num; i++) {
 			newer = form.format(cal.getTime());
@@ -139,12 +137,10 @@ public class ProjectionController {
 			older = form.format(cal.getTime());
 			Date od = cal.getTime();
 			int sum = 0;
-			System.out.println(i + ". " + older + " to " + newer);
 			for (Projection pp : projs) {
 				Date pDate = pp.getDate();
 				if ((pDate.compareTo(nd) <  1) && (pDate.compareTo(od) > -1)) {
 					sum += pp.getTaken().size();
-					System.out.println(i + ". " +older + " - " + pDate.toString() + " - " + newer);
 				}
 			}
 			String y = null;
