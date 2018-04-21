@@ -113,9 +113,7 @@ public class ProjectionController {
 	@RequestMapping(value = "stats/{num}/{s}", method = RequestMethod.GET)
 	public ResponseEntity<?> getStatistics(@PathVariable String s, @PathVariable int num)
 			throws ParseException {
-		SimpleDateFormat form = new SimpleDateFormat("YYYY-MM-dd");
 		Calendar cal = Calendar.getInstance();
-		String newer, older;
 
 		int calConst = s.equalsIgnoreCase("day") ? 5
 				: s.equalsIgnoreCase("week") ? 4 : s.equalsIgnoreCase("month") ? 2 : -1;
@@ -129,12 +127,10 @@ public class ProjectionController {
 		List<Projection> projs = ct.getProjections();
 		
 		for (int i = 0; i < num; i++) {
-			newer = form.format(cal.getTime());
 			Date nd = cal.getTime();
 			cal.add(calConst, -1);
 			if (calConst != 5)
 				cal.add(Calendar.DATE, 1);
-			older = form.format(cal.getTime());
 			Date od = cal.getTime();
 			int sum = 0;
 			for (Projection pp : projs) {

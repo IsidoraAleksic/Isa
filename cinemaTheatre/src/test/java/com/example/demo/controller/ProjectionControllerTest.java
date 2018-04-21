@@ -62,29 +62,8 @@ public class ProjectionControllerTest {
 	}
 
 	@Test
-	public void getAllCT() throws Exception {
-		mockMvc.perform(get(BASE_URL + "/")).andExpect(status().isOk())
-				.andExpect(content().contentType("application/json;charset=UTF8"));
-	}
-	
-	@Test
-	public void getALLC() throws Exception {
-		mockMvc.perform(get(BASE_URL + "/cinemas")).andExpect(status().isOk())
-		.andExpect(content().contentType("application/json;charset=UTF8"));
+	public void getAllProjections() throws Exception {
+		mockMvc.perform(get(BASE_URL + "/")).andExpect(status().isOk());
 	}
 
-	@Test
-	public void getALLT() throws Exception {
-		mockMvc.perform(get(BASE_URL + "/theaters")).andExpect(status().isOk())
-		.andExpect(content().contentType("application/json;charset=UTF8"));
-	}
-	
-	@Test
-	public void getById() throws Exception{
-		mockMvc.perform(get(BASE_URL + "/getById/1")).andExpect(status().isOk())
-		.andExpect(content().contentType("application/json;charset=UTF8"));
-	}
-
-	
-	
 }

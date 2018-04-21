@@ -1,16 +1,15 @@
-
-insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Jefimija', 'Zivkovic','123','isamejl811@gmail.com','Novi Sad','021', TRUE, 'GUEST','BRONZE',true,'10');
-insert into users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('Isidora', 'Aleksic','1234','isidora@gmail.com','Novi Sad','021', TRUE,'ADMINFZ','BRONZE',true,'10');
-insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Daniel', 'Njari','12345','daniel@gmail.com','Novi Sad','021',TRUE,'ADMINCT','BRONZE',true,'5');
-insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Pera', 'Markovic','123','zivkovic.jefimijaa@gmail.com','Beograd','011',TRUE,'ADMINCT','BRONZE',true,'14');
-insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Admin', 'Sistema','123','admin@gmail.com','Beograd','011',TRUE,'ADMIN','BRONZE',true,'14');
-create table user_tier_scale(id Long NOT NULL AUTO_INCREMENT, points INT,user_tier ENUM('BRONZE','SILVER','GOLDEN'),PRIMARY KEY(id));
-
 insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('admin', 'admin','admin','admin@gmail.com','novi sad','021', TRUE, 'ADMIN','BRONZE',true,'10');
 insert into users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('jefimija', 'jefimija','jefimija','isamejl811@gmail.com','jefimija','jefimija', TRUE,'GUEST','BRONZE',true,'10');
 insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('isidora', 'isidora','isidora','isidora@gmail.com','novi sad','021',TRUE,'ADMINFZ','BRONZE',true,'5');
-insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('njari', 'njari','njari','njaridaniel@gmail.com','novi sad','021',TRUE,'ADMINCT','BRONZE',true,'14');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('njari', 'njari','njari','njari@gmail.com','novi sad','021',TRUE,'ADMINCT','BRONZE',true,'14');
 insert into users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('doda', 'doda','doda','doda@gmail.com','doda','doda', TRUE,'GUEST','BRONZE',true,'6');
+
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Jefimija', 'Zivkovic','123','isamejl811@gmail.com','Novi Sad','021', TRUE, 'GUEST','BRONZE',true,'10');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled,role,user_tier,first_login,points) values('Isidora', 'Aleksic','1234','isidora@gmail.com','Novi Sad','021', TRUE,'ADMINFZ','BRONZE',true,'10');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Daniel', 'Njari','12345','njaridaniel@gmail.com','Novi Sad','021',TRUE,'ADMINCT','BRONZE',true,'5');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Pera', 'Markovic','123','zivkovic.jefimijaa@gmail.com','Beograd','011',TRUE,'ADMINCT','BRONZE',true,'14');
+insert into users(first_name, last_name,password_user,email,city,phone,enabled, role,user_tier,first_login,points) values('Admin', 'Sistema','123','admin@gmail.com','Beograd','011',TRUE,'ADMIN','BRONZE',true,'14');
+create table user_tier_scale(id Long NOT NULL AUTO_INCREMENT, points INT,user_tier ENUM('BRONZE','SILVER','GOLDEN'),PRIMARY KEY(id));
 
 insert into user_tier_scale(points,user_tier) values (11,'BRONZE');
 insert into user_tier_scale(points,user_tier) values (20,'SILVER');
