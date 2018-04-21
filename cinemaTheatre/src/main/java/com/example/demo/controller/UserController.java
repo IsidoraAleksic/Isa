@@ -21,7 +21,6 @@ public class UserController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST, consumes = "application/json")
     public String editUserInformation(@RequestBody User user){
-        //TODO: get logged in user(find by verification token). Then find by id.
         User loggedIn = authenticationService.getLoggedInUser();
         if(loggedIn!=null){
             if(user.getPhone()!=null)

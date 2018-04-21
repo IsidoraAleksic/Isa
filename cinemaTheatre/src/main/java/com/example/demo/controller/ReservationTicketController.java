@@ -180,7 +180,7 @@ public class ReservationTicketController {
                         seat.setSeatType(SeatType.TAKEN);
                         ticket = reservationTicketService.findBySeat(seat);
                         if (ticket == null) {
-                            ticketsDao.create((short) 0, 1, seat, projection);
+                            ticketsDao.create((short) 0, 1, seat, projection, 0);
                             ticket = reservationTicketService.findBySeat(seat);
                             user.getReservedTickets().add(ticket);
                             user.setPoints(user.getPoints()+5);

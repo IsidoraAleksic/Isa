@@ -1,6 +1,19 @@
-language: java
-rvm:
- - jdk1.8.0_131
-
- script:
-  - src/test/java/com.example.demo
+spring:
+    profiles:
+        active: test
+    datasource:
+        url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE
+        driverClassName: org.h2.Driver
+        username: root
+        password: root
+        dbcp2:
+          rollback-on-return: true
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        database: H2
+        show_sql: true
+        hibernate:
+            ddl-auto: create-drop
+            naming:
+                strategy: org.hibernate.cfg.ImprovedNamingStrategy
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImplo

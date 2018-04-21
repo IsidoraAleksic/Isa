@@ -13,6 +13,7 @@ import java.util.List;
 
 
 @Service
+@Transactional(readOnly = true)
 public class ReservationTicketServiceImpl implements ReservationTicketService {
     @Autowired
     private SeatRepository seatRepository;
@@ -73,18 +74,21 @@ public class ReservationTicketServiceImpl implements ReservationTicketService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void delete(Ticket ticket) {
         reservationTicketRepository.delete(ticket);
     }
 
 
     @Override
+    @Transactional(readOnly = false)
     public void save(Ticket ticket) {
         reservationTicketRepository.save(ticket);
     }
 
 
     @Override
+    @Transactional(readOnly = false)
     public void save(Seat seat) {
         seatRepository.save(seat);
     }
