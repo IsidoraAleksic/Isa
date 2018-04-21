@@ -451,8 +451,6 @@ function visitCT(id){
 
 
 
->>>>>>> 80b7aa0a2bbaa382fb1dc68f5c06deddf1437080
-
 function tableList(data, type) {
     var results = $('#resultsDiv');
     var leftPane = $('#userInformation');
